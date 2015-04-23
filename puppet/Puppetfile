@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+#^syntax detection
+
+forge "https://forgeapi.puppetlabs.com"
+
+mod 'puppetlabs-apache'
+mod 'puppetlabs-apt'
+mod 'puppetlabs-mysql'
+
+mod 'thias-php'
+
+mod 'actionjack-mailcatcher'

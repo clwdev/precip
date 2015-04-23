@@ -1,0 +1,28 @@
+FORGE
+  remote: https://forgeapi.puppetlabs.com
+  specs:
+    actionjack-mailcatcher (0.1.11)
+      puppetlabs-ruby (>= 0.3.0)
+      puppetlabs-stdlib (>= 4.2.0)
+    nanliu-staging (1.0.3)
+    puppetlabs-apache (1.4.0)
+      puppetlabs-concat (< 2.0.0, >= 1.1.1)
+      puppetlabs-stdlib (< 5.0.0, >= 2.4.0)
+    puppetlabs-apt (2.0.0)
+      puppetlabs-stdlib (>= 4.5.0)
+    puppetlabs-concat (1.2.1)
+      puppetlabs-stdlib (< 5.0.0, >= 3.2.0)
+    puppetlabs-mysql (3.3.0)
+      nanliu-staging (~> 1.0)
+      puppetlabs-stdlib (< 5.0.0, >= 3.2.0)
+    puppetlabs-ruby (0.4.0)
+      puppetlabs-stdlib (< 5.0.0, >= 3.2.0)
+    puppetlabs-stdlib (4.6.0)
+    thias-php (1.1.1)
+
+DEPENDENCIES
+  actionjack-mailcatcher (>= 0)
+  puppetlabs-apache (>= 0)
+  puppetlabs-apt (>= 0)
+  puppetlabs-mysql (>= 0)
+  thias-php (>= 0)
