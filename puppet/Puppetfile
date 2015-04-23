@@ -5,8 +5,10 @@ forge "https://forgeapi.puppetlabs.com"
 
 mod 'puppetlabs-apache'
 mod 'puppetlabs-apt'
-mod 'puppetlabs-mysql'
+mod 'puppetlabs-mysql', "3.2.0"
 
 mod 'thias-php'
 
 mod 'actionjack-mailcatcher'
+
+mod 'jeffgeorge-acdrupal', :path => '/vagrant/puppet/acdrupal'

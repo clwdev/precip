@@ -60,16 +60,17 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision "shell", path: "shell/librarian.sh"
   
-  # Hand off to puppet
-  # config.vm.provision :puppet, :options => [""] do |puppet|
-  #   puppet.manifests_path = "puppet/manifests"
-  #   puppet.manifest_file  = "site.pp"
-  #   puppet.module_path = "puppet/modules"
-  #   puppet.hiera_config_path = "puppet/hiera.yaml"
-  # 
-  #   # some facts
-  #   puppet.facter = {
-  #     "drupal_siteinfo" => drupal_sites.to_json,
-  #   }
-  # end
+  #Hand off to puppet
+  config.vm.provision :puppet, :options => [""] do |puppet|
+    puppet.manifests_path = "puppet/manifests"
+    puppet.manifest_file  = "site.pp"
+    # useful for debugging, if you want to run librarian outside the box
+    # puppet.module_path = "puppet/modules"
+    puppet.hiera_config_path = "puppet/hiera.yaml"
+  
+    # some facts
+    puppet.facter = {
+      "drupal_siteinfo" => drupal_sites.to_json,
+    }
+  end
 end

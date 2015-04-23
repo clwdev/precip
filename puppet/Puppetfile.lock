@@ -12,7 +12,7 @@ FORGE
       puppetlabs-stdlib (>= 4.5.0)
     puppetlabs-concat (1.2.1)
       puppetlabs-stdlib (< 5.0.0, >= 3.2.0)
-    puppetlabs-mysql (3.3.0)
+    puppetlabs-mysql (3.2.0)
       nanliu-staging (~> 1.0)
       puppetlabs-stdlib (< 5.0.0, >= 3.2.0)
     puppetlabs-ruby (0.4.0)
@@ -20,8 +20,14 @@ FORGE
     puppetlabs-stdlib (4.6.0)
     thias-php (1.1.1)
 
+PATH
+  remote: /vagrant/puppet/acdrupal
+  specs:
+    jeffgeorge-acdrupal (0.0.1)
+
 DEPENDENCIES
   actionjack-mailcatcher (>= 0)
+  jeffgeorge-acdrupal (>= 0)
   puppetlabs-apache (>= 0)
   puppetlabs-apt (>= 0)
   puppetlabs-mysql (>= 0)
