@@ -1,0 +1,23 @@
+<?php
+/**
+ * This is the *ULTRA STRIPPED DOWN* Local Settings File for Acquia-Style Pre-Compiled Repos
+ */
+
+/**
+ * Database
+ */
+$databases['default']['default'] = array(
+ 'driver' => 'mysql',
+ 'database' => '<%= @name %>',
+ 'username' => '<%= @name %>',
+ 'password' => '<%= @name %>',
+ 'host' => '<%= @fqdn %>',
+ 'prefix' => '',
+);
+
+/**
+ * Caching
+ */
+$conf['cache'] = FALSE;
+$conf['preprocess_css'] = 0;
+$conf['preprocess_js'] = 0;

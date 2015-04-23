@@ -1,0 +1,64 @@
+<?php
+/**
+ * Universal settings to be applied for all sites in Acquia Cloud
+ */
+$site = getenv('AH_SITE_GROUP');
+$environment = getenv('AH_SITE_ENVIRONMENT');
+
+/**
+ * The Acquia environment variable will be a string of 'dev', 'test', or 'prod'
+ * This will be used by the Rules engine for payment method selection.
+ */
+$conf['acquia_environment'] = $environment ? $environment : 'local';
+
+/**
+ * Stuff bundled with Drupal's default settings.php
+ */
+$update_free_access = FALSE;
+ini_set('session.gc_probability', 1);
+ini_set('session.gc_divisor', 100);
+ini_set('session.gc_maxlifetime', 200000);
+ini_set('session.cookie_lifetime', 2000000);
+$conf['404_fast_paths_exclude'] = '/\/(?:styles)\//';
+$conf['404_fast_paths'] = '/\.(?:txt|png|gif|jpe?g|css|js|ico|swf|flv|cgi|bat|pl|dll|exe|asp)$/i';
+$conf['404_fast_html'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN" "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>404 Not Found</title></head><body><h1>Not Found</h1><p>The requested URL "@path" was not found on this server.</p></body></html>';
+
+/**
+ * Acquia Memcache settings (Uncomment once the module is installed)
+ */
+//if ($site){
+//  $conf['cache_backends'][] = 'sites/all/modules/contrib/memcache/memcache.inc';
+//  // The 'cache_form' bin must be assigned no non-volatile storage.
+//  $conf['cache_class_cache_form'] = 'DrupalDatabaseCache';
+//  $conf['cache_default_class'] = 'MemCacheDrupal';
+//}
+
+/**
+ * Database connection for Acquia Cloud
+ * Including all other settings controlled by Acquia
+ */
+if ($site && file_exists('/var/www/site-php')) {
+  require '/var/www/site-php/' . $site . '/' . $site . '-settings.inc';
+}
+// Include local-settings.inc, if it's here.
+if (realpath(dirname(__FILE__) . '/local-settings.inc')){
+  require realpath(dirname(__FILE__) . '/local-settings.inc');
+}
+
+/**
+ * Setting Drupal Private Files Path as per:
+ * https://docs.acquia.com/articles/setting-private-file-directory-acquia-cloud
+ */
+ if (isset($_ENV['AH_SITE_ENVIRONMENT']) && $_ENV['AH_SITE_ENVIRONMENT'] != "local") {
+   $files_private_conf_path = conf_path();
+   $conf['file_private_path'] = '/mnt/files/' . $_ENV['AH_SITE_GROUP'] . '.' . $_ENV['AH_SITE_ENVIRONMENT'] . '/' . $files_private_conf_path . '/files-private';
+ }
+ else {
+   $conf['file_private_path'] = 'sites/<%= @multisite_dir %>/files';
+ }
+
+/**
+ *  Domain 301 Settings (Don't)
+ */
+
+$conf['domain_301_redirect_enabled'] = 0;

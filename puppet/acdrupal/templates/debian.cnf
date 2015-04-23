@@ -1,0 +1,10 @@
+# Actually managed by Puppet now
+[client]
+host     = localhost
+user     = root
+password = 
+[mysql_upgrade]
+host     = localhost
+user     = root
+password = 
+basedir  = /usr

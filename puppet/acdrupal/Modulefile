@@ -1,0 +1,8 @@
+name    'jeffgeorge-acdrupal'
+version '0.0.1'
+source 'https://github.com/jeffgeorge/vagrant-drupal-ac'
+author 'jeffgeorge'
+license 'Apache License, Version 2.0'
+summary 'Builds out a full-featured Acquia-Cloud-Oriented LAMP Stack for Drupal Apps'
+description "This puppet module defines a full-featured LAMP Stack for local development of Drupal Sites, and (pretty closely) mirrors how Acquia Cloud Drupal Environments work. It's the special-sauce behind the vagrant-drupal-ac vagrant box."
+project_page 'https://github.com/jeffgeorge/vagrant-drupal-ac'
