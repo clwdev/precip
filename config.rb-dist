@@ -1,0 +1,31 @@
+# This is the config file where you'll set up info about your vhosts.
+# When you're done, save it as config.rb (which is .gitignored)
+
+# This is the absolute path on your *HOST OS* to where all your
+# checkouts live. It needs to be distinct directory trees, otherwise
+# NFS will freak out while trying to mount the paths.
+#
+# Ex:
+# drupal_basepath = "/Users/Joe.Developer/www/drupal"
+
+drupal_basepath = ""
+
+# And now, the actual sites lists. It's a 2D hash. For the host, use 
+# whatever you want your hostnames to be. For the path, use the 
+# relative path to the Git Clones in your basepath.
+#
+# Ex:
+# drupal_sites = {
+#   "test" => {
+#     "host" => "test.vm",
+#     "path" => "test-site"
+#   },
+#   "test2" => {
+#     "host" => "other-test.vm",
+#     "path" => "other-test"
+#   }
+# }
+
+drupal_sites = {
+
+}
