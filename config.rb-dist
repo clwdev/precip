@@ -1,29 +1,47 @@
 # This is the config file where you'll set up info about your vhosts.
 # When you're done, save it as config.rb (which is .gitignored)
-
-# This is the absolute path on your *HOST OS* to where all your
-# checkouts live. It needs to be distinct directory trees, otherwise
-# NFS will freak out while trying to mount the paths.
 #
-# Ex:
-# drupal_basepath = "/Users/Joe.Developer/www/drupal"
-
-drupal_basepath = ""
-
-# And now, the actual sites lists. It's a 2D hash. For the host, use 
-# whatever you want your hostnames to be. For the path, use the 
-# relative path to the Git Clones in your basepath.
+# The sites list is a 2D hash, consisting of a name and some parameters.
+#
+#          host: The hostname you want to use for this site. Probably a 
+#                good idea to stick with sitename.vm.
+# 
+#          path: The relative path to your docroot, beneath /drupal_sites/. 
+#                Note that if this is an Acquia Cloud-style Repo, you'll 
+#                need to add /docroot to the end.
+#
+#        drupal: Drupal Version of the site, 6 or 7. Not Drupal? Pass in 
+#                "false".
+#
+#       aliases: A list of alias domains to set up. Useful for testing 
+#                domain-based internationalization.
+#
+# multisite_dir: Need a specific Drupal Multi-site directory instead of 
+#                just /sites/default ? Enter it here.
 #
 # Ex:
 # drupal_sites = {
 #   "test" => {
 #     "host" => "test.vm",
-#     "path" => "test-site"
+#     "path" => "test-site/docroot"
 #   },
-#   "test2" => {
-#     "host" => "other-test.vm",
-#     "path" => "other-test"
-#   }
+#   "some-site-with-aliases" => {
+#     "host" => "some-site.vm",
+#     "aliases" => ["also.some-site.vm","also.other-site.vm"],
+#     "path" => "some-site/docroot",
+#   },
+#   "multisite-1" => {
+#     "host" => "ms-1.vm",
+#     "path" => "multisite-repo/docroot",
+#     "drupal" => "7",
+#     "multisite_dir" => "multisite-1",
+#   },
+#   "multisite-2" => {
+#     "host" => "ms-2.vm",
+#     "path" => "multisite-repo/docroot",
+#     "drupal" => "7",
+#     "multisite_dir" => "multisite-2",
+#   },
 # }
 
 drupal_sites = {
