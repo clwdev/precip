@@ -99,6 +99,7 @@ PHP is already set up to use it, but if for some reason you're making something 
 Known Issues
 ============
 - [ ] During Provisioning, Puppet complains about "Warning: Setting templatedir is deprecated." [It's a Vagrant Bug](https://github.com/mitchellh/vagrant/issues/3740).
+- [ ] Provisioning MySQL is *super* weird, and will perma-bomb if you kill the box between first-boot and MySQL being installed. (Pro-tip: Don't do that.)
 - [ ] Files created by Puppet in a shared directory appear to be written with a 555 umask, making them un-deleteable from the host (without root)
 
 @TODO
@@ -110,6 +111,7 @@ Known Issues
 - [ ] Actual Testing on Windows
 - [ ] Build Drush into the box. Also Composer, Compass, etc. (as an option, at least)
 - [ ] Some sort of generalized environment pulldown script
+- [ ] Rebrand with a catchy name
 - [ ] Other Cool Stuff
 
 Legal
