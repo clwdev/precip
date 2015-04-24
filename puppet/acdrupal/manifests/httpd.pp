@@ -89,7 +89,7 @@ define drupal_vhosts($host, $aliases = [], $path, $drupal = "7", $multisite_dir 
     require    => [ Mysql_database["$name"], Mysql_user["$name@%"] ],
   }
   
-  if $drupal != false {
+  if $drupal != "false" {
     file {"/srv/www/${path}/sites/${multisite_dir}":
       ensure =>'directory',
       mode => '0755',
