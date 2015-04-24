@@ -1,8 +1,6 @@
 class acdrupal {
   
   # ~magic incantations~ to ensure apt-get update runs before any package is installed
-  # apt_update from package apt:: is horrendously unreliable :(
-  #exec { "apt-update": command => "/usr/bin/apt-get update" }
   Exec["apt_update"] -> Package <| |>
   
   class { 'apt': }
