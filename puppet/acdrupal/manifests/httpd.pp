@@ -5,6 +5,12 @@ class acdrupal::httpd {
   class { 'apache::mod::php': }
   class { 'apache::mod::ssl': }
 
+  # We'll need this when we make our vhosts
+  file {"/var/www/site-php":
+    ensure => "directory",
+    mode => '0755',
+  }
+
   # a testing vhost
   apache::vhost { "drupal.vm":
     docroot => "/vagrant/util",
@@ -90,16 +96,17 @@ define drupal_vhosts($host, $aliases = [], $path, $drupal = "7", $multisite_dir 
     }
 
     # Ensure the tree we're going to hide settings in exists
-    file {[ "/var/www/site-php",
-            "/var/www/site-php/${name}"]:
+    file {"/var/www/site-php/${name}":
       ensure => "directory",
       mode => '0755',
+      require => File["/var/www/site-php"],    
     }
 
     # Magic Acquia-style Database Settings.
     file { "/var/www/site-php/${name}/${name}-settings.inc":
       content => template("acdrupal/local_settings_inc.erb"),
       replace => false,
+      mode => '0755',
       subscribe => File["/var/www/site-php/${name}"],
     }
     
@@ -107,6 +114,7 @@ define drupal_vhosts($host, $aliases = [], $path, $drupal = "7", $multisite_dir 
     file { "/srv/www/${path}/sites/${multisite_dir}/settings.php":
       content => template("acdrupal/drupal_${drupal}_settings_php.erb"),
       replace => false,
+      mode => '0755',
       subscribe => File["/srv/www/${path}/sites/${multisite_dir}"],
     }
   }
