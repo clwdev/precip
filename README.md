@@ -99,6 +99,7 @@ PHP is already set up to use it, but if for some reason you're making something 
 Known Issues
 ============
 - [ ] During Provisioning, Puppet complains about "Warning: Setting templatedir is deprecated." [It's a Vagrant Bug](https://github.com/mitchellh/vagrant/issues/3740).
+- [ ] Files created by Puppet in a shared directory appear to be written with a 555 umask, making them un-deleteable from the host (without root)
 
 @TODO
 =====
