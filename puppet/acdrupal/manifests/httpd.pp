@@ -106,7 +106,7 @@ define drupal_vhosts($host, $aliases = [], $path, $drupal = "7", $multisite_dir 
     file { "/var/www/site-php/${name}/${name}-settings.inc":
       content => template("acdrupal/local_settings_inc.erb"),
       replace => false,
-      mode => '0755',
+      mode => '0644',
       subscribe => File["/var/www/site-php/${name}"],
     }
     
@@ -114,7 +114,7 @@ define drupal_vhosts($host, $aliases = [], $path, $drupal = "7", $multisite_dir 
     file { "/srv/www/${path}/sites/${multisite_dir}/settings.php":
       content => template("acdrupal/drupal_${drupal}_settings_php.erb"),
       replace => false,
-      mode => '0755',
+      mode => '0644',
       subscribe => File["/srv/www/${path}/sites/${multisite_dir}"],
     }
   }
