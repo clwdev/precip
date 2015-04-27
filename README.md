@@ -109,7 +109,7 @@ Known Issues
 - [ ] Figure out Drupal 6 Support
 - [ ] Super Secret Automagical repo detection and cloning from config.rb
 - [ ] Actual Testing on Windows
-- [ ] Build Drush into the box. Also Composer, Compass, etc. (as an option, at least)
+- [x] Build Drush into the box. Also Composer, Compass, etc. (as an option, at least)
 - [ ] Some sort of generalized environment pulldown script
 - [ ] Rebrand with a catchy name
 - [ ] Other Cool Stuff

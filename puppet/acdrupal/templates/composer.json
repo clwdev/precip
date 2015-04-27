@@ -1,0 +1,93 @@
+
+{
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "drupalorg/drupalorg_drush",
+                "type": "drupal-drush",
+                "version": "dev-master",
+                "source": {
+                    "type": "git",
+                    "url": "git://git.drupal.org/project/drupalorg_drush.git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "drupalorg/drush_remake",
+                "type": "drupal-drush",
+                "version": "dev-master",
+                "source": {
+                    "type": "git",
+                    "url": "git://git.drupal.org/project/drush_remake.git",
+                    "reference": "7.x-5.2"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "drupalorg/registry_rebuild",
+                "type": "drupal-drush",
+                "version": "dev-master",
+                "source": {
+                    "type": "git",
+                    "url": "git://git.drupal.org/project/registry_rebuild.git",
+                    "reference": "7.x-2.2"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "drupalorg/makefile_extra",
+                "type": "drupal-drush",
+                "version": "dev-master",
+                "source": {
+                    "type": "git",
+                    "url": "git://git.drupal.org/project/makefile_extra.git",
+                    "reference": "7.x-1.0-rc1"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "drupalorg/profiler",
+                "type": "drupal-drush",
+                "version": "dev-master",
+                "source": {
+                    "type": "git",
+                    "url": "git://git.drupal.org/project/profiler.git",
+                    "reference": "7.x-2.0-beta2"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "drupalorg/drush_sql_sync_pipe",
+                "type": "drupal-drush",
+                "version": "dev-master",
+                "source": {
+                    "type": "git",
+                    "url": "git://git.drupal.org/project/drush_sql_sync_pipe.git",
+                    "reference": "7.x-1.3"
+                }
+            }
+        }
+    ],
+    "require": {
+        "drush/drush": "6.5.0",
+        "composer/installers": "~1.0",
+        "drupalorg/drupalorg_drush": "dev-master",
+        "drupalorg/drush_remake": "dev-master",
+        "drupalorg/makefile_extra": "dev-master",
+        "drupalorg/registry_rebuild": "dev-master",
+        "drupalorg/drush_sql_sync_pipe": "dev-master",
+        "phpunit/phpunit": "4.4.0"
+    }
+}
