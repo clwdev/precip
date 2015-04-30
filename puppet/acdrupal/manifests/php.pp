@@ -105,9 +105,10 @@ class acdrupal::php {
     require => [Class['composer'], File["/home/vagrant/.composer/composer.json"]],
   }
   
-  file { '/etc/profile.d/append-composer-path.sh':
+  # Ensures that Drush will be available from outside the box
+  file { '/home/vagrant/.pam_environment':
     mode    => 644,
-    content => 'PATH=$PATH:~/.composer/vendor/bin',
+    content => 'PATH DEFAULT=${PATH}:/home/vagrant/.composer/vendor/bin',
     require => Class['composer'],
   }
 }
