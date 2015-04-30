@@ -41,4 +41,9 @@ class acdrupal {
   include 'acdrupal::httpd'
   include 'acdrupal::database'
   
+  file { "/etc/init/restart_services_once_mounted.conf":
+    content => template("acdrupal/restart_services_once_mounted.conf.erb"),
+    ensure  => 'file',
+    mode    => '0644',
+  }
 }
