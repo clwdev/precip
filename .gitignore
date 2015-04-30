@@ -4,3 +4,4 @@ mysql/*
 log/*
 drupal_sites/*
 puppet/modules/*
+*.aliases.drushrc.php

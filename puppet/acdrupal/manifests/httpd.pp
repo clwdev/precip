@@ -26,6 +26,13 @@ class acdrupal::httpd {
 
   $parsed_siteinfo = parsejson($drupal_siteinfo)
   create_resources(drupal_vhosts, $parsed_siteinfo)
+  
+  # Create Drush aliases
+  file { "/vagrant/vm.aliases.drushrc.php":
+    content => template("acdrupal/drush_aliases.erb"),
+    replace => true,
+    mode => '0644',
+  }
 }
 
 define drupal_vhosts($host, $aliases = [], $path, $drupal = "7", $multisite_dir = "default") {

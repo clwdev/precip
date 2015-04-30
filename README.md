@@ -105,7 +105,7 @@ Known Issues
 @TODO
 =====
 - [ ] Puppet Library Caching (if you've got librarian-puppet locally installed)
-- [ ] Have Puppet compile Drush Aliases automagically
+- [x] Have Puppet compile Drush Aliases automagically
 - [ ] Figure out Drupal 6 Support
 - [ ] Super Secret Automagical repo detection and cloning from config.rb
 - [ ] Actual Testing on Windows
