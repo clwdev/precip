@@ -52,6 +52,9 @@ Vagrant.configure(2) do |config|
       config.bindfs.bind_folder "/nfs-sql", "/var/lib/mysql", user: "mysql", group: "mysql"
     end
   end
+  
+  # Mount the gitignored puppet/modules directory, for caching
+  config.vm.synced_folder "puppet/modules", "/etc/puppet/modules"
 
   # Throw more resources at the VM. Tweak as needed
   config.vm.provider :virtualbox do |vb|
@@ -64,8 +67,6 @@ Vagrant.configure(2) do |config|
   config.vm.provision :puppet, :options => [""] do |puppet|
     puppet.manifests_path = "puppet/manifests"
     puppet.manifest_file  = "site.pp"
-    # useful for debugging, if you want to run librarian outside the box
-    # puppet.module_path = "puppet/modules"
     puppet.hiera_config_path = "puppet/hiera.yaml"
   
     # some facts
