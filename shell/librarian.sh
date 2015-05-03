@@ -2,8 +2,6 @@
 # Heavily Inspired By https://github.com/purple52/librarian-puppet-vagrant
 
 echo "librarian-puppet - Checking dependencies..."
-apt-get update > /dev/null 2>&1
-
 if ! (which git > /dev/null 2>&1); then 
   apt-get -q -y install git > /dev/null 2>&1;
 fi
