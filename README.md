@@ -100,16 +100,16 @@ Known Issues
 ============
 - [ ] During Provisioning, Puppet complains about "Warning: Setting templatedir is deprecated." [It's a Vagrant Bug](https://github.com/mitchellh/vagrant/issues/3740).
 - [ ] Provisioning MySQL is *super* weird, and will perma-bomb if you kill the box between first-boot and MySQL being installed. (Pro-tip: Don't do that.)
-- [x] -Files created by Puppet in a shared directory appear to be written with a 555 umask, making them un-deleteable from the host (without root)-
+- [x] ~~Files created by Puppet in a shared directory appear to be written with a 555 umask, making them un-deleteable from the host (without root)~~
 
 @TODO
 =====
-- [x] -Puppet Library Caching-
-- [x] -Have Puppet compile Drush Aliases automagically-
-- [ ] Figure out Drupal 6 Support
+- [x] ~~Puppet Library Caching~~
+- [x] ~~Have Puppet compile Drush Aliases automagically~~
+- [x] ~~Figure out Drupal 6 Support~~
+- [x] ~~Build Drush into the box. Also Composer, Compass, etc.~~
 - [ ] Super Secret Automagical repo detection and cloning from config.rb
 - [ ] Actual Testing on Windows
-- [x] -Build Drush into the box. Also Composer, Compass, etc.-
 - [ ] Some sort of generalized environment pulldown script
 - [ ] Rebrand with a catchy name
 - [ ] Other Cool Stuff
