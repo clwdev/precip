@@ -1,11 +1,8 @@
 <?php
 /**
- * This is the *ULTRA STRIPPED DOWN* Local Settings File for Acquia-Style Pre-Compiled Repos
+ * D7-style Database Include
  */
 
-/**
- * Database
- */
 $databases['default']['default'] = array(
  'driver' => 'mysql',
  'database' => '<%= @name %>',
@@ -14,10 +11,3 @@ $databases['default']['default'] = array(
  'host' => '<%= @fqdn %>',
  'prefix' => '',
 );
-
-/**
- * Caching
- */
-$conf['cache'] = FALSE;
-$conf['preprocess_css'] = 0;
-$conf['preprocess_js'] = 0;

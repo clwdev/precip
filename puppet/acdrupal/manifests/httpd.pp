@@ -48,7 +48,7 @@ define drupal_vhosts($host, $aliases = [], $path, $drupal = "7", $multisite_dir 
     }],
     setenv => [
         "AH_SITE_GROUP ${name}",
-        "AH_SITE_ENVIRONMENT local"
+        "AH_SITE_ENVIRONMENT vm"
     ],
     access_log => false,
     logroot => "/vagrant/log",
@@ -66,7 +66,7 @@ define drupal_vhosts($host, $aliases = [], $path, $drupal = "7", $multisite_dir 
     }],
     setenv => [
         "AH_SITE_GROUP ${name}",
-        "AH_SITE_ENVIRONMENT local"
+        "AH_SITE_ENVIRONMENT vm"
     ],
     access_log => false,
     logroot => "/vagrant/log",
@@ -111,7 +111,7 @@ define drupal_vhosts($host, $aliases = [], $path, $drupal = "7", $multisite_dir 
 
     # Magic Acquia-style Database Settings.
     file { "/var/www/site-php/${name}/${name}-settings.inc":
-      content => template("acdrupal/local_settings_inc.erb"),
+      content => template("acdrupal/drupal_${drupal}_database.erb"),
       replace => false,
       mode => '0644',
       subscribe => File["/var/www/site-php/${name}"],
