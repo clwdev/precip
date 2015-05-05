@@ -81,7 +81,7 @@
         }
     ],
     "require": {
-        "drush/drush": "7.0.0-rc1",
+        "drush/drush": "6.6.0",
         "composer/installers": "~1.0",
         "drupalorg/drupalorg_drush": "dev-master",
         "drupalorg/drush_remake": "dev-master",
