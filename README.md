@@ -77,6 +77,11 @@ This is also a helpful location for if you just need to test some stuff in a doc
 ## Logs
 Want Apache Logs? Don't want to SSH into the VM and sudo to root and other terrible things? Good! They're in the `/log` directory. Load them up however you want, for instance, with OSX's nice `Console` app.
 
+## Drush
+Upon completing the provisioning process, we build a convenient [Drush Aliases file](https://github.com/drush-ops/drush/blob/6.x/examples/example.aliases.drushrc.php) for you in the .gitignored `vm.aliases.drushrc.php` file. You can install these aliases by running `install_aliases.sh`. Once installed you can access any of your sites from anywhere on your local machine by using one of the `@vm.[sitename]` aliases. So, for instance: `$ drush @vm.testsite status` would give you a status report for the site "testsite".
+
+Drush isn't (presently) installed inside the box, which is actually preferable. Drush 6.x doesn't work with "remote" hosts on local IP's (it's a [known oversight](https://github.com/drush-ops/drush/pull/546) and is only implemented in Drush 7.x). Other fun tools like [drush_sql_sync_pipe](https://www.drupal.org/project/drush_sql_sync_pipe) [don't support Drush 7 yet](https://www.drupal.org/node/2406661), and other things like *normal* sql-sync don't work if both aliases are considered "remotes". It'd be awesome to set up aliases that would let you interact with your local Vagrant the exact same way as your remote cloud environments, but right now it sadly isn't ready for prime-time. 
+
 ## Debugging Integration
 [Xdebug](http://xdebug.org/) is built in and preconfigured. Use something like [Xdebug Helper](https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc?hl=en) to trigger a session, and your IDE should automagically pick it up.
 
