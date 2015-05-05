@@ -71,6 +71,7 @@ Vagrant.configure(2) do |config|
   
     # some facts
     puppet.facter = {
+      "drupal_sites_path" => Dir.pwd + "/drupal_sites",
       "drupal_siteinfo" => drupal_sites.to_json,
     }
   end

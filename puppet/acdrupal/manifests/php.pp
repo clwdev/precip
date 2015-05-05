@@ -75,40 +75,43 @@ class acdrupal::php {
     notify => Service['httpd'],
   }
   
-  class { 'composer': 
-    require => Class['php::cli']
-  }
-  
-  file { "/home/vagrant/.composer/":
-    ensure => 'directory',
-    mode => '0755',
-    owner => "vagrant",
-    group => "vagrant",
-    require => Class['composer'],
-  }
-  
-  file { "/home/vagrant/.composer/composer.json":
-    content => template("acdrupal/composer.json"),
-    ensure  => 'file',
-    mode    => '0644',
-    owner => "vagrant",
-    group => "vagrant",
-    require => [Class['composer'], File['/home/vagrant/.composer/']],
-  }
-    
-  exec { "composer-install":
-    command => "composer install --no-interaction --prefer-dist --no-dev --optimize-autoloader",
-    environment => [ "HOME=/home/vagrant", "COMPOSER_HOME=/home/vagrant/.composer" ],
-    cwd => "/home/vagrant/.composer",
-    path => "/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin",
-    user => "vagrant",
-    require => [Class['composer'], File["/home/vagrant/.composer/composer.json"]],
-  }
-  
-  # Ensures that Drush will be available from outside the box
-  file { '/home/vagrant/.pam_environment':
-    mode    => 644,
-    content => 'PATH DEFAULT=${PATH}:/home/vagrant/.composer/vendor/bin',
-    require => Class['composer'],
-  }
+  # We don't *actually* need Composer right now, so I'm blocking 
+  # this section out until we actually need it for something.
+  #
+  # class { 'composer': 
+  #   require => Class['php::cli']
+  # }
+  # 
+  # file { "/home/vagrant/.composer/":
+  #   ensure => 'directory',
+  #   mode => '0755',
+  #   owner => "vagrant",
+  #   group => "vagrant",
+  #   require => Class['composer'],
+  # }
+  # 
+  # file { "/home/vagrant/.composer/composer.json":
+  #   content => template("acdrupal/composer.json"),
+  #   ensure  => 'file',
+  #   mode    => '0644',
+  #   owner => "vagrant",
+  #   group => "vagrant",
+  #   require => [Class['composer'], File['/home/vagrant/.composer/']],
+  # }
+  #   
+  # exec { "composer-install":
+  #   command => "composer install --no-interaction --prefer-dist --no-dev --optimize-autoloader",
+  #   environment => [ "HOME=/home/vagrant", "COMPOSER_HOME=/home/vagrant/.composer" ],
+  #   cwd => "/home/vagrant/.composer",
+  #   path => "/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin",
+  #   user => "vagrant",
+  #   require => [Class['composer'], File["/home/vagrant/.composer/composer.json"]],
+  # }
+  # 
+  # # Ensures that Drush will be available from outside the box
+  # file { '/home/vagrant/.pam_environment':
+  #   mode    => 644,
+  #   content => 'PATH DEFAULT=${PATH}:/home/vagrant/.composer/vendor/bin',
+  #   require => Class['composer'],
+  # }
 }

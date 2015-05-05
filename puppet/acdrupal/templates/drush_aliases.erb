@@ -5,11 +5,13 @@ $home = drush_server_home();
 <% for @site in @parsed_siteinfo -%>
 <% if @site[1]["drupal"] != "false" %>
 $aliases['<%= @site[0] %>'] = array(
-  'root' => '/srv/www/<%= @site[1]["path"] %>',
+  'root' => '<%= @drupal_sites_path %>/<%= @site[1]["path"] %>',
   'uri' => '<%= @site[1]["host"] %>',
-  'remote-host' => '127.0.0.1',
-  'remote-user' => 'vagrant',
-  'ssh-options' => "-p 2222 -i $home/.vagrant.d/insecure_private_key",
+  // We'll be able to use this later, if Vagrant as a Remote ever stops being weird with Drush 7
+  // 'root' => '/srv/www/<%= @site[1]["path"] %>',
+  // 'remote-host' => '127.0.0.1',
+  // 'remote-user' => 'vagrant',
+  // 'ssh-options' => "-p 2222 -i $home/.vagrant.d/insecure_private_key",
 );
 <% end -%>
 <% end -%>
