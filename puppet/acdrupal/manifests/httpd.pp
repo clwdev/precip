@@ -4,6 +4,7 @@ class acdrupal::httpd {
   class { 'apache': mpm_module => "prefork" }
   class { 'apache::mod::php': }
   class { 'apache::mod::ssl': }
+  class { 'apache::mod::rewrite': }
 
   # We'll need this when we make our vhosts
   file {"/var/www/site-php":
