@@ -56,7 +56,7 @@ Actually Using It
 So you've got your Clones and you've got Vagrant running. . . now what?
 
 ## Importing Databases
-- You've got a database server at root:drupal@drupal.vm!
+- You've got a database server at `root:drupal@drupal.vm`!
 - Connect with SequelPro (or whatever) and load up some databases!
 
 ## Customize to your liking
