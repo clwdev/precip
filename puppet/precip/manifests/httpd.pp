@@ -1,4 +1,4 @@
-class acdrupal::httpd {
+class precip::httpd {
   # Need to specifically ask for Prefork, otherwise Ubuntu will go grab Worker
   # (Worker is weird)
   class { 'apache': mpm_module => "prefork" }
@@ -13,7 +13,7 @@ class acdrupal::httpd {
   }
 
   # a testing vhost
-  apache::vhost { "drupal.vm":
+  apache::vhost { "precip.vm":
     docroot => "/vagrant/util",
     manage_docroot => false,
     port => '80',
@@ -30,7 +30,7 @@ class acdrupal::httpd {
   
   # Create Drush aliases
   file { "/vagrant/vm.aliases.drushrc.php":
-    content => template("acdrupal/drush_aliases.erb"),
+    content => template("precip/drush_aliases.erb"),
     replace => true,
     mode => '0644',
   }
@@ -111,18 +111,23 @@ define drupal_vhosts($host, $aliases = [], $path, $drupal = "7", $multisite_dir 
     }
 
     # Magic Acquia-style Database Settings.
-    file {[
-      "/var/www/site-php/${name}/${name}-settings.inc",
-      "/srv/www/${path}/sites/${multisite_dir}/local-settings.inc"
-      ]:
-      content => template("acdrupal/drupal_${drupal}_database.erb"),
+    file {"/var/www/site-php/${name}/${name}-settings.inc":
+      content => template("precip/drupal_${drupal}_database.erb"),
+      mode => '0644',
+      subscribe => File["/var/www/site-php/${name}"],
+    }
+    
+    # A template "local-settings.inc", in case you don't have one already
+    file {"/srv/www/${path}/sites/${multisite_dir}/local-settings.inc":
+      content => template("precip/drupal_${drupal}_database.erb"),
+      replace => false,
       mode => '0644',
       subscribe => File["/var/www/site-php/${name}"],
     }
     
     # An Acquia-style settings.php, if you need one.
     file { "/srv/www/${path}/sites/${multisite_dir}/settings.php":
-      content => template("acdrupal/drupal_${drupal}_settings_php.erb"),
+      content => template("precip/drupal_${drupal}_settings_php.erb"),
       replace => false,
       mode => '0644',
       subscribe => File["/srv/www/${path}/sites/${multisite_dir}"],

@@ -1,4 +1,4 @@
-class acdrupal {
+class precip {
   
   # ~magic incantations~ to ensure apt-get update runs before any package is installed
   Exec["apt_update"] -> Package <| |>
@@ -37,12 +37,12 @@ class acdrupal {
   }
 
   # Kick off the rest of our manifests
-  include 'acdrupal::php'
-  include 'acdrupal::httpd'
-  include 'acdrupal::database'
+  include 'precip::php'
+  include 'precip::httpd'
+  include 'precip::database'
   
   file { "/etc/init/restart_services_once_mounted.conf":
-    content => template("acdrupal/restart_services_once_mounted.conf.erb"),
+    content => template("precip/restart_services_once_mounted.conf.erb"),
     ensure  => 'file',
     mode    => '0644',
   }

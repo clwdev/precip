@@ -21,13 +21,13 @@ FORGE
     thias-php (1.1.1)
 
 PATH
-  remote: /vagrant/puppet/acdrupal
+  remote: /vagrant/puppet/precip
   specs:
-    jeffgeorge-acdrupal (0.0.1)
+    jeffgeorge-precip (0.0.1)
 
 DEPENDENCIES
   actionjack-mailcatcher (>= 0)
-  jeffgeorge-acdrupal (>= 0)
+  jeffgeorge-precip (>= 0)
   puppetlabs-apache (>= 0)
   puppetlabs-apt (>= 0)
   puppetlabs-mysql (>= 0)
