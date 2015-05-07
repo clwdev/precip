@@ -13,4 +13,4 @@ mod 'actionjack-mailcatcher'
 
 mod 'willdurand-composer'
 
-mod 'jeffgeorge-acdrupal', :path => '/vagrant/puppet/acdrupal'
+mod 'jeffgeorge-precip', :path => '/vagrant/puppet/precip'

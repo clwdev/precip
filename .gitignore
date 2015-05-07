@@ -2,6 +2,6 @@
 config.rb
 mysql/*
 log/*
-drupal_sites/*
+sites/*
 puppet/modules/*
 *.aliases.drushrc.php

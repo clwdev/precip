@@ -7,7 +7,7 @@
 # Pull in external config
 require "json"
 drupal_sites = ""
-drupal_basepath = "drupal_sites"
+drupal_basepath = "sites"
 
 ext_config = File.read 'config.rb'
 eval ext_config
@@ -20,7 +20,7 @@ Vagrant.configure(2) do |config|
 
   # Basic network config.
   config.vm.network :private_network, ip: "10.0.0.11"
-  config.vm.hostname = "drupal.vm"
+  config.vm.hostname = "precip.vm"
   config.hostsupdater.aliases = drupal_sites.collect { |k,v| v["host"] }
 
   # Ensure users exist before we mount stuff
@@ -71,7 +71,7 @@ Vagrant.configure(2) do |config|
   
     # some facts
     puppet.facter = {
-      "drupal_sites_path" => Dir.pwd + "/drupal_sites",
+      "drupal_sites_path" => Dir.pwd + "/" + drupal_basepath,
       "drupal_siteinfo" => drupal_sites.to_json,
     }
   end

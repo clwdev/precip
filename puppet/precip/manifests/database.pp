@@ -1,4 +1,4 @@
-class acdrupal::database {
+class precip::database {
   file {"/etc/mysql":
     owner => "mysql",
     group => "mysql",
@@ -8,7 +8,7 @@ class acdrupal::database {
   
   # Debian-based distros are weird, and need their own extra conf file
   file { "/etc/mysql/debian.cnf":
-    content => template("acdrupal/debian.cnf"),
+    content => template("precip/debian.cnf"),
     ensure  => 'file',
     mode    => '0644',
     require => File['/etc/mysql'],

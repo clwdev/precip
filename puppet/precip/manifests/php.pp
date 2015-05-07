@@ -1,4 +1,4 @@
-class acdrupal::php {
+class precip::php {
   
   class { 'php::cli': }
   
@@ -71,7 +71,7 @@ class acdrupal::php {
   file { "/etc/php5/mods-available/opcache.ini":
     ensure  => 'file',
     require => Package['php5-common'],
-    content => template('acdrupal/opcache.ini.erb'),
+    content => template('precip/opcache.ini.erb'),
     notify => Service['httpd'],
   }
   
@@ -91,7 +91,7 @@ class acdrupal::php {
   # }
   # 
   # file { "/home/vagrant/.composer/composer.json":
-  #   content => template("acdrupal/composer.json"),
+  #   content => template("precip/composer.json"),
   #   ensure  => 'file',
   #   mode    => '0644',
   #   owner => "vagrant",
