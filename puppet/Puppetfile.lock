@@ -23,11 +23,11 @@ FORGE
 PATH
   remote: /vagrant/puppet/precip
   specs:
-    jeffgeorge-precip (0.0.1)
+    clwdev-precip (0.0.1)
 
 DEPENDENCIES
   actionjack-mailcatcher (>= 0)
-  jeffgeorge-precip (>= 0)
+  clwdev-precip (>= 0)
   puppetlabs-apache (>= 0)
   puppetlabs-apt (>= 0)
   puppetlabs-mysql (>= 0)
