@@ -106,7 +106,7 @@ PHP is already set up to use it, but if for some reason you're making something 
 - [x] ~~Figure out Drupal 6 Support~~
 - [x] ~~Build Drush into the box. Also Composer, Compass, etc.~~
 - [x] ~~Rebrand with a catchy name~~
-- [ ] Super Secret Automagical repo detection and cloning from config.rb
+- [x] Super Secret Automagical repo detection and cloning from config.rb
 - [ ] Actual Testing on Windows
 - [ ] Some sort of generalized environment pulldown script
 - [ ] Other Cool Stuff

@@ -12,6 +12,15 @@ drupal_basepath = "sites"
 ext_config = File.read 'config.rb'
 eval ext_config
 
+# Clone repos if necessary
+drupal_sites.each do |name, site|
+  if site.has_key?("git_url") && site.has_key?("git_dir") && !Dir.exists?( Dir.pwd + "/" + drupal_basepath + "/" + site['git_dir'] + "/.git")
+    puts "No Git Clone found for \"#{name}\""
+    git_cmd = "git clone #{site['git_url']} #{drupal_basepath}/#{site['git_dir']}"
+    %x{ #{git_cmd} }
+  end
+end
+
 # The actual Vagrant Configuration
 Vagrant.configure(2) do |config|
   # Vagrant Box Address

@@ -36,7 +36,7 @@ class precip::httpd {
   }
 }
 
-define drupal_vhosts($host, $aliases = [], $path, $drupal = "7", $multisite_dir = "default") {
+define drupal_vhosts($host, $aliases = [], $path, $drupal = "7", $multisite_dir = "default", $git_url = "", $git_dir = "") {
     apache::vhost { "${host}":
     docroot => "/srv/www/${path}",
     manage_docroot => false,

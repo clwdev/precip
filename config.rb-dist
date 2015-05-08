@@ -19,6 +19,12 @@
 # multisite_dir: Need a specific Drupal Multi-site directory instead of 
 #                just /sites/default ? Enter it here.
 #
+#       git_url: URL to a Git Repo, it'll clone it if the dir doesn't exist
+#
+#       git_dir: Directory under /sites/ you want to clone into. This needs
+#                to be distinct from "path" because you may need a docroot
+#                defined to be *below* your git root.
+#
 # Ex:
 # drupal_sites = {
 #   "test" => {
@@ -33,14 +39,18 @@
 #   "multisite-1" => {
 #     "host" => "ms-1.vm",
 #     "path" => "multisite-repo/docroot",
-#     "drupal" => "7",
 #     "multisite_dir" => "multisite-1",
 #   },
 #   "multisite-2" => {
 #     "host" => "ms-2.vm",
 #     "path" => "multisite-repo/docroot",
-#     "drupal" => "7",
 #     "multisite_dir" => "multisite-2",
+#   },
+#   "some-cool-remote-site" => {
+#     "host" => "cool-site.vm",
+#     "path" => "cool-site/docroot",
+#     "git_url" => "git@github.com:cool-dudes/cool-site.git",
+#     "gir_dir" => "cool-site"
 #   },
 # }
 
