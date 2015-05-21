@@ -24,7 +24,7 @@ A full LAMP stack, and a few nice extras.
 ## Pre-flight Checklist
 - Get [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 - Also [Vagrant](http://www.vagrantup.com/downloads.html)
-- Then go download these super helpful Vagrant Plugins (Though, if you forget it **should** install them for you)
+- Then go download these super helpful Vagrant Plugins (If you forget to, Vagrant will install them for you. It'll error on your first `vagrant up`, but will work fine if you re-run `vagrant up`.)
   - `$ vagrant plugin install vagrant-vbguest`
   - `$ vagrant plugin install vagrant-hostsupdater`
   - `$ vagrant plugin install vagrant-useradd`
@@ -57,8 +57,9 @@ Upon completing the provisioning process we build a convenient [Drush Aliases fi
 Drush isn't (presently) installed inside the box, which is actually preferable. Drush 6.x doesn't work with "remote" hosts on local IP's (it's a [known oversight](https://github.com/drush-ops/drush/pull/546) and is only implemented in Drush 7.x). Other fun tools like [drush_sql_sync_pipe](https://www.drupal.org/project/drush_sql_sync_pipe) [don't support Drush 7 yet](https://www.drupal.org/node/2406661), and other things like *normal* sql-sync don't work if both aliases are considered "remotes". It'd be awesome to set up aliases that would let you interact with your local Vagrant the exact same way as your remote cloud environments, but right now it sadly isn't ready for prime-time. 
 
 ## Importing Databases
-- You've got a database server at `root:drupal@precip.vm`!
-- Connect with [SequelPro](http://www.sequelpro.com/) (or whatever) and load up some databases!
+- You've got a database server at `root:precip@precip.vm`!
+- Connect with [SequelPro](http://www.sequelpro.com) (or whatever) and load up some databases!
+- Prefer [phpMyAdmin](http://www.phpmyadmin.net)? We won't hold it against you. Download it and unzip it to `util/phpMyAdmin` and copy [`util/config.inc.php`](util/config.inc.php) -> `/util/phpMyAdmin/`. Once you're done, pop open [precip.vm/phpMyAdmin](http://precip.vm/phpMyAdmin) and you're done.
 - Or, even better: install [drush_sql_sync_pipe](https://www.drupal.org/project/drush_sql_sync_pipe), and import them straight from your remote environment of choice:
   - `$ drush sql-sync-pipe @remotesite.dev @vm.localsite --progress`
 
@@ -106,7 +107,9 @@ PHP is already set up to use it, but if for some reason you're making something 
 - [x] ~~Figure out Drupal 6 Support~~
 - [x] ~~Build Drush into the box. Also Composer, Compass, etc.~~
 - [x] ~~Rebrand with a catchy name~~
-- [x] Super Secret Automagical repo detection and cloning from config.rb
+- [x] ~~Super Secret Automagical repo detection and cloning from config.rb~~
+- [x] ~~phpMyAdmin support~~
+- [ ] [Pimp My Log](http://pimpmylog.com) support
 - [ ] Actual Testing on Windows
 - [ ] Some sort of generalized environment pulldown script
 - [ ] Other Cool Stuff
