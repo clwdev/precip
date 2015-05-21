@@ -109,8 +109,9 @@ PHP is already set up to use it, but if for some reason you're making something 
 - [x] ~~Rebrand with a catchy name~~
 - [x] ~~Super Secret Automagical repo detection and cloning from config.rb~~
 - [x] ~~phpMyAdmin support~~
+- [x] ~~Actual Testing on Windows~~
+- [ ] Figure out NFS support on Windows
 - [ ] [Pimp My Log](http://pimpmylog.com) support
-- [ ] Actual Testing on Windows
 - [ ] Some sort of generalized environment pulldown script
 - [ ] Other Cool Stuff
 
