@@ -32,6 +32,9 @@ Vagrant.configure(2) do |config|
   config.vm.hostname = "precip.vm"
   config.hostsupdater.aliases = drupal_sites.collect { |k,v| v["host"] }
 
+  # Fix harmless 'stdin: is not a tty' warning
+  config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
+
   # Ensure users exist before we mount stuff
   config.useradd.users = {
     'www-data' => ['www-data'],
