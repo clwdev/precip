@@ -45,7 +45,7 @@ class precip::database {
 
   mysql_user { 'root@%': 
     ensure => 'present',
-    password_hash => mysql_password('drupal'),
+    password_hash => mysql_password('precip'),
     subscribe    =>  Service['mysqld']
   }
 
