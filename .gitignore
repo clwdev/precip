@@ -5,3 +5,4 @@ log/*
 sites/*
 puppet/modules/*
 *.aliases.drushrc.php
+precip.box

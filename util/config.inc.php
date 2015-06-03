@@ -16,4 +16,4 @@ $cfg['Servers'][1]['compress'] = false;
 
 $cfg['UploadDir'] = '';
 $cfg['SaveDir'] = '';
-$cfg['SessionSavePath'] = '/tmp'
+$cfg['SessionSavePath'] = '/tmp';

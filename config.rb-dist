@@ -50,7 +50,7 @@
 #     "host" => "cool-site.vm",
 #     "path" => "cool-site/docroot",
 #     "git_url" => "git@github.com:cool-dudes/cool-site.git",
-#     "gir_dir" => "cool-site"
+#     "git_dir" => "cool-site"
 #   },
 # }
 
