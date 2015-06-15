@@ -25,6 +25,7 @@ class precip::php {
     max_input_vars => 5000,
     display_errors => 'On',
     html_errors => 'On',
+    session_save_path => '/tmp',
     sendmail_path => '/usr/bin/env catchmail',
     notify => Service['httpd'],
     require => File['/etc/php5/apache2']
