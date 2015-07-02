@@ -76,12 +76,18 @@ class precip::php {
     notify => Service['httpd'],
   }
   
-  # We don't *actually* need Composer right now, so I'm blocking 
-  # this section out until we actually need it for something.
-  #
-  # class { 'composer': 
-  #   require => Class['php::cli']
-  # }
+  class { 'composer': 
+    require => Class['php::cli']
+  }
+  
+  # Add Composer's vendor directory to the vagrant user's $PATH
+  file { '/home/vagrant/.pam_environment':
+    mode    => 644,
+    content => 'PATH DEFAULT=${PATH}:/home/vagrant/.composer/vendor/bin',
+    require => Class['composer'],
+  }
+  
+  # These bits install Drush & Friends via composer
   # 
   # file { "/home/vagrant/.composer/":
   #   ensure => 'directory',
@@ -107,12 +113,5 @@ class precip::php {
   #   path => "/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin",
   #   user => "vagrant",
   #   require => [Class['composer'], File["/home/vagrant/.composer/composer.json"]],
-  # }
-  # 
-  # # Ensures that Drush will be available from outside the box
-  # file { '/home/vagrant/.pam_environment':
-  #   mode    => 644,
-  #   content => 'PATH DEFAULT=${PATH}:/home/vagrant/.composer/vendor/bin',
-  #   require => Class['composer'],
   # }
 }
