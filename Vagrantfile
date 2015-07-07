@@ -73,9 +73,10 @@ Vagrant.configure(2) do |config|
     vb.customize ["modifyvm", :id, "--memory", "2560", "--ioapic", "on", "--cpus", "2", "--chipset", "ich9", ]
   end
 
+  # Set up and use puppet-librarian inside the box to get all our Puppet Modules
   config.vm.provision "shell", path: "shell/librarian.sh"
   
-  #Hand off to puppet
+  # Hand off to puppet
   config.vm.provision :puppet, :options => [""] do |puppet|
     puppet.manifests_path = "puppet/manifests"
     puppet.manifest_file  = "site.pp"
