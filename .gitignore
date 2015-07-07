@@ -3,5 +3,6 @@ config.rb
 mysql/*
 log/*
 sites/*
+bin/*
 puppet/modules/*
 *.aliases.drushrc.php
