@@ -30,7 +30,7 @@ Vagrant.configure(2) do |config|
   # Basic network config.
   config.vm.network :private_network, ip: "10.0.0.11"
   config.vm.hostname = "precip.vm"
-  config.hostsupdater.aliases = drupal_sites.collect { |k,v| v["host"] }
+  config.hostsupdater.aliases = drupal_sites.collect { |k,v| v["host"] }.concat(drupal_sites.collect { |k,v| v["aliases"] }.flatten.select! { |x| !x.nil? })
 
   # Fix harmless 'stdin: is not a tty' warning
   #config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
