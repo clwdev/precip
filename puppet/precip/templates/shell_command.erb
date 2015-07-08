@@ -1,0 +1,2 @@
+#!/bin/bash
+ssh -F .vagrant/ssh_config -q -t default "bash -l -c 'cd <%= @path %> && <%= @cmd %> $@'"

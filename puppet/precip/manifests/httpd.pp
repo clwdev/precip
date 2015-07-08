@@ -12,6 +12,11 @@ class precip::httpd {
     mode => '0755',
   }
 
+  # We'll also need this if there are any commands defined
+  file { "/vagrant/bin": 
+    ensure => "directory"
+  }
+
   # a testing vhost
   apache::vhost { "precip.vm":
     docroot => "/vagrant/util",
@@ -36,8 +41,8 @@ class precip::httpd {
   }
 }
 
-define drupal_vhosts($host, $aliases = [], $path, $drupal = "7", $multisite_dir = "default", $git_url = "", $git_dir = "") {
-    apache::vhost { "${host}":
+define drupal_vhosts($host, $aliases = [], $path, $drupal = "7", $multisite_dir = "default", $git_url = "", $git_dir = "", $commands = {}) {
+  apache::vhost { "${host}":
     docroot => "/srv/www/${path}",
     manage_docroot => false,
     servername => "${host}",
@@ -132,5 +137,19 @@ define drupal_vhosts($host, $aliases = [], $path, $drupal = "7", $multisite_dir 
       mode => '0644',
       subscribe => File["/srv/www/${path}/sites/${multisite_dir}"],
     }
+  }
+  
+  # Let's make some shell commands!
+  if empty($commands) != true {
+    create_resources(command_builder, $commands)
+  }
+}
+
+define command_builder($path, $cmd){
+  file { "/vagrant/bin/${name}":
+    content => template("precip/shell_command.erb"),
+    replace => true,
+    mode => '0755',
+    require => File["/vagrant/bin"],
   }
 }
