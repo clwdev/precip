@@ -41,7 +41,7 @@ class precip::httpd {
   }
 }
 
-define drupal_vhosts($host, $aliases = [], $path, $drupal = "7", $multisite_dir = "default", $git_url = "", $git_dir = "", $commands = {}) {
+define drupal_vhosts($host, $aliases = [], $path, $drupal = "7", $multisite_dir = "default", $setenv = [], $git_url = "", $git_dir = "", $commands = {}) {
   apache::vhost { "${host}":
     docroot => "/srv/www/${path}",
     manage_docroot => false,
@@ -52,10 +52,12 @@ define drupal_vhosts($host, $aliases = [], $path, $drupal = "7", $multisite_dir 
         path => "/srv/www/${path}",
         allow_override => ['All',],
     }],
-    setenv => [
+    setenv => concat($setenv,
+      [
         "AH_SITE_GROUP ${name}",
         "AH_SITE_ENVIRONMENT vm"
-    ],
+      ]
+    ),
     access_log => false,
     logroot => "/vagrant/log",
     require => File["/vagrant/log"],
@@ -70,10 +72,12 @@ define drupal_vhosts($host, $aliases = [], $path, $drupal = "7", $multisite_dir 
         path => "/srv/www/${path}",
         allow_override => ['All',],
     }],
-    setenv => [
+    setenv => concat($setenv,
+      [
         "AH_SITE_GROUP ${name}",
         "AH_SITE_ENVIRONMENT vm"
-    ],
+      ]
+    ),
     access_log => false,
     logroot => "/vagrant/log",
     ssl => true,
