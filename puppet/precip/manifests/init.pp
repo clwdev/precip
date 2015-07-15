@@ -21,6 +21,25 @@ class precip {
     ensure => present,
   }
 
+  # Install a variety of Language Packs
+  package {[
+    "language-pack-de",
+    "language-pack-en",
+    "language-pack-es",
+    "language-pack-fr",
+    "language-pack-it",
+    "language-pack-ja",
+    "language-pack-nl",
+    "language-pack-nn",
+    "language-pack-pt",
+    "language-pack-ru",
+    "language-pack-sv",
+    "language-pack-zh-hans",
+    "language-pack-zh-hant",
+    ]:
+    ensure => present,
+  }
+
   # Grab some gems.
   # @TODO: Convert to a bundle? Define a bundle path in config.rb and bundle install each of those?
   package {[
