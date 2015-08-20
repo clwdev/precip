@@ -26,6 +26,8 @@ Vagrant.configure(2) do |config|
   # Vagrant Box Address
   # This is a happy base box from PuppetLabs
   config.vm.box = "puppetlabs/ubuntu-14.04-64-puppet"
+  # Pin it to 1.0.1 until Vagrant Issue #3740 is resolved.
+  config.vm.box_version = "1.0.1"
 
   # Basic network config.
   config.vm.network :private_network, ip: "10.0.0.11"
