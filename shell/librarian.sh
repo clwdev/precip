@@ -1,7 +1,7 @@
 #!/bin/sh
 # Heavily Inspired By https://github.com/purple52/librarian-puppet-vagrant
 
-echo "librarian-puppet - Checking dependencies..."
+echo "librarian-puppet - Checking dependencies... (Note: This may take awhile from a cold start.)"
 if ! (which git > /dev/null 2>&1); then 
   apt-get -q -y install git > /dev/null 2>&1;
 fi
