@@ -32,15 +32,16 @@ class precip::php {
   }
   
   php::module {[
-    'mysql',
+    'curl',
+    'gd',
+    'imagick',
     'intl',
     'mcrypt',
-    'gd',
-    'curl',
+    'memcached',
+    'mysql',
+    'sqlite',
     'xdebug',
-    'imagick',
-    'xhprof',
-    'memcached']:
+    'xhprof']:
     notify => Service['httpd'],
   }
   
