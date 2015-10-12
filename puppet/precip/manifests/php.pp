@@ -47,6 +47,7 @@ class precip::php {
   
   php::module::ini { 'xdebug' :
     settings => {
+      'xdebug.remote_autostart' => '1',
       'xdebug.remote_enable' => '1',
       'xdebug.remote_connect_back' => '1',
       'xdebug.idekey' => 'vagrant',
