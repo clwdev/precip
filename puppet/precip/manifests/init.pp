@@ -28,7 +28,7 @@ class precip {
     "language-pack-es",
     "language-pack-fr",
     "language-pack-it",
-    "language-pack-ja",
+    # "language-pack-ja",
     "language-pack-nl",
     "language-pack-nn",
     "language-pack-pt",
