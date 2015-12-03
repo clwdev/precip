@@ -4,6 +4,10 @@ FORGE
     actionjack-mailcatcher (0.1.11)
       puppetlabs-ruby (>= 0.3.0)
       puppetlabs-stdlib (>= 4.2.0)
+    jlondon-wkhtmltox (1.0.9)
+      maestrodev-wget (>= 1.5.0)
+      puppetlabs-stdlib (>= 0)
+    maestrodev-wget (1.7.1)
     nanliu-staging (1.0.3)
     puppetlabs-apache (1.4.0)
       puppetlabs-concat (< 2.0.0, >= 1.1.1)
@@ -19,6 +23,8 @@ FORGE
       puppetlabs-stdlib (< 5.0.0, >= 3.2.0)
     puppetlabs-stdlib (4.6.0)
     thias-php (1.1.1)
+    willdurand-composer (1.1.1)
+      maestrodev-wget (>= 1.2.0)
 
 PATH
   remote: /vagrant/puppet/precip
@@ -28,7 +34,9 @@ PATH
 DEPENDENCIES
   actionjack-mailcatcher (>= 0)
   clwdev-precip (>= 0)
+  jlondon-wkhtmltox (>= 0)
   puppetlabs-apache (>= 0)
   puppetlabs-apt (>= 0)
-  puppetlabs-mysql (>= 0)
+  puppetlabs-mysql (= 3.2.0)
   thias-php (>= 0)
+  willdurand-composer (>= 0)
