@@ -67,6 +67,11 @@ class precip {
     require => Package['g++']
   }
 
+  # Install statically-compiled versions of wkhtmltopdf / wkhtmltoimage
+  class { 'wkhtmltox':
+    ensure => present,
+  }
+
   # Kick off the rest of our manifests
   include 'precip::php'
   include 'precip::httpd'

@@ -13,4 +13,6 @@ mod 'actionjack-mailcatcher'
 
 mod 'willdurand-composer'
 
+mod 'jlondon-wkhtmltox'
+
 mod 'clwdev-precip', :path => '/vagrant/puppet/precip'
