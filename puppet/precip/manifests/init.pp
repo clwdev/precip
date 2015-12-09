@@ -72,6 +72,12 @@ class precip {
     ensure => present,
   }
 
+  # Add all our hosts to /etc/hosts
+  host { 'precip.vm':
+    ip => '127.0.0.1',
+    host_aliases => parsejson($drupal_hosts),
+  }
+
   # Kick off the rest of our manifests
   include 'precip::php'
   include 'precip::httpd'

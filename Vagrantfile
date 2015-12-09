@@ -88,6 +88,7 @@ Vagrant.configure(2) do |config|
     puppet.facter = {
       "drupal_sites_path" => Dir.pwd + "/" + drupal_basepath,
       "drupal_siteinfo" => drupal_sites.to_json,
+      "drupal_hosts" => drupal_sites.collect { |k,v| v["host"] }.concat(drupal_sites.collect { |k,v| v["aliases"] }.flatten.select! { |x| !x.nil? }).to_json,
     }
   end
 end
