@@ -73,7 +73,7 @@ class precip {
   }
 
   # Add all our hosts to /etc/hosts
-  host { 'precip.vm':
+  host { 'local.vm':
     ip => '127.0.0.1',
     host_aliases => parsejson($drupal_hosts),
   }
