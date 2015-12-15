@@ -83,6 +83,12 @@ class precip {
   include 'precip::httpd'
   include 'precip::database'
   
+  file { "/etc/init/vboxadd.conf":
+    content => template("precip/vboxadd.conf.erb"),
+    ensure  => 'file',
+    mode    => '0644',
+  }
+  
   file { "/etc/init/restart_services_once_mounted.conf":
     content => template("precip/restart_services_once_mounted.conf.erb"),
     ensure  => 'file',
