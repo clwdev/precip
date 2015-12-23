@@ -83,10 +83,12 @@ class precip {
   include 'precip::httpd'
   include 'precip::database'
   
-  file { "/etc/init/vboxadd.conf":
-    content => template("precip/vboxadd.conf.erb"),
-    ensure  => 'file',
-    mode    => '0644',
+  # More elegant workaround for vbguest's issue #95
+  # See: https://github.com/dotless-de/vagrant-vbguest/issues/95#issuecomment-163777475
+  file { '/sbin/vboxadd':
+    ensure => "link",
+    force => "true",
+    target => "/sbin/rcvboxadd",
   }
   
   file { "/etc/init/restart_services_once_mounted.conf":

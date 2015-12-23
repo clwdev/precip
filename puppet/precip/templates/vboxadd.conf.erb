@@ -1,9 +1,0 @@
-# Restart Guest Additions in case it somehow forgot to start
-# via https://github.com/dotless-de/vagrant-vbguest/issues/95#issuecomment-163777475
-description "VirtualBox Linux Additions"
-
-start on runlevel [2345]
-stop on runlevel [!2345]
-
-respawn
-exec /sbin/rcvboxadd start
