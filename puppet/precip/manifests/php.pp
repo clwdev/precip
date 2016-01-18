@@ -1,6 +1,18 @@
 class precip::php {
+  apt::key { 'ppa:ondrej':
+    id => '14AA40EC0831756756D7F66C4F4EA0AAE5267A6C',
+  }
+
+  apt::ppa { 'ppa:ondrej/php5-5.6':
+    package_manage => true,
+    require => Apt::Key['ppa:ondrej'],
+  }
   
-  class { 'php::cli': }
+  class { 'php::cli': 
+    require => [
+      Apt::Ppa['ppa:ondrej/php5-5.6'],
+    ]
+  }
   
   file {[
       '/etc/php5/',
@@ -40,8 +52,7 @@ class precip::php {
     'memcached',
     'mysql',
     'sqlite',
-    'xdebug',
-    'xhprof']:
+    'xdebug']:
     notify => Service['httpd'],
   }
   
@@ -53,7 +64,7 @@ class precip::php {
       'xdebug.idekey' => 'vagrant',
       'xdebug.max_nesting_level' => '1000',
     },
-    zend => '/usr/lib/php5/20121212',
+    zend => '/usr/lib/php5/20131226',
     notify => Service['httpd'],
   }
   
