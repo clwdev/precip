@@ -1,8 +1,4 @@
 class precip {
-  
-  # ~magic incantations~ to ensure apt-get update runs before any package is installed
-  Exec["apt_update"] -> Package <| |>
-  
   class { 'apt': }
   
   # Grab some helpful base packages
