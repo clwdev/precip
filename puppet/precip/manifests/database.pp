@@ -27,6 +27,9 @@ class precip::database {
   class { 'mysql::client':
     package_name => 'percona-server-client-5.5',
     package_ensure => 'latest',
+    require => [
+      Apt::Source['Percona'],
+    ]
   }
   
   class { 'mysql::server':
@@ -41,6 +44,9 @@ class precip::database {
         'log_error' => '/vagrant/log/mysql_error.log'
       }
     },
+    require => [
+      Apt::Source['Percona'],
+    ]
   }
 
   mysql_user { 'root@%': 
