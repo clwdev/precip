@@ -9,6 +9,13 @@ require "json"
 drupal_sites = ""
 drupal_basepath = "sites"
 
+# Determine if this is our first boot or not. 
+# If there's a better way to figure this out we now have a single place to change.
+first_boot = true
+if File.file?('.vagrant/machines/default/virtualbox/action_provision')
+  first_boot = false
+end
+
 ext_config = File.read 'config.rb'
 eval ext_config
 
@@ -56,8 +63,7 @@ Vagrant.configure(2) do |config|
     config.vm.synced_folder drupal_basepath, "/nfs-www", type: "nfs"
     config.bindfs.bind_folder "/nfs-www", "/srv/www", user: "www-data", group: "www-data"
     
-    # Determine if we've provisioned yet...
-    if !File.file?('.vagrant/machines/default/virtualbox/action_provision')
+    if first_boot
       # MySQL has to be mounted with vboxsf initially, because MySQL Is Terrible
       config.vm.synced_folder "mysql", "/var/lib/mysql", owner: "mysql", group: "mysql"
     else 
@@ -89,6 +95,7 @@ Vagrant.configure(2) do |config|
       "drupal_sites_path" => Dir.pwd + "/" + drupal_basepath,
       "drupal_siteinfo" => drupal_sites.to_json,
       "drupal_hosts" => drupal_sites.collect { |k,v| v["host"] }.concat(drupal_sites.collect { |k,v| v["aliases"] }.flatten.select! { |x| !x.nil? }).to_json,
+      "first_boot" => first_boot,
     }
   end
 end
