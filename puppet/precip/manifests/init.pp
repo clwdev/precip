@@ -64,8 +64,10 @@ class precip {
   }
 
   # Install statically-compiled versions of wkhtmltopdf / wkhtmltoimage
-  class { 'wkhtmltox':
-    ensure => present,
+  if str2bool("$first_boot") {
+    class { 'wkhtmltox':
+      ensure => present,
+    }
   }
 
   # Add all our hosts to /etc/hosts
