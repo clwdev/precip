@@ -8,8 +8,8 @@ A full LAMP stack, and a few nice extras.
 - Ubuntu Server 14.04 LTS
 - Apache Server 2.4
 - Percona Server 5.5
-- PHP 5.5 (soon 5.6)
-  - With Memcache, OPCache, Xdebug and XHProf all pre-configured
+- PHP 5.6
+  - With Memcache, OPCache, and Xdebug all pre-configured
 - MailCatcher, the simplest way to locally test mail delivery
 
 ## Why not build your own box from scratch?
