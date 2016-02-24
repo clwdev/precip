@@ -64,11 +64,13 @@ class precip::database {
     require    => Mysql_user['root@%'],
   }
   
-  # For some reason, MySQL isn't *really* available to all hosts until 
-  # you restart it. So we need to restart it.
-  exec { "restart-mysqld-after-grant":
-    path => ["/bin", "/sbin", "/usr/bin", "/usr/sbin/"],
-    command => "service mysql restart",
-    require => Mysql_grant["root@%/*.*"],
+  # MySQL isn't *really* available to all hosts until you restart it. 
+  # So we need to restart it on *first boot only*.
+  if str2bool("$first_boot") {
+    exec { "restart-mysqld-after-grant":
+      path => ["/bin", "/sbin", "/usr/bin", "/usr/sbin/"],
+      command => "service mysql restart",
+      require => Mysql_grant["root@%/*.*"],
+    }
   }
 }
