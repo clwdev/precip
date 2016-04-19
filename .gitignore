@@ -6,3 +6,4 @@ sites/*
 bin/*
 puppet/modules/*
 *.aliases.drushrc.php
+precip.box

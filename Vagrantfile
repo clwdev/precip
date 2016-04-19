@@ -78,7 +78,7 @@ Vagrant.configure(2) do |config|
 
   # Throw more resources at the VM. Tweak as needed
   config.vm.provider :virtualbox do |vb|
-    vb.customize ["modifyvm", :id, "--memory", "2560", "--ioapic", "on", "--cpus", "2", "--chipset", "ich9", ]
+    vb.customize ["modifyvm", :id, "--memory", "2560", "--ioapic", "on", "--cpus", "2", "--chipset", "ich9", "--name", "precip"]
   end
 
   # Set up and use puppet-librarian inside the box to get all our Puppet Modules
