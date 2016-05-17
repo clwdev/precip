@@ -58,10 +58,6 @@ class precip {
     target => "/usr/share/zoneinfo/US/Eastern",
   }
 
-  # Bring in Mailcatcher, because Mailcatcher is neat.
-  # class { 'mailcatcher': 
-  #   require => Package['g++']
-  # }
 
   # Install statically-compiled versions of wkhtmltopdf / wkhtmltoimage
   if str2bool("$first_boot") {
