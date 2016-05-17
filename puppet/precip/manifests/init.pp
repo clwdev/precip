@@ -58,11 +58,19 @@ class precip {
     target => "/usr/share/zoneinfo/US/Eastern",
   }
 
-
-  # Install statically-compiled versions of wkhtmltopdf / wkhtmltoimage
   if str2bool("$first_boot") {
+    # Install statically-compiled versions of wkhtmltopdf / wkhtmltoimage
     class { 'wkhtmltox':
       ensure => present,
+    }
+
+    # Install MailHog & ssmtp, an alternative to Mailcatcher
+    class { '::ssmtp':
+      mail_hub => 'localhost:1025',
+    }
+
+    class { 'mailhog':
+      api_bind_host => 'precip.vm',
     }
   }
 
