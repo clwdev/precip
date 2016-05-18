@@ -25,6 +25,11 @@
 #                to be distinct from "path" because you may need a docroot
 #                defined to be *below* your git root.
 #
+#       setenv: set any environment variable for httpd.conf like
+#               "setenv" => ["env_var value"]
+#               and make sure to use square brackets not curly braces for
+#               single str array values to merge with other AH_ values
+#
 # Ex:
 # drupal_sites = {
 #   "test" => {
