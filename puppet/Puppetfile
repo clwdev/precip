@@ -7,9 +7,10 @@ mod 'puppetlabs-apache'
 mod 'puppetlabs-apt'
 mod 'puppetlabs-mysql', "3.2.0"
 
-mod 'thias-php'
+mod 'thias-php', "1.1.1"
 
-mod 'actionjack-mailcatcher'
+mod 'thbe-ssmtp'
+mod 'ftaeger-mailhog'
 
 mod 'willdurand-composer'
 

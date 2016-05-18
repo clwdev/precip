@@ -10,7 +10,7 @@ A full LAMP stack, and a few nice extras.
 - Percona Server 5.5
 - PHP 5.6
   - With Memcache, OPCache, and Xdebug all pre-configured
-- MailCatcher, the simplest way to locally test mail delivery
+- MailHog, the _absolute_ simplest way to locally test mail delivery
 
 ## Why not build your own box from scratch?
 **Precip** offers a few key benefits over rolling your own completely custom Vagrant setup that may not be _immediately_ apparent from staring at a freshly `vagrant init`'ed box.
@@ -84,10 +84,10 @@ Want Apache Logs? Don't want to SSH into the VM and sudo to root and other terri
 
 The [XHProf PHP Extension](http://php.net/manual/en/book.xhprof.php) is also built in. There's a [pretty nice Drupal Module](https://www.drupal.org/project/xhprof) that can hook into it.
 
-## MailCatcher
-[MailCatcher](http://mailcatcher.me) is a magic Ruby app that acts as an alternative mailhandler. Instead of actually sending mail, it just collects it and makes it available to you in a nice local web UI. Said web UI lives on port 1080: [precip.vm:1080](http://precip.vm:1080).
+## MailHog
+[MailHog](https://github.com/mailhog/MailHog) is an alternative mailhandler written in Go. Similar to MailCatcher it collects mail sent by PHP (or, anything actually) and puts it in a friendly local web UI. Said web UI lives on port 8025: [precip.vm:8025](http://precip.vm:8025). The major benefit MailHog has over MailCatcher is that it's written in Go and is distributed as a statically-compiled binary, so we don't have a mile-long list of Ruby dependencies to reconcile before installing.
 
-PHP is already set up to use it, but if for some reason you're making something that needs to directly talk to it, tell it there is *totally* an SMTP server at `smtp://localhost:1025`, and MailCatcher should take it from there.
+PHP is already set up to use it, but if for some reason you're making something that needs to directly talk to it, tell it there is *totally* an SMTP server at `smtp://localhost:1025`, and MailHog should take it from there.
 
 ## Adding additional repos - quick reference
 - Clone your repo to a new directory under `/sites`
@@ -116,4 +116,4 @@ PHP is already set up to use it, but if for some reason you're making something 
 - [ ] Other Cool Stuff
 
 # Legal
-**Precip** is in no way associated with Acquia Inc or Drupal. Drupal is a registered trademark of Dries Buytaert. **Precip** is available under the MIT License. Want to hack on it? Send a Pull Request. Find a bug? File an issue. (or a Pull Request) (preferably a Pull Request)
+**Precip** is in no way associated with Acquia, Inc. or Drupal. Drupal is a registered trademark of Dries Buytaert. **Precip** is available under the MIT License. Want to hack on it? Send a Pull Request. Find a bug? File an issue. (or a Pull Request) (preferably a Pull Request)
