@@ -9,7 +9,7 @@ FORGE
       puppetlabs-stdlib (>= 0)
     maestrodev-wget (1.7.3)
     nanliu-staging (1.0.3)
-    puppetlabs-apache (1.9.0)
+    puppetlabs-apache (1.10.0)
       puppetlabs-concat (< 3.0.0, >= 1.1.1)
       puppetlabs-stdlib (< 5.0.0, >= 2.4.0)
     puppetlabs-apt (2.2.2)
