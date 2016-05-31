@@ -92,6 +92,9 @@ class precip {
     host_aliases => parsejson($drupal_hosts),
   }
 
+  # Install Memcached
+  class { 'memcached': }
+
   # Kick off the rest of our manifests
   include 'precip::php'
   include 'precip::httpd'
