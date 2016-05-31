@@ -16,4 +16,6 @@ mod 'willdurand-composer'
 
 mod 'jlondon-wkhtmltox'
 
+mod 'saz-memcached'
+
 mod 'clwdev-precip', :path => '/vagrant/puppet/precip'
