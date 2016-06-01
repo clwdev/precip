@@ -39,10 +39,9 @@ if ($site && file_exists('/var/www/site-php')) {
   require '/var/www/site-php/' . $site . '/' . $site . '-settings.inc';
 }
 // Include local-settings.inc, if it's here.
-else if (realpath(dirname(__FILE__) . '/local-settings.inc')){
+if (realpath(dirname(__FILE__) . '/local-settings.inc')){
   // This workaround ensures local Drush works
   // "Vagrant as a Remote" Drush just isn't ready for primetime :(
-  $environment = "local";
   require realpath(dirname(__FILE__) . '/local-settings.inc');
 }
 
@@ -54,6 +53,7 @@ else if (realpath(dirname(__FILE__) . '/local-settings.inc')){
 //  // The 'cache_form' bin must be assigned no non-volatile storage.
 //  $conf['cache_class_cache_form'] = 'DrupalDatabaseCache';
 //  $conf['cache_default_class'] = 'MemCacheDrupal';
+//  $conf['memcache_key_prefix'] = '<%= @name %>';
 //}
 
 /**
