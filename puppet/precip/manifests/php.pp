@@ -90,6 +90,11 @@ class precip::php {
     notify => Service['httpd'],
   }
   
+  file { "/etc/php5/cli/conf.d/05-opcache.ini":
+    ensure  => 'absent',
+    require => Class['php::cli'],
+  }
+  
   class { 'composer': 
     require => Class['php::cli']
   }
