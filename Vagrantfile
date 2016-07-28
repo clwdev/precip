@@ -41,9 +41,6 @@ Vagrant.configure(2) do |config|
   config.vm.hostname = "precip.vm"
   config.hostsupdater.aliases = drupal_sites.collect { |k,v| v["host"] }.concat(drupal_sites.collect { |k,v| v["aliases"] }.flatten.select! { |x| !x.nil? })
 
-  # Fix harmless 'stdin: is not a tty' warning
-  #config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
-
   # Ensure users exist before we mount stuff
   config.useradd.users = {
     'www-data' => ['www-data'],
@@ -79,6 +76,12 @@ Vagrant.configure(2) do |config|
   # Throw more resources at the VM. Tweak as needed
   config.vm.provider :virtualbox do |vb|
     vb.customize ["modifyvm", :id, "--memory", "2560", "--ioapic", "on", "--cpus", "2", "--chipset", "ich9", "--name", "precip"]
+  end
+
+  # Fix the harmless "stdin: is not a tty" issue once and for all
+  config.vm.provision "fix-no-tty", type: "shell" do |s|
+      s.privileged = false
+      s.inline = "sudo sed -i '/tty/!s/mesg n/tty -s \\&\\& mesg n/' /root/.profile"
   end
 
   # Set up and use puppet-librarian inside the box to get all our Puppet Modules
