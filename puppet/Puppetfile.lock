@@ -1,9 +1,6 @@
 FORGE
   remote: https://forgeapi.puppetlabs.com
   specs:
-    ftaeger-mailhog (1.0.8)
-      maestrodev-wget (< 2.0.0, >= 1.7.3)
-      puppetlabs-stdlib (< 5.0.0, >= 4.10.0)
     jlondon-wkhtmltox (1.0.11)
       maestrodev-wget (>= 1.5.0)
       puppetlabs-stdlib (>= 0)
@@ -24,7 +21,6 @@ FORGE
     saz-memcached (2.8.1)
       puppetlabs-firewall (>= 0.1.0)
       puppetlabs-stdlib (>= 3.2.0)
-    thbe-ssmtp (0.5.8)
     thias-php (1.1.1)
     willdurand-composer (1.2.1)
       puppetlabs-stdlib (>= 3.2.1)
@@ -36,13 +32,11 @@ PATH
 
 DEPENDENCIES
   clwdev-precip (>= 0)
-  ftaeger-mailhog (>= 0)
   jlondon-wkhtmltox (>= 0)
   puppetlabs-apache (>= 0)
   puppetlabs-apt (>= 0)
   puppetlabs-mysql (= 3.2.0)
   saz-memcached (>= 0)
-  thbe-ssmtp (>= 0)
   thias-php (= 1.1.1)
   willdurand-composer (>= 0)
 

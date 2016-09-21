@@ -63,20 +63,6 @@ class precip {
     class { 'wkhtmltox':
       ensure => present,
     }
-
-    # Install MailHog & ssmtp, an alternative to Mailcatcher
-    class { '::ssmtp':
-      mail_hub => '127.0.0.1:1025',
-    }
-
-    class { 'mailhog':
-      api_bind_host => 'precip.vm',
-    }
-    
-    check_mode { '/etc/ssmtp/ssmtp.conf':
-      mode => 644,
-      require => File['/etc/ssmtp/ssmtp.conf'],
-    }
   }
 
   # Awful hack to fix the permissions on ssmtp's config file
