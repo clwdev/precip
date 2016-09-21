@@ -82,6 +82,7 @@ class precip {
   class { 'memcached': }
 
   # Kick off the rest of our manifests
+  include 'precip::mailhog'
   include 'precip::php'
   include 'precip::httpd'
   include 'precip::database'
