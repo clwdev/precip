@@ -38,7 +38,7 @@ class precip::php {
     display_errors => 'On',
     html_errors => 'On',
     session_save_path => '/tmp',
-    sendmail_path => '/usr/sbin/ssmtp -t',
+    sendmail_path => '/usr/bin/mhsendmail',
     notify => Service['httpd'],
     require => File['/etc/php5/apache2']
   }
