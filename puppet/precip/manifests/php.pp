@@ -38,7 +38,7 @@ class precip::php {
     display_errors => 'On',
     html_errors => 'On',
     session_save_path => '/tmp',
-    sendmail_path => '/usr/bin/mhsendmail',
+    sendmail_path => '/usr/bin/mailhog sendmail noreply@precip.vm',
     notify => Service['httpd'],
     require => File['/etc/php5/apache2']
   }

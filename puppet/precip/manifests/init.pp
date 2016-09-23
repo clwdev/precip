@@ -81,8 +81,10 @@ class precip {
   # Install Memcached
   class { 'memcached': }
 
+  # Install Mailhog, back to being handled by ftaeger-mailhog
+  class { 'mailhog': }
+
   # Kick off the rest of our manifests
-  include 'precip::mailhog'
   include 'precip::php'
   include 'precip::httpd'
   include 'precip::database'
