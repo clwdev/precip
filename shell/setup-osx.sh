@@ -78,6 +78,7 @@ vagrant destroy --force
 out "Setting up Vagrant."
 # This shouldn't be needed with newer versions of Vagrant:
 # sudo touch /etc/exports
+rm -rf ~/.vagrant.d/tmp/ 2>&1
 vagrant up
 
 out "Installing Vagrant Manager."
