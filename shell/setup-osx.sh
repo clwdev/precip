@@ -80,6 +80,7 @@ out "Setting up Vagrant."
 # sudo touch /etc/exports
 rm -rf ~/.vagrant.d/tmp/ 2>&1
 vagrant up
+vagrant up
 
 out "Installing Vagrant Manager."
 brew cask install vagrant-manager
