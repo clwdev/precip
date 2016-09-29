@@ -84,4 +84,4 @@ vagrant up
 
 out "Installing Vagrant Manager."
 brew cask install vagrant-manager
-open ~/Applications/"Vagrant Manager.app"
+open /Applications/"Vagrant Manager.app"
