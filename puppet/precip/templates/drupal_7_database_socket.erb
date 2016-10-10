@@ -1,0 +1,14 @@
+<?php
+/**
+ * D7-style Database Include
+ */
+
+$databases['default']['default'] = array(
+ 'driver' => 'mysql',
+ 'database' => '<%= @name %>',
+ 'username' => '<%= @name %>',
+ 'password' => '<%= @name %>',
+ 'host' => '127.0.0.1',
+ 'unix_socket' => '/var/run/mysqld/mysqld.sock',
+ 'prefix' => '',
+);

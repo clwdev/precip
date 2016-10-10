@@ -121,7 +121,7 @@ define drupal_vhosts($host, $aliases = [], $path, $drupal = "7", $multisite_dir 
 
     # Magic Acquia-style Database Settings.
     file {"/var/www/site-php/${name}/${name}-settings.inc":
-      content => template("precip/drupal_${drupal}_database.erb"),
+      content => template("precip/drupal_${drupal}_database_socket.erb"),
       mode => '0644',
       subscribe => File["/var/www/site-php/${name}"],
     }
