@@ -35,7 +35,13 @@ class precip::httpd {
   
   # Create Drush aliases
   file { "/vagrant/vm.aliases.drushrc.php":
-    content => template("precip/drush_aliases.erb"),
+    content => template("precip/drush_vm_aliases.erb"),
+    replace => true,
+    mode => '0644',
+  }
+  
+  file { "/vagrant/vmi.aliases.drushrc.php":
+    content => template("precip/drush_vmi_aliases.erb"),
     replace => true,
     mode => '0644',
   }

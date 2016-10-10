@@ -1,0 +1,12 @@
+<?php
+
+$home = drush_server_home();
+
+<% for @site in @parsed_siteinfo -%>
+<% if @site[1]["drupal"] != "false" %>
+$aliases['<%= @site[0] %>'] = array(
+  'root' => '<%= @drupal_sites_path %>/<%= @site[1]["path"] %>',
+  'uri' => '<%= @site[1]["host"] %>',
+);
+<% end -%>
+<% end -%>
