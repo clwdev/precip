@@ -107,30 +107,29 @@ class precip::php {
   }
   
   # These bits install Drush & Friends via composer
-  # 
-  # file { "/home/vagrant/.composer/":
-  #   ensure => 'directory',
-  #   mode => '0755',
-  #   owner => "vagrant",
-  #   group => "vagrant",
-  #   require => Class['composer'],
-  # }
-  # 
-  # file { "/home/vagrant/.composer/composer.json":
-  #   content => template("precip/composer.json"),
-  #   ensure  => 'file',
-  #   mode    => '0644',
-  #   owner => "vagrant",
-  #   group => "vagrant",
-  #   require => [Class['composer'], File['/home/vagrant/.composer/']],
-  # }
-  #   
-  # exec { "composer-install":
-  #   command => "composer install --no-interaction --prefer-dist --no-dev --optimize-autoloader",
-  #   environment => [ "HOME=/home/vagrant", "COMPOSER_HOME=/home/vagrant/.composer" ],
-  #   cwd => "/home/vagrant/.composer",
-  #   path => "/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin",
-  #   user => "vagrant",
-  #   require => [Class['composer'], File["/home/vagrant/.composer/composer.json"]],
-  # }
+  file { "/home/vagrant/.composer/":
+    ensure => 'directory',
+    mode => '0755',
+    owner => "vagrant",
+    group => "vagrant",
+    require => Class['composer'],
+  }
+  
+  file { "/home/vagrant/.composer/composer.json":
+    content => template("precip/composer.json"),
+    ensure  => 'file',
+    mode    => '0644',
+    owner => "vagrant",
+    group => "vagrant",
+    require => [Class['composer'], File['/home/vagrant/.composer/']],
+  }
+    
+  exec { "install-composer-libraries":
+    command => "composer install --no-interaction --prefer-dist --no-dev --optimize-autoloader",
+    environment => [ "HOME=/home/vagrant", "COMPOSER_HOME=/home/vagrant/.composer" ],
+    cwd => "/home/vagrant/.composer",
+    path => "/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin",
+    user => "vagrant",
+    require => [Class['composer'], File["/home/vagrant/.composer/composer.json"]],
+  }
 }
