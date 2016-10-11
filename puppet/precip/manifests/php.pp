@@ -34,7 +34,7 @@ class precip::php {
     upload_max_filesize => '50M',
     memory_limit => '256M',
     date_timezone => 'America/New_York',
-    max_input_vars => 5000,
+    max_input_vars => 10000,
     display_errors => 'On',
     html_errors => 'On',
     session_save_path => '/tmp',
