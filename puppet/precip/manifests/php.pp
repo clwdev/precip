@@ -69,13 +69,6 @@ class precip::php {
     notify => Service['httpd'],
   }
   
-  file { "/etc/php5/mods-available/xdebug.ini":
-    ensure  => 'link',
-    require => Package['php5-common'],
-    target => '/etc/php5/conf.d/xdebug.ini',
-    notify => Service['httpd'],
-  }
-
   $opcache_settings = {
     'opcache.enable_cli' => '1',
     'opcache.revalidate_freq' => '1',
