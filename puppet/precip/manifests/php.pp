@@ -35,6 +35,7 @@ class precip::php {
     memory_limit => '256M',
     date_timezone => 'America/New_York',
     max_input_vars => 10000,
+    realpath_cache_size => 1024,
     display_errors => 'On',
     html_errors => 'On',
     session_save_path => '/tmp',
