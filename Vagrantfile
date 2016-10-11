@@ -44,7 +44,8 @@ Vagrant.configure(2) do |config|
   # Ensure users exist before we mount stuff
   config.useradd.users = {
     'www-data' => ['www-data'],
-    'mysql' => nil
+    'mysql' => nil,
+    'vagrant' => ['vagrant','www-data'],
   }
 
   # Disabling vbguest is helpful in development
@@ -58,16 +59,11 @@ Vagrant.configure(2) do |config|
   else
     # Everybody else gets nfs + bindfs for their Apache folders
     config.vm.synced_folder drupal_basepath, "/nfs-www", type: "nfs"
-    config.bindfs.bind_folder "/nfs-www", "/srv/www", user: "www-data", group: "www-data"
+    config.bindfs.bind_folder "/nfs-www", "/srv/www", user: "vagrant", group: "www-data", chown_ignore: true, chgrp_ignore: true, perms: "u=rwx:g=rwx:o=rx"
     
-    if first_boot
-      # MySQL has to be mounted with vboxsf initially, because MySQL Is Terrible
-      config.vm.synced_folder "mysql", "/var/lib/mysql", owner: "mysql", group: "mysql"
-    else 
-      # Once MySQL is installed during initial provisioning we can re-mount with nfs + bindfs
-      config.vm.synced_folder "mysql", "/nfs-sql", type: "nfs"
-      config.bindfs.bind_folder "/nfs-sql", "/var/lib/mysql", user: "mysql", group: "mysql"
-    end
+    # Once MySQL is installed during initial provisioning we can re-mount with nfs + bindfs
+    config.vm.synced_folder "mysql", "/nfs-sql", type: "nfs"
+    config.bindfs.bind_folder "/nfs-sql", "/var/lib/mysql", user: "mysql", group: "mysql", chown_ignore: true, chgrp_ignore: true
   end
   
   # Mount the gitignored puppet/modules directory, for caching
