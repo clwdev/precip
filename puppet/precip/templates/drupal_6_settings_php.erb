@@ -35,11 +35,10 @@ $conf['404_fast_html'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
  * Database connection for Acquia Cloud
  * Including all other settings controlled by Acquia
  */
-if ($site && file_exists('/var/www/site-php')) {
-  require '/var/www/site-php/' . $site . '/' . $site . '-settings.inc';
-}
-// Include local-settings.inc, if it's here.
-if (realpath(dirname(__FILE__) . '/local-settings.inc')){
+ if ($site && file_exists('/var/www/site-php/' . $site . '/' . $site . '-settings.inc')) {
+   require '/var/www/site-php/' . $site . '/' . $site . '-settings.inc';
+ }
+ else if (realpath(dirname(__FILE__) . '/local-settings.inc')){
   // This workaround ensures local Drush works
   // "Vagrant as a Remote" Drush just isn't ready for primetime :(
   require realpath(dirname(__FILE__) . '/local-settings.inc');

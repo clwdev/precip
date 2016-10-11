@@ -35,7 +35,13 @@ class precip::httpd {
   
   # Create Drush aliases
   file { "/vagrant/vm.aliases.drushrc.php":
-    content => template("precip/drush_aliases.erb"),
+    content => template("precip/drush_vm_aliases.erb"),
+    replace => true,
+    mode => '0644',
+  }
+  
+  file { "/vagrant/vmi.aliases.drushrc.php":
+    content => template("precip/drush_vmi_aliases.erb"),
     replace => true,
     mode => '0644',
   }
@@ -109,28 +115,27 @@ define drupal_vhosts($host, $aliases = [], $path, $drupal = "7", $multisite_dir 
   if $drupal != "false" {
     file {"/srv/www/${path}/sites/${multisite_dir}":
       ensure =>'directory',
-      mode => '0755',
+      mode => '0775',
     }
 
     # Ensure the tree we're going to hide settings in exists
     file {"/var/www/site-php/${name}":
       ensure => "directory",
-      mode => '0755',
+      mode => '0775',
       require => File["/var/www/site-php"],    
     }
 
     # Magic Acquia-style Database Settings.
     file {"/var/www/site-php/${name}/${name}-settings.inc":
-      content => template("precip/drupal_${drupal}_database.erb"),
-      mode => '0644',
+      content => template("precip/drupal_${drupal}_database_socket.erb"),
+      mode => '0775',
       subscribe => File["/var/www/site-php/${name}"],
     }
     
     # A template "local-settings.inc", in case you don't have one already
     file {"/srv/www/${path}/sites/${multisite_dir}/local-settings.inc":
       content => template("precip/drupal_${drupal}_database.erb"),
-      replace => false,
-      mode => '0644',
+      mode => '0775',
       subscribe => File["/var/www/site-php/${name}"],
     }
     
@@ -138,7 +143,7 @@ define drupal_vhosts($host, $aliases = [], $path, $drupal = "7", $multisite_dir 
     file { "/srv/www/${path}/sites/${multisite_dir}/settings.php":
       content => template("precip/drupal_${drupal}_settings_php.erb"),
       replace => false,
-      mode => '0644',
+      mode => '0775',
       subscribe => File["/srv/www/${path}/sites/${multisite_dir}"],
     }
   }
