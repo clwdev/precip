@@ -77,7 +77,8 @@ class precip::php {
   }
 
   $opcache_settings = {
-    'opcache.revalidate_freq' => '0',
+    'opcache.enable_cli' => '1',
+    'opcache.revalidate_freq' => '1',
     'opcache.memory_consumption' => '512',
     'opcache.max_accelerated_files' => '10000',
     'opcache.interned_strings_buffer' => '16',
