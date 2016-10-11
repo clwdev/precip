@@ -8,6 +8,7 @@
 require "json"
 drupal_sites = ""
 drupal_basepath = "sites"
+external_hosts = {}
 
 # Determine if this is our first boot or not. 
 # If there's a better way to figure this out we now have a single place to change.
@@ -98,6 +99,7 @@ Vagrant.configure(2) do |config|
       "drupal_sites_path" => Dir.pwd + "/" + drupal_basepath,
       "drupal_siteinfo" => drupal_sites.to_json,
       "drupal_hosts" => drupal_sites.collect { |k,v| v["host"] }.concat(drupal_sites.collect { |k,v| v["aliases"] }.flatten.select! { |x| !x.nil? }).to_json,
+      "external_hosts" => external_hosts.to_json,
       "first_boot" => first_boot,
     }
   end

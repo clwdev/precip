@@ -78,6 +78,9 @@ class precip {
     host_aliases => parsejson($drupal_hosts),
   }
 
+  $parsed_hosts = parsejson($external_hosts)
+  create_resources(host, $parsed_hosts)
+
   # Install Memcached
   class { 'memcached': }
 
