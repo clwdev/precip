@@ -3,6 +3,7 @@
 %x(vagrant plugin install vagrant-hostsupdater) unless Vagrant.has_plugin?('vagrant-hostsupdater')
 %x(vagrant plugin install vagrant-useradd) unless Vagrant.has_plugin?('vagrant-useradd')
 %x(vagrant plugin install vagrant-bindfs) unless Vagrant.has_plugin?('vagrant-bindfs')
+%x(vagrant plugin install vagrant-persistent-storage) unless Vagrant.has_plugin?('vagrant-persistent-storage')
 
 # Pull in external config
 require "json"
@@ -54,18 +55,26 @@ Vagrant.configure(2) do |config|
 
   # Synced Folders
   if Vagrant::Util::Platform.windows?
-    # Windows gets vboxsf for everything. Sorry Windows!
+    # Windows gets vboxsf, because it can't do nfs + bindfs
     config.vm.synced_folder drupal_basepath, "/srv/www", owner: "www-data", group: "www-data"
-    config.vm.synced_folder "mysql", "/var/lib/mysql", owner: "mysql", group: "mysql"
   else
-    # Everybody else gets nfs + bindfs for their Apache folders
+    # Everybody else gets nfs + bindfs, for better small-file read perf
     config.vm.synced_folder drupal_basepath, "/nfs-www", type: "nfs"
     config.bindfs.bind_folder "/nfs-www", "/srv/www", user: "vagrant", group: "www-data", chown_ignore: true, chgrp_ignore: true, perms: "u=rwx:g=rwx:o=rx"
-    
-    # Once MySQL is installed during initial provisioning we can re-mount with nfs + bindfs
-    config.vm.synced_folder "mysql", "/nfs-sql", type: "nfs"
-    config.bindfs.bind_folder "/nfs-sql", "/var/lib/mysql", user: "mysql", group: "mysql", chown_ignore: true, chgrp_ignore: true
   end
+
+  # MySQL now uses the vagrant-persistent-storage module.
+  # Same concept as before & same benefits, but with the added bonus of being a native filesystem instead of a share.
+  config.persistent_storage.enabled = true
+  config.persistent_storage.location = "mysql.vdi"
+  config.persistent_storage.size = 32768
+  config.persistent_storage.mountname = 'mysql'
+  config.persistent_storage.filesystem = 'ext4'
+  config.persistent_storage.mountpoint = '/var/lib/mysql'
+  
+  # Want to mount your *old* MySQL dir so you can copy your old files over? 
+  # Uncomment this and run: vagrant reload && vagrant ssh -c "sudo bash /vagrant/shell/migrate-db.sh"
+  #config.vm.synced_folder "mysql", "/var/lib/mysql-old", owner: "mysql", group: "mysql"
   
   # Mount the gitignored puppet/modules directory, for caching
   config.vm.synced_folder "puppet/modules", "/etc/puppet/modules"

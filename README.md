@@ -29,6 +29,7 @@ A full LAMP stack, and a few nice extras.
   - `$ vagrant plugin install vagrant-hostsupdater`
   - `$ vagrant plugin install vagrant-useradd`
   - `$ vagrant plugin install vagrant-bindfs`
+  - `$ vagrant plugin install vagrant-vagrant-persistent-storage`
 
 ## Git Clones & Configuration
 - Clone this repo
@@ -99,7 +100,6 @@ PHP is already set up to use it, but if for some reason you're making something 
 
 # Known Issues
 - [ ] During Provisioning, Puppet complains about "Warning: Setting templatedir is deprecated." [It's a Vagrant Bug](https://github.com/mitchellh/vagrant/issues/3740).
-- [ ] Provisioning MySQL is *super* weird, and will perma-bomb if you kill the box between first-boot and MySQL being installed. (Pro-tip: Don't do that.) (But if you do, just `$ vagrant destroy -f && vagrant up`)
 
 # @TODO
 - [x] ~~Puppet Library Caching~~
@@ -110,8 +110,8 @@ PHP is already set up to use it, but if for some reason you're making something 
 - [x] ~~Super Secret Automagical repo detection and cloning from config.rb~~
 - [x] ~~phpMyAdmin support~~
 - [x] ~~Actual Testing on Windows~~
-- [ ] Figure out NFS support on Windows
-- [ ] [Pimp My Log](http://pimpmylog.com) support
+- [ ] ~~Figure out NFS support on Windows~~ (gave up)
+- [ ] [Pimp My Log](http://pimpmylog.com) support (In progress, see PR #26)
 - [ ] Some sort of generalized environment pulldown script
 - [ ] Other Cool Stuff
 
