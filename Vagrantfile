@@ -73,7 +73,7 @@ Vagrant.configure(2) do |config|
   config.persistent_storage.mountpoint = '/var/lib/mysql'
   
   # Want to mount your *old* MySQL dir so you can copy your old files over? 
-  # Uncomment this, vagrat reload, and run: vagrant ssh -c "sudo bash /vagrant/shell/migrate-db.sh"
+  # Uncomment this and run: vagrant reload && vagrant ssh -c "sudo bash /vagrant/shell/migrate-db.sh"
   #config.vm.synced_folder "mysql", "/var/lib/mysql-old", owner: "mysql", group: "mysql"
   
   # Mount the gitignored puppet/modules directory, for caching
