@@ -81,7 +81,34 @@ Vagrant.configure(2) do |config|
 
   # Throw more resources at the VM. Tweak as needed
   config.vm.provider :virtualbox do |vb|
-    vb.customize ["modifyvm", :id, "--memory", "2560", "--ioapic", "on", "--cpus", "2", "--chipset", "ich9", "--name", "precip", "--natdnshostresolver1", "on"]
+    # Name this virtual machine "precip"
+    vb.customize ["modifyvm", :id, "--name", "precip"]
+    # IOAPIC is needed for a 64bit host
+    vb.customize ["modifyvm", :id, "--ioapic", "on"]
+    # A single processor still outperforms larger numbers with Virtualbox
+    vb.customize ["modifyvm", :id, "--cpus", "2"]
+    # Use ICH9 for performance
+    vb.customize ["modifyvm", :id, "--chipset", "ich9"]
+    # Deffer DNS resolution to the host for performance
+    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    # Prevent Virtualbox status errors about vram
+    vb.customize ["modifyvm", :id, "--vram", "10"]
+    # Prevent a time drift of more than a minute from the host
+    vb.customize ["guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 60000]
+    # Give this virtual machine 1/4th of the host RAM
+    host = RbConfig::CONFIG['host_os']
+    if host =~ /darwin/
+      # sysctl returns Bytes and we need to convert to MB
+      mem = `sysctl -n hw.memsize`.to_i / 1024
+    elsif host =~ /linux/
+      # meminfo shows KB and we need to convert to MB
+      mem = `grep 'MemTotal' /proc/meminfo | sed -e 's/MemTotal://' -e 's/ kB//'`.to_i 
+    elsif host =~ /mswin|mingw|cygwin/
+      # Windows code via https://github.com/rdsubhas/vagrant-faster
+      mem = `wmic computersystem Get TotalPhysicalMemory`.split[1].to_i / 1024
+    end
+    mem = mem / 1024 / 4
+    vb.customize ["modifyvm", :id, "--memory", mem]
   end
 
   # Fix the harmless "stdin: is not a tty" issue once and for all
