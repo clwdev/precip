@@ -27,7 +27,6 @@ class precip::httpd {
         allow_override => ['All',],
     }],
     access_log => false,
-        logroot => "/vagrant/log",
   }
 
   $parsed_siteinfo = parsejson($drupal_siteinfo)
@@ -65,8 +64,6 @@ define drupal_vhosts($host, $aliases = [], $path, $drupal = "7", $multisite_dir 
       ]
     ),
     access_log => false,
-    logroot => "/vagrant/log",
-    require => File["/vagrant/log"],
   }
   apache::vhost { "${host}-ssl":
     docroot => "/srv/www/${path}",
@@ -85,9 +82,8 @@ define drupal_vhosts($host, $aliases = [], $path, $drupal = "7", $multisite_dir 
       ]
     ),
     access_log => false,
-    logroot => "/vagrant/log",
+    error_log_file => "${host}_error.log",
     ssl => true,
-    require => File["/vagrant/log"],
   }
   
   mysql::db { $name:

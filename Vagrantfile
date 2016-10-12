@@ -76,6 +76,9 @@ Vagrant.configure(2) do |config|
   # Uncomment this and run: vagrant reload && vagrant ssh -c "sudo bash /vagrant/shell/migrate-db.sh"
   #config.vm.synced_folder "mysql", "/var/lib/mysql-old", owner: "mysql", group: "mysql"
   
+  # Mount the log directory straight at /var/log/apache2, so PimpMyLog can access it
+  config.vm.synced_folder "log", "/var/log/apache2", owner: "www-data", group: "www-data"
+  
   # Mount the gitignored puppet/modules directory, for caching
   config.vm.synced_folder "puppet/modules", "/etc/puppet/modules"
 
