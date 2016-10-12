@@ -71,6 +71,7 @@ vagrant plugin install vagrant-vbguest
 vagrant plugin install vagrant-hostsupdater
 vagrant plugin install vagrant-useradd
 vagrant plugin install vagrant-bindfs
+vagrant plugin install vagrant-persistent-storage
 
 out "Ensuring a clean machine."
 vagrant destroy --force
