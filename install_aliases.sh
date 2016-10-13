@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Installing @vm.* Drush Aliases..."
+echo "Installing @vm.* and @vmi.* Drush Aliases..."
 mkdir -p $HOME/.drush
 if [ -e "vm.aliases.drushrc.php" ]; then
   cp -f vm.aliases.drushrc.php $HOME/.drush/

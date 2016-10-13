@@ -78,7 +78,7 @@ There's a simple little "util" vhost set up at [precip.vm](http://precip.vm). It
 This is also a helpful location for if you just need to test some stuff in a docroot without setting up a whole host directory or git clone, just toss the files in util and don't commit them.
 
 ## Logs
-Want Apache Logs? Don't want to SSH into the VM and sudo to root and other terrible things? Good! They're in the `/log` directory. Load them up however you want, for instance, with OSX's nice `Console` app.
+Each VirtualHost you define in `config.rb` automatically logs Apache errors to the `/log` directory which is conveniently outside the VM. You can use something like MacOS' "console" app to track them, or view them in a browser with [PimpMyLog](http://pimpmylog.com/), which has been installed and auto-configured for you at [precip.vm/pml](http://precip.vm/pml).
 
 ## Debugging Integration
 [Xdebug](http://xdebug.org/) is built in and preconfigured. Use something like [Xdebug Helper](https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc?hl=en) to trigger a session, and your IDE should automagically pick it up.
@@ -110,10 +110,10 @@ PHP is already set up to use it, but if for some reason you're making something 
 - [x] ~~Super Secret Automagical repo detection and cloning from config.rb~~
 - [x] ~~phpMyAdmin support~~
 - [x] ~~Actual Testing on Windows~~
-- [ ] ~~Figure out NFS support on Windows~~ (gave up)
-- [ ] [Pimp My Log](http://pimpmylog.com) support (In progress, see PR #26)
+- [x] ~~Figure out NFS support on Windows~~ (gave up)
+- [x] ~~[Pimp My Log](http://pimpmylog.com) support~~
 - [ ] Some sort of generalized environment pulldown script
-- [ ] Other Cool Stuff
+- [ ] Other Cool Stuff?????
 
 # Legal
 **Precip** is in no way associated with Acquia, Inc. or Drupal. Drupal is a registered trademark of Dries Buytaert. **Precip** is available under the MIT License. Want to hack on it? Send a Pull Request. Find a bug? File an issue. (or a Pull Request) (preferably a Pull Request)

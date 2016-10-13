@@ -6,6 +6,7 @@ forge "https://forgeapi.puppetlabs.com"
 mod 'puppetlabs-apache'
 mod 'puppetlabs-apt'
 mod 'puppetlabs-mysql', "3.2.0"
+mod 'puppetlabs-vcsrepo'
 mod 'ftaeger-mailhog', "1.1.0"
 
 mod 'thias-php', "1.2.0"
