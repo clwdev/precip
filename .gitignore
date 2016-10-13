@@ -8,3 +8,4 @@ puppet/modules/*
 *.aliases.drushrc.php
 precip.box
 *.vdi
+.idea

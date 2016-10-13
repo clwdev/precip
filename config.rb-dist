@@ -58,6 +58,22 @@
 #     "git_dir" => "cool-site"
 #   },
 # }
+#
+# This file also allows you to configure external hosts while provisioning the box. Multiple hosts with
+# multiple aliases can be configured:
+#
+# Ex:
+# external_hosts = {
+#   "externalhost.example" => {
+#     "ip" => "10.0.0.42",
+#     "host_aliases" => ["alias.externalhost.example", "alias2.externalhost.example"]
+#   },
+#   "externalhost2.example" => {
+#     "ip" => "10.0.0.41",
+#     "host_aliases" => ["alias1.externalhost2.example", "alias2.externalhost2.example"]
+#   }
+# }
+#
 
 drupal_sites = {
    "example" => {
