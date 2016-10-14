@@ -7,8 +7,9 @@
 
 # Pull in external config
 require "json"
-drupal_sites = ""
+drupal_sites = {}
 drupal_basepath = "sites"
+internal_hosts = []
 external_hosts = {}
 
 # Determine if this is our first boot or not. 
@@ -30,6 +31,16 @@ drupal_sites.each do |name, site|
   end
 end
 
+drupal_sites.each do |name, site|
+  if site.has_key?("host")
+    internal_hosts.push(site['host'])
+  end
+  if site.has_key?("aliases")
+    internal_hosts.push(site['aliases'])
+  end
+end
+internal_hosts = internal_hosts.flatten
+
 # The actual Vagrant Configuration
 Vagrant.configure(2) do |config|
   # Vagrant Box Address
@@ -41,7 +52,7 @@ Vagrant.configure(2) do |config|
   # Basic network config.
   config.vm.network :private_network, ip: "10.0.0.11"
   config.vm.hostname = "precip.vm"
-  config.hostsupdater.aliases = drupal_sites.collect { |k,v| v["host"] }.concat(drupal_sites.collect { |k,v| v["aliases"] }.flatten.select! { |x| !x.nil? })
+  config.hostsupdater.aliases = internal_hosts
 
   # Ensure users exist before we mount stuff
   config.useradd.users = {
@@ -140,7 +151,7 @@ Vagrant.configure(2) do |config|
     puppet.facter = {
       "drupal_sites_path" => Dir.pwd + "/" + drupal_basepath,
       "drupal_siteinfo" => drupal_sites.to_json,
-      "drupal_hosts" => drupal_sites.collect { |k,v| v["host"] }.concat(drupal_sites.collect { |k,v| v["aliases"] }.flatten.select! { |x| !x.nil? }).to_json,
+      "drupal_hosts" => internal_hosts.to_json,
       "external_hosts" => external_hosts.to_json,
       "first_boot" => first_boot,
     }
