@@ -46,7 +46,7 @@ class precip::httpd {
   }
 }
 
-define drupal_vhosts($host, $aliases = [], $path, $drupal = "7", $multisite_dir = "default", $setenv = [], $git_url = "", $git_dir = "", $commands = {}) {
+define drupal_vhosts($host, $aliases = [], $path, $drupal = "7", $multisite_dir = "default", $setenv = [], $git_url = "", $git_dir = "", $commands = {}, $ssl_cert = "/vagrant/ssl/precip_vm_host.pem", $ssl_ca = "/vagrant/ssl/precip_ca_bundle.crt.pem", $ssl_key = "/vagrant/ssl/precip_vm_host-key.pem") {
   apache::vhost { "${host}":
     docroot => "/srv/www/${path}",
     manage_docroot => false,
@@ -84,6 +84,9 @@ define drupal_vhosts($host, $aliases = [], $path, $drupal = "7", $multisite_dir 
     access_log => false,
     error_log_file => "${host}_error.log",
     ssl => true,
+    ssl_cert => "${ssl_cert}",
+    ssl_ca => "${ssl_ca}",
+    ssl_key => "${ssl_key}"
   }
   
   mysql::db { $name:
