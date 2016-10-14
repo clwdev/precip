@@ -30,6 +30,11 @@
 #               and make sure to use square brackets not curly braces for
 #               single str array values to merge with other AH_ values
 #
+#       ssl_ca: Use these to pass in a path (probably /vagrant/ssl/something)
+#      ssl_key  to explicitly specify a set of SSL key + cert + ca bundle, so
+#     ssl_cert  you can do semi-legitimate and pretty realistic SSL-enabled 
+#               testing.
+#
 # Ex:
 # drupal_sites = {
 #   "test" => {
