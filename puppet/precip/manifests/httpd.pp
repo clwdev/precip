@@ -134,6 +134,7 @@ define drupal_vhosts($host, $aliases = [], $path, $drupal = "7", $multisite_dir 
     # A template "local-settings.inc", in case you don't have one already
     file {"/srv/www/${path}/sites/${multisite_dir}/local-settings.inc":
       content => template("precip/drupal_${drupal}_database.erb"),
+      replace => false,
       mode => '0775',
       subscribe => File["/var/www/site-php/${name}"],
     }
