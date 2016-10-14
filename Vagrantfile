@@ -82,9 +82,43 @@ Vagrant.configure(2) do |config|
   # Mount the gitignored puppet/modules directory, for caching
   config.vm.synced_folder "puppet/modules", "/etc/puppet/modules"
 
-  # Throw more resources at the VM. Tweak as needed
+  # Configure the VM. Tweak as needed
+  configured = -1
   config.vm.provider :virtualbox do |vb|
-    vb.customize ["modifyvm", :id, "--memory", "2560", "--ioapic", "on", "--cpus", "2", "--chipset", "ich9", "--name", "precip", "--natdnshostresolver1", "on"]
+    # Name this virtual machine "precip"
+    vb.customize ["modifyvm", :id, "--name", "precip"]
+    # IOAPIC is needed for a 64bit host for multiple cures
+    vb.customize ["modifyvm", :id, "--ioapic", "on"]
+    # Use ICH9 for performance
+    vb.customize ["modifyvm", :id, "--chipset", "ich9"]
+    # Deffer DNS resolution to the host for performance
+    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    # Prevent Virtualbox status errors about vram
+    vb.customize ["modifyvm", :id, "--vram", "10"]
+    # Prevent a time drift of more than a minute from the host
+    vb.customize ["guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 60000]
+    # Set reserved memory at 2GB, as we've never seen it actively use more than ~1.5G
+    vb.customize ["modifyvm", :id, "--memory", 2048]
+    # Give half of cpu cores as the host (if more than 1), otherwise leave as default
+    # In our testing this produced the best results. Adapted from https://github.com/rdsubhas/vagrant-faster
+    host = RbConfig::CONFIG['host_os']
+    cpus = -1
+    if host =~ /darwin/
+      cpus = `sysctl -n hw.ncpu`.to_i
+      mem = `sysctl -n hw.memsize`.to_i / 1024 / 1024
+    elsif host =~ /linux/
+      cpus = `nproc`.to_i
+    elsif host =~ /mswin|mingw|cygwin/
+      cpus = `wmic cpu Get NumberOfCores`.split[1].to_i
+    end
+    cpus = cpus / 2 if cpus > 1
+    if cpus > 0
+      vb.customize ["modifyvm", :id, "--cpus", cpus]
+      if configured < 1
+        puts "CPUs set to: #{cpus}"
+      end
+    end
+    configured = 1
   end
 
   # Fix the harmless "stdin: is not a tty" issue once and for all
