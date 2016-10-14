@@ -4,6 +4,7 @@ mysql/*
 log/*
 sites/*
 bin/*
+ssl/*
 puppet/modules/*
 *.aliases.drushrc.php
 precip.box
