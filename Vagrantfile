@@ -19,6 +19,11 @@ if File.file?('.vagrant/machines/default/virtualbox/action_provision')
   first_boot = false
 end
 
+# Determine if our config.rb exists or not, fail gracefully
+if !File.file?('config.rb')
+  abort("Error: 'config.rb' is missing. Please review README.md and config.rb-dist to create one.")
+end
+
 ext_config = File.read 'config.rb'
 eval ext_config
 
@@ -47,7 +52,7 @@ Vagrant.configure(2) do |config|
   # This is a happy base box from PuppetLabs
   config.vm.box = "puppetlabs/ubuntu-14.04-64-puppet"
   # Pin to 1.0.0 for perf reasons
-  config.vm.box_version = "1.0.0"
+  config.vm.box_version = "1.0.3"
 
   # Basic network config.
   config.vm.network :private_network, ip: "10.0.0.11"
@@ -151,8 +156,8 @@ Vagrant.configure(2) do |config|
   
   # Hand off to puppet
   config.vm.provision :puppet, :options => [""] do |puppet|
-    puppet.manifests_path = "puppet/manifests"
-    puppet.manifest_file  = "site.pp"
+    puppet.environment_path = "puppet/environments"
+    puppet.environment = "vm"
     puppet.hiera_config_path = "puppet/hiera.yaml"
   
     # some facts
