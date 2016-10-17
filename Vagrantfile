@@ -102,7 +102,14 @@ Vagrant.configure(2) do |config|
     vb.customize ["modifyvm", :id, "--ioapic", "on"]
     # Use ICH9 for performance
     vb.customize ["modifyvm", :id, "--chipset", "ich9"]
-    # Deffer DNS resolution to the host for performance
+    # Use kvm (instead of legacy) as the paravirtprovider
+    # on Linux guests for performance
+    # https://github.com/geerlingguy/drupal-vm/issues/212
+    vb.customize ["modifyvm", :id, "--paravirtprovider", "kvm"]
+    # Now that we're off "legacy" paravirtprovider, we can use virtio for nics
+    vb.customize ["modifyvm", :id, "--nictype1", "virtio"]
+    vb.customize ["modifyvm", :id, "--nictype2", "virtio"]
+    # Defer DNS resolution to the host for performance
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     # Prevent Virtualbox status errors about vram
     vb.customize ["modifyvm", :id, "--vram", "10"]
@@ -125,9 +132,10 @@ Vagrant.configure(2) do |config|
     cpus = cpus / 2 if cpus > 1
     if cpus > 0
       vb.customize ["modifyvm", :id, "--cpus", cpus]
-      if configured < 1
-        puts "CPUs set to: #{cpus}"
-      end
+      # Suppress CPU Setting Noise, uncomment for debug purposes
+      # if configured < 1
+      #   puts "CPUs set to: #{cpus}"
+      # end
     end
     configured = 1
   end
