@@ -29,7 +29,7 @@ A full LAMP stack, and a few nice extras.
   - `$ vagrant plugin install vagrant-hostsupdater`
   - `$ vagrant plugin install vagrant-useradd`
   - `$ vagrant plugin install vagrant-bindfs`
-  - `$ vagrant plugin install vagrant-vagrant-persistent-storage`
+  - `$ vagrant plugin install vagrant-persistent-storage`
 
 ## Git Clones & Configuration
 - Clone this repo
