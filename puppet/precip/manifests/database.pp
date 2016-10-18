@@ -14,14 +14,25 @@ class precip::database {
     require => File['/etc/mysql'],
   }
   
+  # New Keys for Percona Server
+  apt::key { 'percona':
+    id     => '430BDF5C56E7C94E848EE60C1C4CBDCDCD2EFD2A',
+    server => 'keyserver.ubuntu.com',
+  }
+  
+  apt::key { 'percona-packaging':
+    id     => '4D1BB29D63D98E422B2113B19334A25F8507EFA5',
+    server => 'keyserver.ubuntu.com',
+  }
+  
   # Define the Percona apt repo
   apt::source { 'Percona':
-    location   => 'http://repo.percona.com/apt',
-    repos      => 'main',
-    key        => {
-      'id'     => '430BDF5C56E7C94E848EE60C1C4CBDCDCD2EFD2A',
-      'server' => 'keys.gnupg.net',
-    },
+    location => 'http://repo.percona.com/apt',
+    repos    => 'main',
+    require  => [
+      Apt::Key['percona'],
+      Apt::Key['percona-packaging']
+    ]
   }
   
   class { 'mysql::client':
