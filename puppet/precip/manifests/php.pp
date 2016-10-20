@@ -1,6 +1,7 @@
 class precip::php {
   apt::key { 'ppa:ondrej':
-    id => '14AA40EC0831756756D7F66C4F4EA0AAE5267A6C',
+    id     => '14AA40EC0831756756D7F66C4F4EA0AAE5267A6C',
+    server => 'keyserver.ubuntu.com',
   }
 
   apt::ppa { 'ppa:ondrej/php5-5.6':
