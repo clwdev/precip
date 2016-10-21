@@ -89,6 +89,7 @@ class precip {
   class { 'mailhog': }
 
   # Kick off the rest of our manifests
+  include 'precip::keys'
   include 'precip::php'
   include 'precip::httpd'
   include 'precip::database'
