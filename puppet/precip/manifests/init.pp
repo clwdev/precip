@@ -13,6 +13,7 @@ class precip {
     "imagemagick",
     "vim",
     "g++",
+    "software-properties-common",
     ]:
     ensure => present,
   }
