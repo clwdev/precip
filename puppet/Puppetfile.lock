@@ -24,14 +24,16 @@ FORGE
     saz-memcached (2.8.1)
       puppetlabs-firewall (>= 0.1.0)
       puppetlabs-stdlib (>= 3.2.0)
-    thias-php (1.2.0)
-    willdurand-composer (1.2.1)
-      puppetlabs-stdlib (>= 3.2.1)
 
 PATH
   remote: /vagrant/puppet/precip
   specs:
     clwdev-precip (0.0.1)
+
+GITHUBTARBALL
+  remote: voxpupuli/puppet-php
+  specs:
+    voxpupuli-php (4.0.0-beta1)
 
 DEPENDENCIES
   clwdev-precip (>= 0)
@@ -42,6 +44,5 @@ DEPENDENCIES
   puppetlabs-mysql (= 3.2.0)
   puppetlabs-vcsrepo (>= 0)
   saz-memcached (>= 0)
-  thias-php (= 1.2.0)
-  willdurand-composer (>= 0)
+  voxpupuli-php (>= 0)
 
