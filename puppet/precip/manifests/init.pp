@@ -37,16 +37,16 @@ class precip {
   }
 
   # Grab some gems.
-  # @TODO: Convert to a bundle? Define a bundle path in config.rb and bundle install each of those?
-  package {[
-    "compass",
-    "breakpoint",
-    "sass",
-    "susy",
-    ]:
-    ensure => 'installed',
-    provider => 'gem',
-  }
+  # Commented out for now, until we figure out task runners
+  # package {[
+  #   "compass",
+  #   "breakpoint",
+  #   "sass",
+  #   "susy",
+  #   ]:
+  #   ensure => 'installed',
+  #   provider => 'gem',
+  # }
 
   # Make our log directory
   file {"/vagrant/log": ensure => "directory", }
