@@ -11,6 +11,7 @@ drupal_sites = {}
 drupal_basepath = "sites"
 internal_hosts = []
 external_hosts = {}
+packaging_mode = false
 
 # Determine if this is our first boot or not. 
 # If there's a better way to figure this out we now have a single place to change.
@@ -166,6 +167,7 @@ Vagrant.configure(2) do |config|
       "drupal_hosts" => internal_hosts.to_json,
       "external_hosts" => external_hosts.to_json,
       "first_boot" => first_boot,
+      "packaging_mode" => packaging_mode,
     }
   end
 end
