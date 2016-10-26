@@ -20,6 +20,7 @@ vagrant destroy --force
 
 echo "Prepping config.rb and sites folder"
 cp config.rb-dist config.rb
+echo "packaging_mode = true" | tee -a config.rb
 mkdir -p "$BASEDIR/../sites" >/dev/null 2>&1
 
 echo "Installing prerequisites"
