@@ -11,6 +11,7 @@ drupal_sites = {}
 drupal_basepath = "sites"
 internal_hosts = []
 external_hosts = {}
+packaging_mode = false
 
 # Determine if this is our first boot or not. 
 # If there's a better way to figure this out we now have a single place to change.
@@ -51,7 +52,7 @@ Vagrant.configure(2) do |config|
   # Vagrant Box Address
   # This is a happy base box from PuppetLabs
   config.vm.box = "puppetlabs/ubuntu-14.04-64-puppet"
-  config.vm.box_version = "1.0.0"
+  config.vm.box_version = "1.0.3"
 
   # Basic network config.
   config.vm.network :private_network, ip: "10.0.0.11"
@@ -166,6 +167,7 @@ Vagrant.configure(2) do |config|
       "drupal_hosts" => internal_hosts.to_json,
       "external_hosts" => external_hosts.to_json,
       "first_boot" => first_boot,
+      "packaging_mode" => packaging_mode,
     }
   end
 end

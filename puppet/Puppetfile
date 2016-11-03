@@ -9,9 +9,9 @@ mod 'puppetlabs-mysql', "3.2.0"
 mod 'puppetlabs-vcsrepo'
 mod 'ftaeger-mailhog', "1.1.0"
 
-mod 'thias-php', "1.2.0"
-
-mod 'willdurand-composer'
+#mod 'thias-php', "1.2.0"
+#mod 'willdurand-composer'
+mod 'mayflower-php'
 
 mod 'jlondon-wkhtmltox'
 

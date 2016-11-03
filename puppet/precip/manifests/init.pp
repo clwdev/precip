@@ -13,6 +13,7 @@ class precip {
     "imagemagick",
     "vim",
     "g++",
+    "software-properties-common",
     ]:
     ensure => present,
   }
@@ -37,16 +38,16 @@ class precip {
   }
 
   # Grab some gems.
-  # @TODO: Convert to a bundle? Define a bundle path in config.rb and bundle install each of those?
-  package {[
-    "compass",
-    "breakpoint",
-    "sass",
-    "susy",
-    ]:
-    ensure => 'installed',
-    provider => 'gem',
-  }
+  # Commented out for now, until we figure out task runners
+  # package {[
+  #   "compass",
+  #   "breakpoint",
+  #   "sass",
+  #   "susy",
+  #   ]:
+  #   ensure => 'installed',
+  #   provider => 'gem',
+  # }
 
   # Make our log directory
   file {"/vagrant/log": ensure => "directory", }
@@ -88,10 +89,13 @@ class precip {
   class { 'mailhog': }
 
   # Kick off the rest of our manifests
-  include 'precip::php'
-  include 'precip::httpd'
-  include 'precip::database'
-  include 'precip::pimpmylog'
+  include 'precip::keys'
+  if !str2bool("$packaging_mode") {
+    include 'precip::php'
+    include 'precip::httpd'
+    include 'precip::database'
+    include 'precip::pimpmylog'
+  }
   
   # More elegant workaround for vbguest's issue #95
   # See: https://github.com/dotless-de/vagrant-vbguest/issues/95#issuecomment-163777475

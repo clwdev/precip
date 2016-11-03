@@ -1,12 +1,22 @@
 FORGE
   remote: https://forgeapi.puppetlabs.com
   specs:
+    darin-zypprepo (1.0.2)
+    example42-puppi (2.2.1)
+    example42-yum (2.1.27)
+      example42-puppi (>= 2.0.0)
     ftaeger-mailhog (1.1.0)
       puppetlabs-stdlib (< 5.0.0, >= 4.10.0)
     jlondon-wkhtmltox (1.0.11)
       maestrodev-wget (>= 1.5.0)
       puppetlabs-stdlib (>= 0)
     maestrodev-wget (1.7.3)
+    mayflower-php (4.0.0-beta1)
+      darin-zypprepo (~> 1.0)
+      example42-yum (~> 2.0)
+      puppetlabs-apt (< 3.0.0, >= 1.8.0)
+      puppetlabs-inifile (~> 1.0)
+      puppetlabs-stdlib (< 5.0.0, >= 4.2.0)
     nanliu-staging (1.0.3)
     puppetlabs-apache (1.10.0)
       puppetlabs-concat (< 3.0.0, >= 1.1.1)
@@ -16,6 +26,7 @@ FORGE
     puppetlabs-concat (2.1.0)
       puppetlabs-stdlib (< 5.0.0, >= 3.2.0)
     puppetlabs-firewall (1.8.1)
+    puppetlabs-inifile (1.6.0)
     puppetlabs-mysql (3.2.0)
       nanliu-staging (~> 1.0)
       puppetlabs-stdlib (< 5.0.0, >= 3.2.0)
@@ -24,9 +35,6 @@ FORGE
     saz-memcached (2.8.1)
       puppetlabs-firewall (>= 0.1.0)
       puppetlabs-stdlib (>= 3.2.0)
-    thias-php (1.2.0)
-    willdurand-composer (1.2.1)
-      puppetlabs-stdlib (>= 3.2.1)
 
 PATH
   remote: /vagrant/puppet/precip
@@ -37,11 +45,10 @@ DEPENDENCIES
   clwdev-precip (>= 0)
   ftaeger-mailhog (= 1.1.0)
   jlondon-wkhtmltox (>= 0)
+  mayflower-php (>= 0)
   puppetlabs-apache (>= 0)
   puppetlabs-apt (>= 0)
   puppetlabs-mysql (= 3.2.0)
   puppetlabs-vcsrepo (>= 0)
   saz-memcached (>= 0)
-  thias-php (= 1.2.0)
-  willdurand-composer (>= 0)
 

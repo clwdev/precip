@@ -1,105 +1,62 @@
 class precip::php {
-  apt::key { 'ppa:ondrej':
-    id     => '14AA40EC0831756756D7F66C4F4EA0AAE5267A6C',
-    server => 'keyserver.ubuntu.com',
-  }
-
-  apt::ppa { 'ppa:ondrej/php5-5.6':
-    package_manage => true,
-    require => Apt::Key['ppa:ondrej'],
-  }
-  
-  class { 'php::cli': 
-    require => [
-      Apt::Ppa['ppa:ondrej/php5-5.6'],
-    ]
-  }
-  
-  file {[
-      '/etc/php5/',
-      '/etc/php5/cli',
-      '/etc/php5/apache2',
-      '/etc/php5/conf.d'
-    ]:
-    ensure => "directory",
-  }
-  
-  php::ini {[
-      '/etc/php.ini',
-      '/etc/php5/cli/php.ini',
-      '/etc/php5/apache2/php.ini',
-    ]:
-    max_execution_time => 600,
-    max_input_time => 300,
-    post_max_size => '50M',
-    upload_max_filesize => '50M',
-    memory_limit => '256M',
-    date_timezone => 'America/New_York',
-    max_input_vars => 10000,
-    realpath_cache_size => 1024,
-    display_errors => 'On',
-    html_errors => 'On',
-    session_save_path => '/tmp',
-    sendmail_path => '/usr/bin/mailhog sendmail noreply@precip.vm',
-    notify => Service['httpd'],
-    require => File['/etc/php5/apache2']
-  }
-  
-  php::module {[
-    'curl',
-    'gd',
-    'imagick',
-    'intl',
-    'mcrypt',
-    'memcached',
-    'mysql',
-    'sqlite',
-    'xdebug']:
-    notify => Service['httpd'],
-  }
-  
-  php::module::ini { 'xdebug' :
-    settings => {
-      'xdebug.remote_autostart' => '1',
-      'xdebug.remote_enable' => '1',
-      'xdebug.remote_connect_back' => '1',
-      'xdebug.idekey' => 'vagrant',
-      'xdebug.max_nesting_level' => '10000',
+  class { '::php':
+    manage_repos => true,
+    fpm          => false,
+    dev          => true,
+    composer     => true,
+    pear         => false,
+    phpunit      => false,
+    extensions   => {
+      curl       => { },
+      gd         => { },
+      imagick    => { },
+      intl       => { },
+      mcrypt     => { },
+      memcached  => { },
+      mysql      => { },
+      sqlite     => { }, 
+      opcache    => {
+        settings => {
+          'opcache/opcache.enable_cli' => '1',
+          'opcache/opcache.revalidate_freq' => '1',
+          'opcache/opcache.memory_consumption' => '512',
+          'opcache/opcache.max_accelerated_files' => '10000',
+          'opcache/opcache.interned_strings_buffer' => '16',
+          'opcache/opcache.fast_shutdown' => '1',
+        },
+      },
+      xdebug     => {
+        settings => {
+          'xdebug/xdebug.remote_autostart' => '1',
+          'xdebug/xdebug.remote_enable' => '1',
+          'xdebug/xdebug.remote_connect_back' => '1',
+          'xdebug/xdebug.idekey' => 'vagrant',
+          'xdebug/xdebug.max_nesting_level' => '10000',
+        },
+      },
     },
-    zend => '/usr/lib/php5/20131226',
-    notify => Service['httpd'],
-  }
-  
-  $opcache_settings = {
-    'opcache.enable_cli' => '1',
-    'opcache.revalidate_freq' => '1',
-    'opcache.memory_consumption' => '512',
-    'opcache.max_accelerated_files' => '10000',
-    'opcache.interned_strings_buffer' => '16',
-    'opcache.fast_shutdown' => '1',
+    settings     => {
+      'PHP/max_execution_time'  => '600',
+      'PHP/max_input_time'      => '300',
+      'PHP/post_max_size'       => '50M',
+      'PHP/upload_max_filesize' => '50M',
+      'PHP/memory_limit'        => '256M',
+      'PHP/max_input_vars'      => '10000',
+      'PHP/realpath_cache_size' => '1024',
+      'PHP/display_errors'      => 'On',
+      'PHP/html_errors'         => 'On',
+      'PHP/session_save_path'   => '/tmp',
+      'PHP/sendmail_path'       => '/usr/bin/mailhog sendmail noreply@precip.vm',
+      'Date/date.timezone'      => 'America/New_York',
+    },
+    require => Package["software-properties-common"],
   }
 
-  file { "/etc/php5/mods-available/opcache.ini":
-    ensure  => 'file',
-    require => Package['php5-common'],
-    content => template('precip/opcache.ini.erb'),
-    notify => Service['httpd'],
-  }
-  
-  file { "/etc/php5/cli/conf.d/05-opcache.ini":
-    ensure  => 'absent',
-    require => Class['php::cli'],
-  }
-  
-  class { 'composer': 
-    require => Class['php::cli']
-  }
-  
   # Add Composer's vendor directory to the vagrant user's $PATH
   file { '/home/vagrant/.pam_environment':
     mode    => '0644',
     content => 'PATH DEFAULT=${PATH}:/home/vagrant/.composer/vendor/bin',
-    require => Class['composer'],
+    require => Class['php'],
   }
   
   # These bits install Drush & Friends via composer
@@ -108,7 +65,7 @@ class precip::php {
     mode => '0755',
     owner => "vagrant",
     group => "vagrant",
-    require => Class['composer'],
+    require => Class['php'],
   }
   
   file { "/home/vagrant/.composer/composer.json":
@@ -117,7 +74,7 @@ class precip::php {
     mode    => '0644',
     owner => "vagrant",
     group => "vagrant",
-    require => [Class['composer'], File['/home/vagrant/.composer/']],
+    require => [Class['php'], File['/home/vagrant/.composer/']],
   }
     
   exec { "install-composer-libraries":
@@ -126,6 +83,6 @@ class precip::php {
     cwd => "/home/vagrant/.composer",
     path => "/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin",
     user => "vagrant",
-    require => [Class['composer'], File["/home/vagrant/.composer/composer.json"]],
+    require => [Class['php'], File["/home/vagrant/.composer/composer.json"]],
   }
 }
