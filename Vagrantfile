@@ -1,10 +1,3 @@
-# Ensure we've got some Helpful Plugins
-%x(vagrant plugin install vagrant-vbguest) unless Vagrant.has_plugin?('vagrant-vbguest')
-%x(vagrant plugin install vagrant-hostsupdater) unless Vagrant.has_plugin?('vagrant-hostsupdater')
-%x(vagrant plugin install vagrant-useradd) unless Vagrant.has_plugin?('vagrant-useradd')
-%x(vagrant plugin install vagrant-bindfs) unless Vagrant.has_plugin?('vagrant-bindfs')
-%x(vagrant plugin install vagrant-persistent-storage) unless Vagrant.has_plugin?('vagrant-persistent-storage')
-
 # Pull in external config
 require "json"
 drupal_sites = {}
