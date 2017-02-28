@@ -11,6 +11,7 @@ class precip::php {
       gd         => { },
       imagick    => { },
       intl       => { },
+      mbstring   => { },
       mcrypt     => { },
       memcached  => { },
       mysql      => { },
