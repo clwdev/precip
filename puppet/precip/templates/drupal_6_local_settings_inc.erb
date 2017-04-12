@@ -1,0 +1,15 @@
+<?php
+/**
+ * D6-style Settings Include
+ * 
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *     DO NOT COMMIT THIS FILE UNDER ANY CIRCUMSTANCES       *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ */
+
+$db_url = 'mysql://<%= @name %>:<%= @name %>@<%= @fqdn %>/<%= @name %>';
+$db_prefix = '';
+
+if(!PHP_SAPI=='cli'){
+  $db_url = 'mysql://<%= @name %>:<%= @name %>@127.0.0.1/<%= @name %>';
+}

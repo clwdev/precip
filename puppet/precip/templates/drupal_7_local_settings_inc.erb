@@ -1,0 +1,26 @@
+<?php
+/**
+ * D7-style Database Include
+ * 
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *     DO NOT COMMIT THIS FILE UNDER ANY CIRCUMSTANCES       *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ */
+
+$databases['default']['default'] = array(
+ 'driver' => 'mysql',
+ 'database' => '<%= @name %>',
+ 'username' => '<%= @name %>',
+ 'password' => '<%= @name %>',
+ 'host' => '<%= @fqdn %>',
+ 'prefix' => '',
+);
+
+if(!PHP_SAPI=='cli'){
+  $databases['default']['default']['host'] = '127.0.0.1';
+  $databases['default']['default']['unix_socket'] = '/var/run/mysqld/mysqld.sock';
+}
+
+$conf['memcache_servers'] = array('precip.vm:11211' => 'default');
+
+$drupal_hash_salt = "precip.vm";
