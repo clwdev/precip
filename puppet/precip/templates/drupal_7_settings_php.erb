@@ -31,8 +31,14 @@ drupal_fast_404();
 if ($site && file_exists('/var/www/site-php/' . $site . '/' . $site . '-settings.inc')) {
   require '/var/www/site-php/' . $site . '/' . $site . '-settings.inc';
 }
-else if (realpath(dirname(__FILE__) . '/local-settings.inc')){
-  // Otherwise, Include local-settings.inc, if it's here.
+
+/**
+ * Database connections for local development
+ * . . . and also some other stuff, if you need it.
+ *
+ * * * * * * * * DO NOT COMMIT THIS FILE * * * * * * * * 
+ */
+if (realpath(dirname(__FILE__) . '/local-settings.inc')){
   require realpath(dirname(__FILE__) . '/local-settings.inc');
 }
 
@@ -51,16 +57,15 @@ else if (realpath(dirname(__FILE__) . '/local-settings.inc')){
  * Setting Drupal Private Files Path as per:
  * https://docs.acquia.com/articles/setting-private-file-directory-acquia-cloud
  */
- if (isset($_ENV['AH_SITE_ENVIRONMENT']) && $_ENV['AH_SITE_ENVIRONMENT'] != "local") {
-   $files_private_conf_path = conf_path();
-   $conf['file_private_path'] = '/mnt/files/' . $_ENV['AH_SITE_GROUP'] . '.' . $_ENV['AH_SITE_ENVIRONMENT'] . '/' . $files_private_conf_path . '/files-private';
- }
- else {
-   $conf['file_private_path'] = 'sites/<%= @multisite_dir %>/files';
- }
+if (isset($_ENV['AH_SITE_ENVIRONMENT']) && $_ENV['AH_SITE_ENVIRONMENT'] != "local") {
+  $files_private_conf_path = conf_path();
+  $conf['file_private_path'] = '/mnt/files/' . $_ENV['AH_SITE_GROUP'] . '.' . $_ENV['AH_SITE_ENVIRONMENT'] . '/' . $files_private_conf_path . '/files-private';
+}
+else {
+  $conf['file_private_path'] = 'sites/<%= @multisite_dir %>/files';
+}
 
 /**
  *  Domain 301 Settings (Don't)
  */
-
 $conf['domain_301_redirect_enabled'] = 0;
