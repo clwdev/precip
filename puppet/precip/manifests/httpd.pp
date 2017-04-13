@@ -19,12 +19,6 @@ class precip::httpd {
     notify => Service['apache2'],
   }
 
-  # We'll need this when we make our vhosts
-  file {"/var/www/site-php":
-    ensure => "directory",
-    mode => '0755',
-  }
-
   # We'll also need this if there are any commands defined
   file { "/vagrant/bin": 
     ensure => "directory"
@@ -129,27 +123,13 @@ define drupal_vhosts($host, $aliases = [], $path, $drupal = "7", $multisite_dir 
       ensure =>'directory',
       mode => '0775',
     }
-
-    # Ensure the tree we're going to hide settings in exists
-    file {"/var/www/site-php/${name}":
-      ensure => "directory",
-      mode => '0775',
-      require => File["/var/www/site-php"],    
-    }
-
-    # Magic Acquia-style Database Settings.
-    file {"/var/www/site-php/${name}/${name}-settings.inc":
-      content => template("precip/drupal_${drupal}_database_socket.erb"),
-      mode => '0775',
-      subscribe => File["/var/www/site-php/${name}"],
-    }
     
-    # A template "local-settings.inc", in case you don't have one already
+    # "local-settings.inc", a way of setting extra stuff for local development
     file {"/srv/www/${path}/sites/${multisite_dir}/local-settings.inc":
-      content => template("precip/drupal_${drupal}_database.erb"),
+      content => template("precip/drupal_${drupal}_local_settings_inc.erb"),
       replace => false,
       mode => '0775',
-      subscribe => File["/var/www/site-php/${name}"],
+      subscribe => File["/srv/www/${path}/sites/${multisite_dir}"],
     }
     
     # An Acquia-style settings.php, if you need one.

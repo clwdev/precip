@@ -1,4 +1,4 @@
-#![precip](precip-logo-thin.png)
+![precip](precip-logo-thin.png)
 
 # Precip: Local Development for Cloud-y Drupal
 **Precip** is a [Vagrant](http://www.vagrantup.com)-based all-inclusive local development environment for building Drupal Sites you'll eventually be pushing up to one of several wonderful Drupal Cloud Hosting Services. It's initially being built against Acquia Cloud, but may eventually support other similar services.
