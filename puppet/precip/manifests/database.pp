@@ -1,18 +1,4 @@
 class precip::database {
-  file {"/etc/mysql":
-    owner => "mysql",
-    group => "mysql",
-    mode => '0755',
-    ensure => "directory",
-  }  
-  
-  # Debian-based distros are weird, and need their own extra conf file
-  file { "/etc/mysql/debian.cnf":
-    content => template("precip/debian.cnf"),
-    ensure  => 'file',
-    mode    => '0644',
-    require => File['/etc/mysql'],
-  }
   
   # Define the Percona apt repo
   apt::source { 'Percona':
@@ -49,19 +35,19 @@ class precip::database {
     ]
   }
 
-  mysql_user { 'root@%': 
+  mysql_user { 'precip@%': 
     ensure => 'present',
     password_hash => mysql_password('precip'),
     subscribe    =>  Service['mysqld']
   }
 
-  mysql_grant { 'root@%/*.*':
+  mysql_grant { 'precip@%/*.*':
     ensure     => 'present',
     options    => ['GRANT'],
     privileges => ['ALL'],
     table      => "*.*",
-    user       => 'root@%',
-    require    => Mysql_user['root@%'],
+    user       => 'precip@%',
+    require    => Mysql_user['precip@%'],
   }
   
   # MySQL isn't *really* available to all hosts until you restart it. 
@@ -70,7 +56,7 @@ class precip::database {
     exec { "restart-mysqld-after-grant":
       path => ["/bin", "/sbin", "/usr/bin", "/usr/sbin/"],
       command => "service mysql restart",
-      require => Mysql_grant["root@%/*.*"],
+      require => Mysql_grant["precip@%/*.*"],
     }
   }
 }
