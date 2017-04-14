@@ -11,7 +11,7 @@ class precip::database {
   }
   
   class { 'mysql::client':
-    package_name => 'percona-server-client-5.5',
+    package_name => 'percona-server-client-5.6',
     package_ensure => 'latest',
     require => [
       Apt::Source['Percona'],
@@ -19,7 +19,7 @@ class precip::database {
   }
   
   class { 'mysql::server':
-    package_name => 'percona-server-server-5.5',
+    package_name => 'percona-server-server-5.6',
     package_ensure => 'latest',
     override_options => { 
       'mysqld' => { 
