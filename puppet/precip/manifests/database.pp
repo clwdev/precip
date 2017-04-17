@@ -1,15 +1,5 @@
 class precip::database {
   
-  # Define the Percona apt repo
-  # apt::source { 'Percona':
-  #   location => 'http://repo.percona.com/apt',
-  #   repos    => 'main',
-  #   require  => [
-  #     Apt::Key['percona'],
-  #     Apt::Key['percona-packaging']
-  #   ]
-  # }
-
   # Define the MariaDB apt repo
   apt::source { 'MariaDB':
     location => 'http://mirror.jmu.edu/pub/mariadb/repo/10.1/ubuntu',
