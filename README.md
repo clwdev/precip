@@ -7,7 +7,7 @@
 A full LAMP stack, and a few nice extras.
 - Ubuntu Server 14.04 LTS
 - Apache Server 2.4
-- Percona Server 5.6
+- MariaDB 10.1
 - PHP 5.6
   - With Memcache, OPCache, and Xdebug all pre-configured
 - MailHog, the _absolute_ simplest way to locally test mail delivery
