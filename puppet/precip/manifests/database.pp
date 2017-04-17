@@ -1,25 +1,34 @@
 class precip::database {
   
   # Define the Percona apt repo
-  apt::source { 'Percona':
-    location => 'http://repo.percona.com/apt',
+  # apt::source { 'Percona':
+  #   location => 'http://repo.percona.com/apt',
+  #   repos    => 'main',
+  #   require  => [
+  #     Apt::Key['percona'],
+  #     Apt::Key['percona-packaging']
+  #   ]
+  # }
+
+  # Define the MariaDB apt repo
+  apt::source { 'MariaDB':
+    location => 'http://mirror.jmu.edu/pub/mariadb/repo/10.1/ubuntu',
     repos    => 'main',
     require  => [
-      Apt::Key['percona'],
-      Apt::Key['percona-packaging']
+      Apt::Key['mariadb']
     ]
   }
-  
+
   class { 'mysql::client':
-    package_name => 'percona-server-client-5.6',
+    package_name => 'mariadb-client',
     package_ensure => 'latest',
     require => [
-      Apt::Source['Percona'],
+      Apt::Source['MariaDB']
     ]
   }
   
   class { 'mysql::server':
-    package_name => 'percona-server-server-5.6',
+    package_name => 'mariadb-server',
     package_ensure => 'latest',
     override_options => { 
       'mysqld' => { 
@@ -31,7 +40,7 @@ class precip::database {
       }
     },
     require => [
-      Apt::Source['Percona'],
+      Apt::Source['MariaDB']
     ]
   }
 
