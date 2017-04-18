@@ -7,7 +7,7 @@
 A full LAMP stack, and a few nice extras.
 - Ubuntu Server 14.04 LTS
 - Apache Server 2.4
-- Percona Server 5.5
+- MariaDB 10.1
 - PHP 5.6
   - With Memcache, OPCache, and Xdebug all pre-configured
 - MailHog, the _absolute_ simplest way to locally test mail delivery
@@ -50,10 +50,8 @@ A full LAMP stack, and a few nice extras.
  - Current known stable releases as of March 7, 2017: 
     - vagrant 1.9.2
     - vagrant-bindfs (1.0.1)
-    - Version Constraint: 1.0.1
     - vagrant-hostsupdater (1.0.2)
     - vagrant-persistent-storage (0.0.21)
-    - Version Constraint: 0.0.21
     - vagrant-share (1.1.6, system)
     - vagrant-useradd (0.0.1)
     - vagrant-vbguest (0.13.0)
@@ -72,7 +70,7 @@ Upon completing the provisioning process we build a convenient [Drush Aliases fi
 Drush isn't (presently) installed inside the box, which is actually preferable. Drush 6.x doesn't work with "remote" hosts on local IP's (it's a [known oversight](https://github.com/drush-ops/drush/pull/546) and is only implemented in Drush 7.x). Other fun tools like [drush_sql_sync_pipe](https://www.drupal.org/project/drush_sql_sync_pipe) [don't support Drush 7 yet](https://www.drupal.org/node/2406661), and other things like *normal* sql-sync don't work if both aliases are considered "remotes". It'd be awesome to set up aliases that would let you interact with your local Vagrant the exact same way as your remote cloud environments, but right now it sadly isn't ready for prime-time. 
 
 ## Importing Databases
-- You've got a database server at `root:precip@precip.vm`!
+- You've got a database server running on `precip.vm`, and can connect with user/pass `precip` / `precip`
 - Connect with [SequelPro](http://www.sequelpro.com) (or whatever) and load up some databases!
 - Prefer [phpMyAdmin](http://www.phpmyadmin.net)? We won't hold it against you. Download it and unzip it to `util/phpMyAdmin` and copy [`util/config.inc.php`](util/config.inc.php) -> `/util/phpMyAdmin/`. Once you're done, pop open [precip.vm/phpMyAdmin](http://precip.vm/phpMyAdmin) and you're done.
 - Or, even better: install [drush_sql_sync_pipe](https://www.drupal.org/project/drush_sql_sync_pipe), and import them straight from your remote environment of choice:

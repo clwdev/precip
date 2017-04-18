@@ -1,39 +1,24 @@
 class precip::database {
-  file {"/etc/mysql":
-    owner => "mysql",
-    group => "mysql",
-    mode => '0755',
-    ensure => "directory",
-  }  
   
-  # Debian-based distros are weird, and need their own extra conf file
-  file { "/etc/mysql/debian.cnf":
-    content => template("precip/debian.cnf"),
-    ensure  => 'file',
-    mode    => '0644',
-    require => File['/etc/mysql'],
-  }
-  
-  # Define the Percona apt repo
-  apt::source { 'Percona':
-    location => 'http://repo.percona.com/apt',
+  # Define the MariaDB apt repo
+  apt::source { 'MariaDB':
+    location => 'http://mirror.jmu.edu/pub/mariadb/repo/10.1/ubuntu',
     repos    => 'main',
     require  => [
-      Apt::Key['percona'],
-      Apt::Key['percona-packaging']
+      Apt::Key['mariadb']
     ]
   }
-  
+
   class { 'mysql::client':
-    package_name => 'percona-server-client-5.5',
+    package_name => 'mariadb-client',
     package_ensure => 'latest',
     require => [
-      Apt::Source['Percona'],
+      Apt::Source['MariaDB']
     ]
   }
   
   class { 'mysql::server':
-    package_name => 'percona-server-server-5.5',
+    package_name => 'mariadb-server',
     package_ensure => 'latest',
     override_options => { 
       'mysqld' => { 
@@ -45,23 +30,23 @@ class precip::database {
       }
     },
     require => [
-      Apt::Source['Percona'],
+      Apt::Source['MariaDB']
     ]
   }
 
-  mysql_user { 'root@%': 
+  mysql_user { 'precip@%': 
     ensure => 'present',
     password_hash => mysql_password('precip'),
     subscribe    =>  Service['mysqld']
   }
 
-  mysql_grant { 'root@%/*.*':
+  mysql_grant { 'precip@%/*.*':
     ensure     => 'present',
     options    => ['GRANT'],
     privileges => ['ALL'],
     table      => "*.*",
-    user       => 'root@%',
-    require    => Mysql_user['root@%'],
+    user       => 'precip@%',
+    require    => Mysql_user['precip@%'],
   }
   
   # MySQL isn't *really* available to all hosts until you restart it. 
@@ -70,7 +55,7 @@ class precip::database {
     exec { "restart-mysqld-after-grant":
       path => ["/bin", "/sbin", "/usr/bin", "/usr/sbin/"],
       command => "service mysql restart",
-      require => Mysql_grant["root@%/*.*"],
+      require => Mysql_grant["precip@%/*.*"],
     }
   }
 }
