@@ -7,7 +7,7 @@ FORGE
       example42-puppi (>= 2.0.0)
     ftaeger-mailhog (1.1.0)
       puppetlabs-stdlib (< 5.0.0, >= 4.10.0)
-    jlondon-wkhtmltox (1.0.11)
+    jlondon-wkhtmltox (1.1.0)
       maestrodev-wget (>= 1.5.0)
       puppetlabs-stdlib (>= 0)
     maestrodev-wget (1.7.3)
@@ -49,6 +49,7 @@ DEPENDENCIES
   puppetlabs-apache (>= 0)
   puppetlabs-apt (>= 0)
   puppetlabs-mysql (= 3.2.0)
+  puppetlabs-stdlib (= 4.12.0)
   puppetlabs-vcsrepo (>= 0)
   saz-memcached (>= 0)
 
