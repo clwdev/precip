@@ -2,7 +2,7 @@ class precip::database {
   
   # Define the MariaDB apt repo
   apt::source { 'MariaDB':
-    location => 'http://mirror.jmu.edu/pub/mariadb/repo/10.1/ubuntu',
+    location => 'http://nyc2.mirrors.digitalocean.com/mariadb/repo/10.1/ubuntu',
     repos    => 'main',
     require  => [
       Apt::Key['mariadb']

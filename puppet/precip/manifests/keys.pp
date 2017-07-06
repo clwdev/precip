@@ -13,7 +13,7 @@ class precip::keys {
   
   # MariaDB's PPA key
   apt::key { 'mariadb':
-    id     => '199369E5404BD5FC7D2FE43BCBCB082A1BB943DB',
+    id     => '177F4010FE56CA3336300305F1656F24C74CD1D8',
     server => 'keyserver.ubuntu.com',
   }
 }
