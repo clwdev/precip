@@ -148,7 +148,7 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", path: "shell/librarian.sh"
   
   # Hand off to puppet
-  config.vm.provision :puppet, :options => [""] do |puppet|
+  config.vm.provision :puppet, :options => ["--disable_warnings deprecations"] do |puppet|
     puppet.environment_path = "puppet/environments"
     puppet.environment = "vm"
     puppet.hiera_config_path = "puppet/hiera.yaml"
