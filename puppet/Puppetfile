@@ -14,8 +14,6 @@ mod 'ftaeger-mailhog', "1.1.0"
 #mod 'willdurand-composer'
 mod 'mayflower-php'
 
-mod 'jlondon-wkhtmltox'
-
 mod 'saz-memcached'
 
 mod 'clwdev-precip', :path => '/vagrant/puppet/precip'

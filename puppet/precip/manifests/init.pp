@@ -59,13 +59,6 @@ class precip {
     target => "/usr/share/zoneinfo/US/Eastern",
   }
 
-  if str2bool("$first_boot") {
-    # Install statically-compiled versions of wkhtmltopdf / wkhtmltoimage
-    class { 'wkhtmltox':
-      ensure => present,
-    }
-  }
-
   # Awful hack to fix the permissions on ssmtp's config file
   define check_mode($mode) {
     exec { "/bin/chmod $mode $name":
