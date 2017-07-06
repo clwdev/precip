@@ -6,8 +6,8 @@ if ! (which git > /dev/null 2>&1); then
   apt-get -q -y install git > /dev/null 2>&1;
 fi
 
-if [ -n "$(apt-cache search ruby1.9.1-dev)" ]; then
-  apt-get -q -y install ruby1.9.1-dev > /dev/null 2>&1;
+if [ -n "$(apt-cache search ruby-dev)" ]; then
+  apt-get -q -y install ruby-dev > /dev/null 2>&1;
 fi
 
 if ! (which librarian-puppet > /dev/null 2>&1); then 
