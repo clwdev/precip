@@ -4,14 +4,14 @@
 forge "https://forgeapi.puppetlabs.com"
 
 mod 'puppetlabs-apache'
-mod 'puppetlabs-apt'
+mod 'puppetlabs-apt', "4.1.0"
 mod 'puppetlabs-mysql'
 mod 'puppetlabs-vcsrepo'
 mod 'puppetlabs-stdlib'
 mod 'ftaeger-mailhog', "1.1.0"
 
-mod 'mayflower-php'
-#mod 'puppet-php' # may switch later...
+mod 'puppet-php',
+  :git => "https://github.com/voxpupuli/puppet-php.git"
 
 mod 'saz-memcached'
 
