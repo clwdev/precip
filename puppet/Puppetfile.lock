@@ -2,8 +2,6 @@ FORGE
   remote: https://forgeapi.puppetlabs.com
   specs:
     darin-zypprepo (1.0.2)
-    ftaeger-mailhog (1.1.0)
-      puppetlabs-stdlib (< 5.0.0, >= 4.10.0)
     puppet-archive (1.3.0)
       puppetlabs-stdlib (< 5.0.0, >= 4.6.0)
     puppet-staging (2.2.0)
@@ -26,6 +24,14 @@ FORGE
       puppetlabs-stdlib (>= 3.2.0)
 
 GIT
+  remote: https://github.com/jeffgeorge/ftaeger-mailhog.git
+  ref: remove_wget_cache_dir
+  sha: 19ae4d8ef23606b497eba004bfbb37a928dd0bd7
+  specs:
+    ftaeger-mailhog (1.1.0)
+      puppetlabs-stdlib (< 5.0.0, >= 4.10.0)
+
+GIT
   remote: https://github.com/voxpupuli/puppet-php.git
   ref: master
   sha: dc9e9cc53bc4adc0dbfc1812a200618d5ad8e265
@@ -44,7 +50,7 @@ PATH
 
 DEPENDENCIES
   clwdev-precip (>= 0)
-  ftaeger-mailhog (= 1.1.0)
+  ftaeger-mailhog (>= 0)
   puppet-php (>= 0)
   puppetlabs-apache (>= 0)
   puppetlabs-apt (= 4.1.0)

@@ -8,7 +8,9 @@ mod 'puppetlabs-apt', "4.1.0"
 mod 'puppetlabs-mysql'
 mod 'puppetlabs-vcsrepo'
 mod 'puppetlabs-stdlib'
-mod 'ftaeger-mailhog', "1.1.0"
+mod 'ftaeger-mailhog',
+  :git => "https://github.com/jeffgeorge/ftaeger-mailhog.git",
+  :ref => "remove_wget_cache_dir"
 
 mod 'puppet-php',
   :git => "https://github.com/voxpupuli/puppet-php.git"
