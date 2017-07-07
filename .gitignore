@@ -6,6 +6,8 @@ sites/*
 bin/*
 ssl/*
 puppet/modules/*
+puppet/.librarian
+puppet/.tmp
 *.aliases.drushrc.php
 precip.box
 *.vdi
