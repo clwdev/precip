@@ -1,7 +1,11 @@
 class precip::php {
-  class { '::php':
+
+  class { '::php::globals':
+    php_version => '7.0',
+    config_root => '/etc/php/7.0',
+  }->class { '::php':
     manage_repos => true,
-    fpm          => false,
+    fpm          => true,
     dev          => true,
     composer     => true,
     pear         => false,
@@ -9,30 +13,31 @@ class precip::php {
     extensions   => {
       curl       => { },
       gd         => { },
-      imagick    => { },
+      #imagick    => { },
       intl       => { },
       mbstring   => { },
       mcrypt     => { },
-      memcached  => { },
+      #memcached  => { },
       mysql      => { },
-      sqlite     => { }, 
+      sqlite     => { },
+      zip        => { },
       opcache    => {
         settings => {
-          'opcache/opcache.enable_cli' => '1',
-          'opcache/opcache.revalidate_freq' => '1',
-          'opcache/opcache.memory_consumption' => '512',
-          'opcache/opcache.max_accelerated_files' => '10000',
+          'opcache/opcache.enable_cli'              => '1',
+          'opcache/opcache.revalidate_freq'         => '1',
+          'opcache/opcache.memory_consumption'      => '512',
+          'opcache/opcache.max_accelerated_files'   => '10000',
           'opcache/opcache.interned_strings_buffer' => '16',
-          'opcache/opcache.fast_shutdown' => '1',
+          'opcache/opcache.fast_shutdown'           => '1',
         },
       },
       xdebug     => {
         settings => {
-          'xdebug/xdebug.remote_autostart' => '1',
-          'xdebug/xdebug.remote_enable' => '1',
+          'xdebug/xdebug.remote_autostart'    => '1',
+          'xdebug/xdebug.remote_enable'       => '1',
           'xdebug/xdebug.remote_connect_back' => '1',
-          'xdebug/xdebug.idekey' => 'vagrant',
-          'xdebug/xdebug.max_nesting_level' => '10000',
+          'xdebug/xdebug.idekey'              => 'vagrant',
+          'xdebug/xdebug.max_nesting_level'   => '10000',
         },
       },
     },
@@ -50,7 +55,7 @@ class precip::php {
       'PHP/sendmail_path'       => '/usr/bin/mailhog sendmail noreply@precip.vm',
       'Date/date.timezone'      => 'America/New_York',
     },
-    require => Package["software-properties-common"],
+    require      => Package['software-properties-common'],
   }
 
   # Add Composer's vendor directory to the vagrant user's $PATH
@@ -59,31 +64,31 @@ class precip::php {
     content => 'PATH DEFAULT=${PATH}:/home/vagrant/.composer/vendor/bin',
     require => Class['php'],
   }
-  
+
   # These bits install Drush & Friends via composer
-  file { "/home/vagrant/.composer/":
-    ensure => 'directory',
-    mode => '0755',
-    owner => "vagrant",
-    group => "vagrant",
+  file { '/home/vagrant/.composer/':
+    ensure  => 'directory',
+    mode    => '0755',
+    owner   => 'vagrant',
+    group   => 'vagrant',
     require => Class['php'],
   }
-  
-  file { "/home/vagrant/.composer/composer.json":
-    content => template("precip/composer.json"),
+
+  file { '/home/vagrant/.composer/composer.json':
     ensure  => 'file',
+    content => template('precip/composer.json'),
     mode    => '0644',
-    owner => "vagrant",
-    group => "vagrant",
+    owner   => 'vagrant',
+    group   => 'vagrant',
     require => [Class['php'], File['/home/vagrant/.composer/']],
   }
-    
-  exec { "install-composer-libraries":
-    command => "composer install --no-interaction --prefer-dist --no-dev --optimize-autoloader",
-    environment => [ "HOME=/home/vagrant", "COMPOSER_HOME=/home/vagrant/.composer" ],
-    cwd => "/home/vagrant/.composer",
-    path => "/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin",
-    user => "vagrant",
-    require => [Class['php'], File["/home/vagrant/.composer/composer.json"]],
+  
+  exec { 'install-composer-libraries':
+    command     => 'composer install --no-interaction --prefer-dist --no-dev --optimize-autoloader',
+    environment => [ 'HOME=/home/vagrant', 'COMPOSER_HOME=/home/vagrant/.composer' ],
+    cwd         => '/home/vagrant/.composer',
+    path        => '/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin',
+    user        => 'vagrant',
+    require     => [Class['php'], File['/home/vagrant/.composer/composer.json']],
   }
 }
