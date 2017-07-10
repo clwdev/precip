@@ -1,23 +1,23 @@
 class precip::httpd {
   # Need to specifically ask for Prefork, otherwise Ubuntu will go grab Worker
   # (Worker is weird)
-  class { 'apache': mpm_module => "prefork" }
-  class { 'apache::mod::php': 
-    package_name => "libapache2-mod-php5.6",
-    path => "/usr/lib/apache2/modules/libphp5.6.so",
-    require => Class['php']
-  }
+  class { 'apache': mpm_module => 'prefork' }
+  # class { 'apache::mod::php': 
+  #   package_name => "libapache2-mod-php5.6",
+  #   path => "/usr/lib/apache2/modules/libphp5.6.so",
+  #   require => Class['php']
+  # }
   class { 'apache::mod::ssl': }
   class { 'apache::mod::rewrite': }
 
   # Merge /etc/php/5.6/apache2 with /etc/php/5.6/cli *after* we install mod_php
-  file { '/etc/php/5.6/apache2':
-    ensure => "link",
-    force => "true",
-    target => "/etc/php/5.6/cli",
-    require => Class['apache::mod::php'],
-    notify => Service['apache2'],
-  }
+  # file { '/etc/php/5.6/apache2':
+  #   ensure => "link",
+  #   force => "true",
+  #   target => "/etc/php/5.6/cli",
+  #   require => Class['apache::mod::php'],
+  #   notify => Service['apache2'],
+  # }
 
   # We'll also need this if there are any commands defined
   file { '/vagrant/bin':
