@@ -5,6 +5,7 @@ drupal_basepath = "sites"
 internal_hosts = []
 external_hosts = {}
 packaging_mode = false
+forward_ssh_agent = false
 
 # Determine if this is our first boot or not. 
 # If there's a better way to figure this out we now have a single place to change.
@@ -61,6 +62,10 @@ Vagrant.configure(2) do |config|
 
   # Disabling vbguest is helpful in development
   # config.vbguest.auto_update = false
+
+  # Forward your host's SSH Agent to the VM
+  # Allows for key-based git repo authentication inside the box without copying keys
+  config.ssh.forward_agent = forward_ssh_agent
 
   # Synced Folders
   if Vagrant::Util::Platform.windows?
