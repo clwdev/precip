@@ -7,6 +7,7 @@ class precip {
     'htop',
     'curl',
     'wget',
+    'unzip',
     'bzip2',
     'git',
     'openssl',
@@ -37,17 +38,25 @@ class precip {
     ensure => present,
   }
 
-  # Grab some gems.
-  # Commented out for now, until we figure out task runners
-  # package {[
-  #   "compass",
-  #   "breakpoint",
-  #   "sass",
-  #   "susy",
-  #   ]:
-  #   ensure => 'installed',
-  #   provider => 'gem',
-  # }
+  # Grab various stuff needed to build sites
+  package {[
+    'bundler',
+    'compass',
+    'breakpoint',
+    'sass',
+    'susy',
+    ]:
+    ensure => 'installed',
+    provider => 'gem',
+  }
+
+  # @TODO: Install yarnpkg too, via their custom repo
+  package {[
+    'nodejs',
+    'npm',
+    ]:
+    ensure => present,
+  }
 
   # Make our log directory
   file {'/vagrant/log': ensure => 'directory', }
