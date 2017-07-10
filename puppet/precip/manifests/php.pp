@@ -15,11 +15,11 @@ class precip::php {
     extensions   => {
       curl       => { },
       gd         => { },
-      #imagick    => { },
+      imagick    => { },
       intl       => { },
       mbstring   => { },
       mcrypt     => { },
-      #memcached  => { },
+      memcached  => { },
       mysql      => { },
       sqlite     => { },
       zip        => { },
