@@ -16,10 +16,4 @@ class precip::keys {
     id     => '177F4010FE56CA3336300305F1656F24C74CD1D8',
     server => 'keyserver.ubuntu.com',
   }
-
-  # Puppetlabs' Repo Signing Key
-  apt::key { 'puppetlabs':
-    id     => '6F6B15509CF8E59E6E469F327F438280EF8D349F',
-    server => 'keyserver.ubuntu.com',
-  }
 }
