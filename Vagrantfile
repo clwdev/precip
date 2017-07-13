@@ -44,8 +44,7 @@ internal_hosts = internal_hosts.flatten
 # The actual Vagrant Configuration
 Vagrant.configure(2) do |config|
   # Vagrant Box Address
-  # This is a happy base box from PuppetLabs
-  config.vm.box = "puppetlabs/ubuntu-16.04-64-puppet"
+  config.vm.box = "clwdev/precip-16.04-base"
   config.vm.box_version = "1.0.0"
 
   # Basic network config.
