@@ -142,12 +142,6 @@ Vagrant.configure(2) do |config|
     configured = 1
   end
 
-  # Fix the harmless "stdin: is not a tty" issue once and for all
-  config.vm.provision "fix-no-tty", type: "shell" do |s|
-      s.privileged = false
-      s.inline = "sudo sed -i '/tty/!s/mesg n/tty -s \\&\\& mesg n/' /root/.profile"
-  end
-
   # Set up and use puppet-librarian inside the box to get all our Puppet Modules
   config.vm.provision "shell", path: "shell/librarian.sh"
   
