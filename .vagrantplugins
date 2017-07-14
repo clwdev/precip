@@ -2,11 +2,11 @@
 # via https://github.com/mitchellh/vagrant/issues/4347
 
 required_plugins = {
-  'vagrant-vbguest'            => '~>0.13',
-  'vagrant-hostsupdater'       => '~>1.0',
+  'vagrant-vbguest'            => '0.14.2',
+  'vagrant-hostsupdater'       => '1.0.2',
   'vagrant-useradd'            => '0.0.1',
-  'vagrant-bindfs'             => '1.0.1',
-  'vagrant-persistent-storage' => '0.0.21',
+  'vagrant-bindfs'             => '1.0.8',
+  'vagrant-persistent-storage' => '0.0.33',
 }
 
 needs_restart = false
