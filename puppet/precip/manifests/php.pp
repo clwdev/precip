@@ -21,9 +21,10 @@ class precip::php {
       mcrypt     => { },
       memcached  => { },
       mysql      => { },
-      sqlite     => { },
+      sqlite3    => { },
       zip        => { },
       opcache    => {
+        zend     => true,
         settings => {
           'opcache/opcache.enable_cli'              => '1',
           'opcache/opcache.revalidate_freq'         => '1',
@@ -34,6 +35,7 @@ class precip::php {
         },
       },
       xdebug     => {
+        zend     => true,
         settings => {
           'xdebug/xdebug.remote_autostart'    => '1',
           'xdebug/xdebug.remote_enable'       => '1',
