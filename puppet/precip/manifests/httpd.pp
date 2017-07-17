@@ -9,6 +9,8 @@ class precip::httpd {
   # }
   class { 'apache::mod::ssl': }
   class { 'apache::mod::rewrite': }
+  class { 'apache::mod::actions': }
+  class { 'apache::mod::fastcgi': }
 
   # Merge /etc/php/5.6/apache2 with /etc/php/5.6/cli *after* we install mod_php
   # file { '/etc/php/5.6/apache2':
