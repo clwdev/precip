@@ -20,6 +20,15 @@ class precip::httpd {
   #   require => Class['apache::mod::php'],
   #   notify => Service['apache2'],
   # }
+  # Actually set up the fastcgi server (note: this is the php7.0 one)
+  apache::fastcgi::server { 'php':
+    host       => '127.0.0.1:9000',
+    timeout    => 15,
+    flush      => false,
+    faux_path  => '/var/www/php.fcgi',
+    fcgi_alias => '/php.fcgi',
+    file_type  => 'application/x-httpd-php'
+  }
 
   # We'll also need this if there are any commands defined
   file { '/vagrant/bin':
@@ -36,6 +45,7 @@ class precip::httpd {
         allow_override => ['All',],
     }],
     access_log     => false,
+    custom_fragment => 'AddType application/x-httpd-php .php'
   }
 
   $parsed_siteinfo = parsejson($drupal_siteinfo)
