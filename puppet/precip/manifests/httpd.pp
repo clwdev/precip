@@ -44,6 +44,18 @@ class precip::httpd {
     custom_fragment => 'AddType application/x-httpd-php-5.6 .php'
   }
 
+  apache::vhost { '70.precip.vm':
+    docroot        => '/vagrant/util',
+    manage_docroot => false,
+    port           => '80',
+    directories    => [{
+        path           => '/vagrant/util',
+        allow_override => ['All',],
+    }],
+    access_log     => false,
+    custom_fragment => 'AddType application/x-httpd-php-7.0 .php'
+  }
+
   $parsed_siteinfo = parsejson($drupal_siteinfo)
   create_resources(drupal_vhosts, $parsed_siteinfo)
 
