@@ -7,14 +7,23 @@ class precip::httpd {
   class { 'apache::mod::actions': }
   class { 'apache::mod::fastcgi': }
 
-  # Actually set up the fastcgi server (note: this is the php7.0 one)
-  apache::fastcgi::server { 'php':
-    host       => '127.0.0.1:9000',
+  # Set up some FastCGI Servers
+  apache::fastcgi::server { 'php56':
+    host       => '/run/php/php5.6-fpm.sock',
     timeout    => 15,
     flush      => false,
-    faux_path  => '/var/www/php.fcgi',
-    fcgi_alias => '/php.fcgi',
-    file_type  => 'application/x-httpd-php'
+    faux_path  => '/var/www/php56.fcgi',
+    fcgi_alias => '/php56.fcgi',
+    file_type  => 'application/x-httpd-php-5.6'
+  }
+  
+  apache::fastcgi::server { 'php70':
+    host       => '/run/php/php7.0-fpm.sock',
+    timeout    => 15,
+    flush      => false,
+    faux_path  => '/var/www/php70.fcgi',
+    fcgi_alias => '/php70.fcgi',
+    file_type  => 'application/x-httpd-php-7.0'
   }
 
   # We'll also need this if there are any commands defined
@@ -32,7 +41,7 @@ class precip::httpd {
         allow_override => ['All',],
     }],
     access_log     => false,
-    custom_fragment => 'AddType application/x-httpd-php .php'
+    custom_fragment => 'AddType application/x-httpd-php-5.6 .php'
   }
 
   $parsed_siteinfo = parsejson($drupal_siteinfo)
