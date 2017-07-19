@@ -63,4 +63,25 @@ class precip::manualphp {
     ensure  => present,
     require => [Apt::Ppa['ppa:ondrej/php'], Class['apt::update']],
   }
+  
+  # config files
+  file { '/etc/php/5.6/mods-available/xdebug.ini':
+    ensure  => 'file',
+    content => template('precip/php56_xdebug.erb'),
+    mode    => '0644',
+    require => Package['php-xdebug'],
+  }
+
+  file { '/etc/php/7.0/mods-available/xdebug.ini':
+    ensure  => 'file',
+    content => template('precip/php70_xdebug.erb'),
+    mode    => '0644',
+    require => Package['php-xdebug'],
+  }
+  
+  exec { 'sudo phpenmod -v ALL -s ALL xdebug && service php5.6-fpm reload && service php7.0-fpm reload':
+    path    => '/usr/sbin:/usr/bin:/bin',
+    #onlyif  => ['test `php5.6 --version|grep Xdebug -c` -eq 0','test `php7.0 --version|grep Xdebug -c` -eq 0'],
+    require => File['/etc/php/5.6/mods-available/xdebug.ini','/etc/php/7.0/mods-available/xdebug.ini']
+  }
 }
