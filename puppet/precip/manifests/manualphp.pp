@@ -64,24 +64,84 @@ class precip::manualphp {
     require => [Apt::Ppa['ppa:ondrej/php'], Class['apt::update']],
   }
   
-  # config files
+  # Define some services so we can easily notify them of changes
+  service { 'php5.6-fpm':
+    ensure     => running,
+    enable     => true,
+    hasrestart => true,
+    hasstatus  => true,
+  }
+  
+  service { 'php7.0-fpm':
+    ensure     => running,
+    enable     => true,
+    hasrestart => true,
+    hasstatus  => true,
+  }
+  
+  # Config files. Yes, these could be simplified because 
+  # we only have the one .erb for each file. But we may
+  # have to eventually split them out, so i'm keeping
+  # them split out for now.
+  file { '/etc/php/5.6/mods-available/opcache.ini':
+    ensure  => 'file',
+    content => template('precip/php_opcache.erb'),
+    mode    => '0644',
+    require => Package['php5.6-fpm'],
+    notify  => Service['php5.6-fpm'],
+  }
+  
+  file { '/etc/php/7.0/mods-available/opcache.ini':
+    ensure  => 'file',
+    content => template('precip/php_opcache.erb'),
+    mode    => '0644',
+    require => Package['php7.0-fpm'],
+    notify  => Service['php7.0-fpm'],
+  }
+  
   file { '/etc/php/5.6/mods-available/xdebug.ini':
     ensure  => 'file',
-    content => template('precip/php56_xdebug.erb'),
+    content => template('precip/php_xdebug.erb'),
     mode    => '0644',
-    require => Package['php-xdebug'],
+    require => Package['php-xdebug','php5.6-fpm'],
+    notify  => Service['php5.6-fpm'],
   }
 
   file { '/etc/php/7.0/mods-available/xdebug.ini':
     ensure  => 'file',
-    content => template('precip/php70_xdebug.erb'),
+    content => template('precip/php_xdebug.erb'),
     mode    => '0644',
-    require => Package['php-xdebug'],
+    require => Package['php-xdebug','php7.0-fpm'],
+    notify  => Service['php7.0-fpm'],
   }
   
-  exec { 'sudo phpenmod -v ALL -s ALL xdebug && service php5.6-fpm reload && service php7.0-fpm reload':
+  file {[
+    '/etc/php/5.6/cli/conf.d/99-overrides.ini',
+    '/etc/php/5.6/fpm/conf.d/99-overrides.ini',
+    ]:
+    ensure  => 'file',
+    content => template('precip/php_overrides.erb'),
+    mode    => '0644',
+    require => Package['php5.6-fpm'],
+    notify  => Service['php5.6-fpm'],
+  }
+  
+  file {[
+    '/etc/php/7.0/cli/conf.d/99-overrides.ini',
+    '/etc/php/7.0/fpm/conf.d/99-overrides.ini',
+    ]:
+    ensure  => 'file',
+    content => template('precip/php_overrides.erb'),
+    mode    => '0644',
+    require => Package['php7.0-fpm'],
+    notify  => Service['php7.0-fpm'],
+  }
+  
+  # I think the onlyif is failing here. :(
+  exec { 'sudo phpenmod -v ALL -s ALL xdebug':
     path    => '/usr/sbin:/usr/bin:/bin',
-    #onlyif  => ['test `php5.6 --version|grep Xdebug -c` -eq 0','test `php7.0 --version|grep Xdebug -c` -eq 0'],
-    require => File['/etc/php/5.6/mods-available/xdebug.ini','/etc/php/7.0/mods-available/xdebug.ini']
+    onlyif  => ['test `curl -s 70.precip.vm | grep Xdebug -c` -eq 0','test `curl -s 70.precip.vm | grep Xdebug -c` -eq 0'],
+    require => [File['/etc/php/5.6/mods-available/xdebug.ini','/etc/php/7.0/mods-available/xdebug.ini'], Apache::Vhost['precip.vm','70.precip.vm']],
+    notify  => Service['php5.6-fpm','php7.0-fpm'],
   }
 }
