@@ -111,11 +111,23 @@ class precip {
     include 'precip::pimpmylog'
   }
 
-  # Ensure vagrant owns /usr/local/bin
-  file { '/usr/local/bin':
+  # Ensure vagrant owns /usr/local/bin and /usr/local/lib
+  file { [
+    '/usr/local/bin',
+    '/usr/local/lib',
+    ]:
     ensure => 'directory',
     owner  => 'vagrant',
     group  => 'vagrant',
+  }
+  
+  # On Ubuntu, the package name for "Node JS" is "nodejs" not "node".
+  # Lets smooth that out.
+  file { '/usr/local/bin/node':
+    ensure  => 'link',
+    force   => true,
+    target  => '/usr/bin/nodejs',
+    require => [File['/usr/local/bin'],Package['nodejs']],
   }
 
   # More elegant workaround for vbguest's issue #95
