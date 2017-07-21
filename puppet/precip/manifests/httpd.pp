@@ -10,7 +10,7 @@ class precip::httpd {
   # Set up some FastCGI Servers
   apache::fastcgi::server { 'php56':
     host       => '/run/php/php5.6-fpm.sock',
-    timeout    => 15,
+    timeout    => 300,
     flush      => false,
     faux_path  => '/var/www/php56.fcgi',
     fcgi_alias => '/php56.fcgi',
@@ -19,7 +19,7 @@ class precip::httpd {
   
   apache::fastcgi::server { 'php70':
     host       => '/run/php/php7.0-fpm.sock',
-    timeout    => 15,
+    timeout    => 300,
     flush      => false,
     faux_path  => '/var/www/php70.fcgi',
     fcgi_alias => '/php70.fcgi',
