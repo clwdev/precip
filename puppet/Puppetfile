@@ -12,9 +12,6 @@ mod 'ftaeger-mailhog',
   :git => "https://github.com/jeffgeorge/ftaeger-mailhog.git",
   :ref => "remove_wget_cache_dir"
 
-mod 'puppet-php',
-  :git => "https://github.com/voxpupuli/puppet-php.git"
-
 mod 'saz-memcached'
 
 mod 'clwdev-precip', :path => '/vagrant/puppet/precip'

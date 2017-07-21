@@ -1,9 +1,6 @@
 FORGE
   remote: https://forgeapi.puppetlabs.com
   specs:
-    darin-zypprepo (1.0.2)
-    puppet-archive (1.3.0)
-      puppetlabs-stdlib (< 5.0.0, >= 4.6.0)
     puppet-staging (2.2.0)
     puppetlabs-apache (1.11.0)
       puppetlabs-concat (< 3.0.0, >= 1.1.1)
@@ -13,7 +10,6 @@ FORGE
     puppetlabs-concat (2.2.1)
       puppetlabs-stdlib (< 5.0.0, >= 4.2.0)
     puppetlabs-firewall (1.8.1)
-    puppetlabs-inifile (1.6.0)
     puppetlabs-mysql (3.11.0)
       puppet-staging (< 3.0.0, >= 1.0.1)
       puppetlabs-stdlib (< 5.0.0, >= 3.2.0)
@@ -31,18 +27,6 @@ GIT
     ftaeger-mailhog (1.1.0)
       puppetlabs-stdlib (< 5.0.0, >= 4.10.0)
 
-GIT
-  remote: https://github.com/voxpupuli/puppet-php.git
-  ref: master
-  sha: dc9e9cc53bc4adc0dbfc1812a200618d5ad8e265
-  specs:
-    puppet-php (5.0.0-rc0)
-      darin-zypprepo (< 2.0.0, >= 1.0.2)
-      puppet-archive (< 2.0.0, >= 1.0.0)
-      puppetlabs-apt (< 5.0.0, >= 4.1.0)
-      puppetlabs-inifile (< 2.0.0, >= 1.4.1)
-      puppetlabs-stdlib (< 5.0.0, >= 4.13.1)
-
 PATH
   remote: /vagrant/puppet/precip
   specs:
@@ -51,7 +35,6 @@ PATH
 DEPENDENCIES
   clwdev-precip (>= 0)
   ftaeger-mailhog (>= 0)
-  puppet-php (>= 0)
   puppetlabs-apache (>= 0)
   puppetlabs-apt (= 4.1.0)
   puppetlabs-mysql (>= 0)
