@@ -5,10 +5,10 @@
 
 ## What's Included?
 A full LAMP stack, and a few nice extras.
-- Ubuntu Server 14.04 LTS
+- Ubuntu Server 16.04.2 LTS
 - Apache Server 2.4
 - MariaDB 10.1
-- PHP 5.6
+- PHP 5.6 *or* 7.0
   - With Memcache, OPCache, and Xdebug all pre-configured
 - MailHog, the _absolute_ simplest way to locally test mail delivery
 
@@ -48,13 +48,12 @@ A full LAMP stack, and a few nice extras.
  - As a general rule, getting latest Vagrant, Virtualbox and plugins is advised
  - BUT if you have issues, as sometimes bleeding edge releases can have unreported / unresolved bugs, roll back to prior versions by uninstalling and re-installing that earlier version (and search issue queues). The Macosx package includes an uninstaller script.
  - Current known stable releases as of March 7, 2017: 
-    - vagrant 1.9.2
-    - vagrant-bindfs (1.0.1)
+    - vagrant 1.9.7
+    - vagrant-bindfs (1.0.8)
     - vagrant-hostsupdater (1.0.2)
-    - vagrant-persistent-storage (0.0.21)
-    - vagrant-share (1.1.6, system)
+    - vagrant-persistent-storage (0.0.33)
     - vagrant-useradd (0.0.1)
-    - vagrant-vbguest (0.13.0)
+    - vagrant-vbguest (0.14.2)
  
 ## Updating Vagrant
 - If you do a `$ git pull` and see that the `Vagrantfile` has been updated, you may want to make sure things are up to date by running `$ vagrant reload --provision`.
