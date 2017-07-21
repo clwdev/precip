@@ -144,4 +144,43 @@ class precip::manualphp {
     require => [File['/etc/php/5.6/mods-available/xdebug.ini','/etc/php/7.0/mods-available/xdebug.ini'], Apache::Vhost['precip.vm','70.precip.vm']],
     notify  => Service['php5.6-fpm','php7.0-fpm'],
   }
+  
+  package {'composer':
+    ensure  => present,
+    require => Package['php5.6-cli','php7.0-cli'],
+  }
+  
+  # Add Composer's vendor directory to the vagrant user's $PATH
+  file { '/home/vagrant/.pam_environment':
+    mode    => '0644',
+    content => 'PATH DEFAULT=${PATH}:/home/vagrant/.composer/vendor/bin',
+    require => Package['composer'],
+  }
+
+  # These bits install Drush & Friends via composer
+  file { '/home/vagrant/.composer/':
+    ensure  => 'directory',
+    mode    => '0755',
+    owner   => 'vagrant',
+    group   => 'vagrant',
+    require => Package['composer'],
+  }
+
+  file { '/home/vagrant/.composer/composer.json':
+    ensure  => 'file',
+    content => template('precip/composer.json'),
+    mode    => '0644',
+    owner   => 'vagrant',
+    group   => 'vagrant',
+    require => [Package['composer'], File['/home/vagrant/.composer/']],
+  }
+  
+  exec { 'install-composer-libraries':
+    command     => 'composer install --no-interaction --prefer-dist --no-dev --optimize-autoloader',
+    environment => [ 'HOME=/home/vagrant', 'COMPOSER_HOME=/home/vagrant/.composer' ],
+    cwd         => '/home/vagrant/.composer',
+    path        => '/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin',
+    user        => 'vagrant',
+    require     => [Package['composer'], File['/home/vagrant/.composer/composer.json']],
+  }
 }
