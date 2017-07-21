@@ -111,6 +111,13 @@ class precip {
     include 'precip::pimpmylog'
   }
 
+  # Ensure vagrant owns /usr/local/bin
+  file { '/usr/local/bin':
+    ensure => 'directory',
+    owner  => 'vagrant',
+    group  => 'vagrant',
+  }
+
   # More elegant workaround for vbguest's issue #95
   # See: https://github.com/dotless-de/vagrant-vbguest/issues/95#issuecomment-163777475
   file { '/sbin/vboxadd':
