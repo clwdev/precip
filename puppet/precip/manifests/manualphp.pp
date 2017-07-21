@@ -116,6 +116,28 @@ class precip::manualphp {
   }
   
   file {[
+    '/etc/php/5.6/cli/conf.d/20-xdebug.ini',
+    '/etc/php/5.6/fpm/conf.d/20-xdebug.ini',
+    ]:
+    ensure => 'link',
+    force  => true,
+    target => '/etc/php/5.6/mods-available/xdebug.ini',
+    require => [File['/etc/php/5.6/mods-available/xdebug.ini'], Package['php5.6-fpm']],
+    notify  => Service['php5.6-fpm'],
+  }
+  
+  file {[
+    '/etc/php/7.0/cli/conf.d/20-xdebug.ini',
+    '/etc/php/7.0/fpm/conf.d/20-xdebug.ini',
+    ]:
+    ensure => 'link',
+    force  => true,
+    target => '/etc/php/7.0/mods-available/xdebug.ini',
+    require => [File['/etc/php/7.0/mods-available/xdebug.ini'], Package['php7.0-fpm']],
+    notify  => Service['php7.0-fpm'],
+  }
+  
+  file {[
     '/etc/php/5.6/cli/conf.d/99-overrides.ini',
     '/etc/php/5.6/fpm/conf.d/99-overrides.ini',
     ]:
@@ -135,14 +157,6 @@ class precip::manualphp {
     mode    => '0644',
     require => Package['php7.0-fpm'],
     notify  => Service['php7.0-fpm'],
-  }
-  
-  # I think the onlyif is failing here. :(
-  exec { 'sudo phpenmod -v ALL -s ALL xdebug':
-    path    => '/usr/sbin:/usr/bin:/bin',
-    onlyif  => ['test `curl -s 70.precip.vm | grep Xdebug -c` -eq 0','test `curl -s 70.precip.vm | grep Xdebug -c` -eq 0'],
-    require => [File['/etc/php/5.6/mods-available/xdebug.ini','/etc/php/7.0/mods-available/xdebug.ini'], Apache::Vhost['precip.vm','70.precip.vm']],
-    notify  => Service['php5.6-fpm','php7.0-fpm'],
   }
   
   package {'composer':
