@@ -38,7 +38,7 @@ class precip {
     ensure => present,
   }
 
-  # Grab various stuff needed to build sites
+  # Tools needed to build Omega-based themes
   package {[
     'bundler',
     'compass',
@@ -50,12 +50,24 @@ class precip {
     provider => 'gem',
   }
 
-  # @TODO: Install yarnpkg too, via their custom repo
+  # Define the Yarn apt repo
+  apt::source { 'yarn':
+    location => 'http://dl.yarnpkg.com/debian/',
+    release  => 'stable',
+    repos    => 'main',
+    require  => [
+      Apt::Key['yarn']
+    ]
+  }
+
+  # Tools needed to build Radix-based themes
   package {[
     'nodejs',
     'npm',
+    'yarn',
     ]:
-    ensure => present,
+    require => [Apt::Source['yarn'],Class['apt::update']],
+    ensure  => present,
   }
 
   # Make our log directory

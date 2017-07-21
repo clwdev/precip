@@ -11,9 +11,15 @@ class precip::keys {
     server => 'keyserver.ubuntu.com',
   }
 
-  # MariaDB's PPA key
+  # MariaDB's Package Signing key
   apt::key { 'mariadb':
     id     => '177F4010FE56CA3336300305F1656F24C74CD1D8',
+    server => 'keyserver.ubuntu.com',
+  }
+  
+  # Yarn's Package Signing Key
+  apt::key { 'yarn':
+    id     => '72ECF46A56B4AD39C907BBB71646B01B86E50310',
     server => 'keyserver.ubuntu.com',
   }
 }
