@@ -1,4 +1,4 @@
-class precip::manualphp {
+class precip::php {
   # All Puppet PHP Modules are Terrible.
   # Let's not use them.
   

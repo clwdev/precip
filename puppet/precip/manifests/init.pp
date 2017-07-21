@@ -105,8 +105,7 @@ class precip {
   # Kick off the rest of our manifests
   include 'precip::keys'
   if !str2bool("$packaging_mode") {
-    #include 'precip::php'
-    include 'precip::manualphp'
+    include 'precip::php'
     include 'precip::httpd'
     include 'precip::database'
     include 'precip::pimpmylog'
