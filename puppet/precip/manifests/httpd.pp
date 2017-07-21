@@ -73,7 +73,7 @@ class precip::httpd {
   }
 }
 
-define drupal_vhosts($host, $aliases = [], $path, $drupal = '7', $multisite_dir = 'default', $setenv = [], $git_url = '', $git_dir = '', $commands = {}, $ssl_cert = '/vagrant/ssl/precip_vm_host.pem', $ssl_ca = '/vagrant/ssl/precip_ca_bundle.crt.pem', $ssl_key = '/vagrant/ssl/precip_vm_host-key.pem') {
+define drupal_vhosts($host, $aliases = [], $path, $drupal = '7', $multisite_dir = 'default', $setenv = [], $git_url = '', $git_dir = '', $commands = {}, $ssl_cert = '/vagrant/ssl/precip_vm_host.pem', $ssl_ca = '/vagrant/ssl/precip_ca_bundle.crt.pem', $ssl_key = '/vagrant/ssl/precip_vm_host-key.pem', $php_version = '5.6') {
   apache::vhost { $host:
     docroot        => "/srv/www/${path}",
     manage_docroot => false,
@@ -91,6 +91,8 @@ define drupal_vhosts($host, $aliases = [], $path, $drupal = '7', $multisite_dir 
       ]
     ),
     access_log     => false,
+    error_log_file => "${host}_error.log",
+    custom_fragment => "AddType application/x-httpd-php-${php_version} .php"
   }
   apache::vhost { "${host}-ssl":
     docroot        => "/srv/www/${path}",
@@ -110,6 +112,7 @@ define drupal_vhosts($host, $aliases = [], $path, $drupal = '7', $multisite_dir 
     ),
     access_log     => false,
     error_log_file => "${host}_error.log",
+    custom_fragment => "AddType application/x-httpd-php-${php_version} .php",
     ssl            => true,
     ssl_cert       => $ssl_cert,
     ssl_ca         => $ssl_ca,
