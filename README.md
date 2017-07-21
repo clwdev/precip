@@ -24,7 +24,7 @@ A full LAMP stack, and a few nice extras.
 ## Pre-flight Checklist
 - Get [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 - Also [Vagrant](http://www.vagrantup.com/downloads.html)
-- Then go download these super helpful Vagrant Plugins (If you forget to, Vagrant will install them for you. It'll error on your first `vagrant up`, but will work fine if you re-run `vagrant up`.)
+- Then go download these super helpful Vagrant Plugins (If you forget to, Vagrant will install them for you. It *might* error on your first `vagrant up`, but should still install things fine.)
   - `$ vagrant plugin install vagrant-vbguest`
   - `$ vagrant plugin install vagrant-hostsupdater`
   - `$ vagrant plugin install vagrant-useradd`
