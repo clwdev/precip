@@ -94,8 +94,6 @@ Each VirtualHost you define in `config.rb` automatically logs Apache errors to t
 ## Debugging Integration
 [Xdebug](http://xdebug.org/) is built in and preconfigured. Use something like [Xdebug Helper](https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc?hl=en) to trigger a session, and your IDE should automagically pick it up.
 
-The [XHProf PHP Extension](http://php.net/manual/en/book.xhprof.php) is also built in. There's a [pretty nice Drupal Module](https://www.drupal.org/project/xhprof) that can hook into it.
-
 ## MailHog
 [MailHog](https://github.com/mailhog/MailHog) is an alternative mailhandler written in Go. Similar to MailCatcher it collects mail sent by PHP (or, anything actually) and puts it in a friendly local web UI. Said web UI lives on port 8025: [precip.vm:8025](http://precip.vm:8025). The major benefit MailHog has over MailCatcher is that it's written in Go and is distributed as a statically-compiled binary, so we don't have a mile-long list of Ruby dependencies to reconcile before installing.
 
