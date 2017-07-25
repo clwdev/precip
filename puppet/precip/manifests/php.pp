@@ -172,7 +172,7 @@ class precip::php {
   }
 
   # These bits install Drush & Friends via composer
-  file { '/home/vagrant/.composer/':
+  file { '/home/vagrant/.composer':
     ensure  => 'directory',
     mode    => '0755',
     owner   => 'vagrant',
@@ -182,7 +182,7 @@ class precip::php {
 
   file { '/home/vagrant/.composer/composer.json':
     ensure  => 'file',
-    content => template('precip/composer.json'),
+    content => template('precip/global-composer.json'),
     mode    => '0644',
     owner   => 'vagrant',
     group   => 'vagrant',
