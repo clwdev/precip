@@ -85,12 +85,19 @@
 
 # Packaging Mode skips some of the build steps and preps a box for publishing. 
 # Uncomment the following line to run the site in "packaging mode"
+#
 # packaging_mode = true
 
 # Forward SSH Agent forwards your host's ssh_agent (so, all authorized keys and such)
 # into the box, which means you'll be able to do key-based git authentication without
 # having to copy/paste keys into the box.
+#
 # forward_ssh_agent = true
+
+# Sometimes you may need to run two instances of precip, but Virtualbox and Vagrant
+# get angry if two boxes have the same name. Need to override that? Set it here.
+#
+# vm_name = "not-precip"
 
 drupal_sites = {
 #   "example" => {

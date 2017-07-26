@@ -6,6 +6,7 @@ internal_hosts = []
 external_hosts = {}
 packaging_mode = false
 forward_ssh_agent = false
+vm_name = "precip"
 
 # Determine if this is our first boot or not. 
 # If there's a better way to figure this out we now have a single place to change.
@@ -99,8 +100,8 @@ Vagrant.configure(2) do |config|
   # Configure the VM. Tweak as needed
   configured = -1
   config.vm.provider :virtualbox do |vb|
-    # Name this virtual machine "precip"
-    vb.customize ["modifyvm", :id, "--name", "precip"]
+    # Provide a unique name for this virtual machine
+    vb.customize ["modifyvm", :id, "--name", vm_name]
     # IOAPIC is needed for a 64bit host for multiple cures
     vb.customize ["modifyvm", :id, "--ioapic", "on"]
     # Use ICH9 for performance
