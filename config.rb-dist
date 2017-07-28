@@ -84,7 +84,9 @@
 #
 
 # Packaging Mode skips some of the build steps and preps a box for publishing. 
-# Uncomment the following line to run the site in "packaging mode"
+# Uncomment the following line to run the site in "packaging mode".
+#
+# Warning: Only do this if you _really_ know what you're doing
 #
 # packaging_mode = true
 
@@ -98,6 +100,13 @@
 # get angry if two boxes have the same name. Need to override that? Set it here.
 #
 # vm_name = "not-precip"
+
+# We offer a partially pre-built version of the Precip Base Box, which ships with 
+# all keys and base packages pre-installed, so all that's left is installing PHP, 
+# Apache, MySQL, and Configuring everything. This can help on restrictive networks
+# where you might not be able to add keys properly.
+#
+# use_packaged_precip = true
 
 drupal_sites = {
 #   "example" => {
