@@ -176,7 +176,7 @@ Vagrant.configure(2) do |config|
     }
   end
   
-  if File.file?('shell/custom.sh') && File.executable?('shell/custom.sh')
+  if File.file?('shell/custom.sh')
     # Run any Extra stuff you may need
     config.vm.provision "shell", path: "shell/custom.sh", privileged: false
   end

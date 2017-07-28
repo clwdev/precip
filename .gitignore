@@ -12,4 +12,5 @@ puppet/.tmp
 precip.box
 *.vdi
 .idea
+.DS_Store
 shell/custom.sh
