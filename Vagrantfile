@@ -7,6 +7,7 @@ external_hosts = {}
 packaging_mode = false
 forward_ssh_agent = false
 vm_name = "precip"
+use_packaged_precip = false
 
 # Determine if this is our first boot or not. 
 # If there's a better way to figure this out we now have a single place to change.
@@ -46,8 +47,15 @@ internal_hosts = internal_hosts.flatten
 # The actual Vagrant Configuration
 Vagrant.configure(2) do |config|
   # Vagrant Box Address
-  config.vm.box = "clwdev/precip-16.04-base"
-  config.vm.box_version = "1.0.0"
+  if use_packaged_precip == true
+    # The pre-packaged and shrink-wrapped version of Precip
+    config.vm.box = "clwdev/precip"
+    config.vm.box_version = "2.0.0"
+  else
+    # The super-generic simple Ubuntu 16.04 base box (with Puppet)
+    config.vm.box = "clwdev/precip-16.04-base"
+    config.vm.box_version = "1.0.0"
+  end
 
   # Basic network config.
   config.vm.network :private_network, ip: "10.0.0.11"
