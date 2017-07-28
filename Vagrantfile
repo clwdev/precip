@@ -163,4 +163,9 @@ Vagrant.configure(2) do |config|
       "packaging_mode" => packaging_mode,
     }
   end
+  
+  if File.file?('shell/custom.sh') && File.executable?('shell/custom.sh')
+    # Run any Extra stuff you may need
+    config.vm.provision "shell", path: "shell/custom.sh", privileged: false
+  end
 end
