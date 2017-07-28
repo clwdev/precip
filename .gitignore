@@ -12,3 +12,4 @@ puppet/.tmp
 precip.box
 *.vdi
 .idea
+shell/custom.sh
