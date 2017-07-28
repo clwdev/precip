@@ -141,6 +141,10 @@ Vagrant.configure(2) do |config|
       #   puts "CPUs set to: #{cpus}"
       # end
     end
+    # Allow Windows Hosts to create symlinks inside shared folders
+    if Vagrant::Util::Platform.windows?
+      vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
+    end
     configured = 1
   end
 
