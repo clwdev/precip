@@ -1,89 +1,202 @@
 class precip::php {
-  class { '::php':
-    manage_repos => true,
-    fpm          => false,
-    dev          => true,
-    composer     => true,
-    pear         => false,
-    phpunit      => false,
-    extensions   => {
-      curl       => { },
-      gd         => { },
-      imagick    => { },
-      intl       => { },
-      mbstring   => { },
-      mcrypt     => { },
-      memcached  => { },
-      mysql      => { },
-      sqlite     => { }, 
-      opcache    => {
-        settings => {
-          'opcache/opcache.enable_cli' => '1',
-          'opcache/opcache.revalidate_freq' => '1',
-          'opcache/opcache.memory_consumption' => '512',
-          'opcache/opcache.max_accelerated_files' => '10000',
-          'opcache/opcache.interned_strings_buffer' => '16',
-          'opcache/opcache.fast_shutdown' => '1',
-        },
-      },
-      xdebug     => {
-        settings => {
-          'xdebug/xdebug.remote_autostart' => '1',
-          'xdebug/xdebug.remote_enable' => '1',
-          'xdebug/xdebug.remote_connect_back' => '1',
-          'xdebug/xdebug.idekey' => 'vagrant',
-          'xdebug/xdebug.max_nesting_level' => '10000',
-        },
-      },
-    },
-    settings     => {
-      'PHP/max_execution_time'  => '600',
-      'PHP/max_input_time'      => '300',
-      'PHP/post_max_size'       => '50M',
-      'PHP/upload_max_filesize' => '50M',
-      'PHP/memory_limit'        => '256M',
-      'PHP/max_input_vars'      => '10000',
-      'PHP/realpath_cache_size' => '1024',
-      'PHP/display_errors'      => 'On',
-      'PHP/html_errors'         => 'On',
-      'PHP/session_save_path'   => '/tmp',
-      'PHP/sendmail_path'       => '/usr/bin/mailhog sendmail noreply@precip.vm',
-      'Date/date.timezone'      => 'America/New_York',
-    },
-    require => Package["software-properties-common"],
+  # All Puppet PHP Modules are Terrible.
+  # Let's not use them.
+  
+  # Get Ondrej's PPA
+  ::apt::ppa { "ppa:ondrej/php": }
+  
+  # Get all the PHP 5.6 deps
+  package{[
+    'php5.6-cli',
+    'php5.6-common',
+    'php5.6-curl',
+    'php5.6-dev',
+    'php5.6-fpm',
+    'php5.6-gd',
+    'php5.6-intl',
+    'php5.6-json',
+    'php5.6-mbstring',
+    'php5.6-mcrypt',
+    'php5.6-mysql',
+    'php5.6-opcache',
+    'php5.6-readline',
+    'php5.6-soap',
+    'php5.6-sqlite3',
+    'php5.6-xml',
+    'php5.6-zip',
+    ]:
+    ensure  => present,
+    require => [Apt::Ppa['ppa:ondrej/php'], Class['apt::update']],
+  }
+  
+  # Get all the PHP 7 deps
+  package{[
+    'php7.0-cli',
+    'php7.0-common',
+    'php7.0-curl',
+    'php7.0-dev',
+    'php7.0-fpm',
+    'php7.0-gd',
+    'php7.0-intl',
+    'php7.0-json',
+    'php7.0-mbstring',
+    'php7.0-mcrypt',
+    'php7.0-mysql',
+    'php7.0-opcache',
+    'php7.0-readline',
+    'php7.0-soap',
+    'php7.0-sqlite3',
+    'php7.0-xml',
+    'php7.0-zip',
+    ]:
+    ensure  => present,
+    require => [Apt::Ppa['ppa:ondrej/php'], Class['apt::update']],
+  }
+  
+  # . . and the ones we only need once
+  package{[
+    'php-igbinary',
+    'php-imagick',
+    'php-memcached',
+    'php-msgpack',
+    'php-pear',
+    'php-xdebug',
+    ]:
+    ensure  => present,
+    require => [Apt::Ppa['ppa:ondrej/php'], Class['apt::update']],
+  }
+  
+  # Define some services so we can easily notify them of changes
+  service { 'php5.6-fpm':
+    ensure     => running,
+    enable     => true,
+    hasrestart => true,
+    hasstatus  => true,
+  }
+  
+  service { 'php7.0-fpm':
+    ensure     => running,
+    enable     => true,
+    hasrestart => true,
+    hasstatus  => true,
+  }
+  
+  # Config files. Yes, these could be simplified because 
+  # we only have the one .erb for each file. But we may
+  # have to eventually split them out, so i'm keeping
+  # them split out for now.
+  file { '/etc/php/5.6/mods-available/opcache.ini':
+    ensure  => 'file',
+    content => template('precip/php_opcache.erb'),
+    mode    => '0644',
+    require => Package['php5.6-fpm'],
+    notify  => Service['php5.6-fpm'],
+  }
+  
+  file { '/etc/php/7.0/mods-available/opcache.ini':
+    ensure  => 'file',
+    content => template('precip/php_opcache.erb'),
+    mode    => '0644',
+    require => Package['php7.0-fpm'],
+    notify  => Service['php7.0-fpm'],
+  }
+  
+  file { '/etc/php/5.6/mods-available/xdebug.ini':
+    ensure  => 'file',
+    content => template('precip/php_xdebug.erb'),
+    mode    => '0644',
+    require => Package['php-xdebug','php5.6-fpm'],
+    notify  => Service['php5.6-fpm'],
   }
 
+  file { '/etc/php/7.0/mods-available/xdebug.ini':
+    ensure  => 'file',
+    content => template('precip/php_xdebug.erb'),
+    mode    => '0644',
+    require => Package['php-xdebug','php7.0-fpm'],
+    notify  => Service['php7.0-fpm'],
+  }
+  
+  file {[
+    '/etc/php/5.6/cli/conf.d/20-xdebug.ini',
+    '/etc/php/5.6/fpm/conf.d/20-xdebug.ini',
+    ]:
+    ensure => 'link',
+    force  => true,
+    target => '/etc/php/5.6/mods-available/xdebug.ini',
+    require => [File['/etc/php/5.6/mods-available/xdebug.ini'], Package['php5.6-fpm']],
+    notify  => Service['php5.6-fpm'],
+  }
+  
+  file {[
+    '/etc/php/7.0/cli/conf.d/20-xdebug.ini',
+    '/etc/php/7.0/fpm/conf.d/20-xdebug.ini',
+    ]:
+    ensure => 'link',
+    force  => true,
+    target => '/etc/php/7.0/mods-available/xdebug.ini',
+    require => [File['/etc/php/7.0/mods-available/xdebug.ini'], Package['php7.0-fpm']],
+    notify  => Service['php7.0-fpm'],
+  }
+  
+  file {[
+    '/etc/php/5.6/cli/conf.d/99-overrides.ini',
+    '/etc/php/5.6/fpm/conf.d/99-overrides.ini',
+    ]:
+    ensure  => 'file',
+    content => template('precip/php_overrides.erb'),
+    mode    => '0644',
+    require => Package['php5.6-fpm'],
+    notify  => Service['php5.6-fpm'],
+  }
+  
+  file {[
+    '/etc/php/7.0/cli/conf.d/99-overrides.ini',
+    '/etc/php/7.0/fpm/conf.d/99-overrides.ini',
+    ]:
+    ensure  => 'file',
+    content => template('precip/php_overrides.erb'),
+    mode    => '0644',
+    require => Package['php7.0-fpm'],
+    notify  => Service['php7.0-fpm'],
+  }
+  
+  package {'composer':
+    ensure  => present,
+    require => Package['php5.6-cli','php7.0-cli'],
+  }
+  
   # Add Composer's vendor directory to the vagrant user's $PATH
   file { '/home/vagrant/.pam_environment':
     mode    => '0644',
     content => 'PATH DEFAULT=${PATH}:/home/vagrant/.composer/vendor/bin',
-    require => Class['php'],
+    require => Package['composer'],
   }
-  
+
   # These bits install Drush & Friends via composer
-  file { "/home/vagrant/.composer/":
-    ensure => 'directory',
-    mode => '0755',
-    owner => "vagrant",
-    group => "vagrant",
-    require => Class['php'],
+  file { '/home/vagrant/.composer':
+    ensure  => 'directory',
+    mode    => '0755',
+    owner   => 'vagrant',
+    group   => 'vagrant',
+    require => Package['composer'],
+  }
+
+  file { '/home/vagrant/.composer/composer.json':
+    ensure  => 'file',
+    content => template('precip/global-composer.json'),
+    mode    => '0644',
+    owner   => 'vagrant',
+    group   => 'vagrant',
+    require => [Package['composer'], File['/home/vagrant/.composer/']],
   }
   
-  file { "/home/vagrant/.composer/composer.json":
-    content => template("precip/composer.json"),
-    ensure  => 'file',
-    mode    => '0644',
-    owner => "vagrant",
-    group => "vagrant",
-    require => [Class['php'], File['/home/vagrant/.composer/']],
-  }
-    
-  exec { "install-composer-libraries":
-    command => "composer install --no-interaction --prefer-dist --no-dev --optimize-autoloader",
-    environment => [ "HOME=/home/vagrant", "COMPOSER_HOME=/home/vagrant/.composer" ],
-    cwd => "/home/vagrant/.composer",
-    path => "/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin",
-    user => "vagrant",
-    require => [Class['php'], File["/home/vagrant/.composer/composer.json"]],
+  exec { 'install-composer-libraries':
+    command     => 'composer install --no-interaction --prefer-dist --no-dev --optimize-autoloader',
+    environment => [ 'HOME=/home/vagrant', 'COMPOSER_HOME=/home/vagrant/.composer' ],
+    cwd         => '/home/vagrant/.composer',
+    path        => '/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin',
+    user        => 'vagrant',
+    require     => [Package['composer'], File['/home/vagrant/.composer/composer.json']],
   }
 }

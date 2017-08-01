@@ -5,6 +5,9 @@ drupal_basepath = "sites"
 internal_hosts = []
 external_hosts = {}
 packaging_mode = false
+forward_ssh_agent = false
+vm_name = "precip"
+use_packaged_precip = false
 
 # Determine if this is our first boot or not. 
 # If there's a better way to figure this out we now have a single place to change.
@@ -38,14 +41,21 @@ drupal_sites.each do |name, site|
     internal_hosts.push(site['aliases'])
   end
 end
+internal_hosts.push("70.precip.vm")
 internal_hosts = internal_hosts.flatten
 
 # The actual Vagrant Configuration
 Vagrant.configure(2) do |config|
   # Vagrant Box Address
-  # This is a happy base box from PuppetLabs
-  config.vm.box = "puppetlabs/ubuntu-14.04-64-puppet"
-  config.vm.box_version = "1.0.3"
+  if use_packaged_precip == true
+    # The pre-packaged and shrink-wrapped version of Precip
+    config.vm.box = "clwdev/precip"
+    config.vm.box_version = "2.0.0"
+  else
+    # The super-generic simple Ubuntu 16.04 base box (with Puppet)
+    config.vm.box = "clwdev/precip-16.04-base"
+    config.vm.box_version = "1.0.0"
+  end
 
   # Basic network config.
   config.vm.network :private_network, ip: "10.0.0.11"
@@ -61,6 +71,10 @@ Vagrant.configure(2) do |config|
 
   # Disabling vbguest is helpful in development
   # config.vbguest.auto_update = false
+
+  # Forward your host's SSH Agent to the VM
+  # Allows for key-based git repo authentication inside the box without copying keys
+  config.ssh.forward_agent = forward_ssh_agent
 
   # Synced Folders
   if Vagrant::Util::Platform.windows?
@@ -94,8 +108,8 @@ Vagrant.configure(2) do |config|
   # Configure the VM. Tweak as needed
   configured = -1
   config.vm.provider :virtualbox do |vb|
-    # Name this virtual machine "precip"
-    vb.customize ["modifyvm", :id, "--name", "precip"]
+    # Provide a unique name for this virtual machine
+    vb.customize ["modifyvm", :id, "--name", vm_name]
     # IOAPIC is needed for a 64bit host for multiple cures
     vb.customize ["modifyvm", :id, "--ioapic", "on"]
     # Use ICH9 for performance
@@ -135,20 +149,18 @@ Vagrant.configure(2) do |config|
       #   puts "CPUs set to: #{cpus}"
       # end
     end
+    # Allow Windows Hosts to create symlinks inside shared folders
+    if Vagrant::Util::Platform.windows?
+      vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
+    end
     configured = 1
-  end
-
-  # Fix the harmless "stdin: is not a tty" issue once and for all
-  config.vm.provision "fix-no-tty", type: "shell" do |s|
-      s.privileged = false
-      s.inline = "sudo sed -i '/tty/!s/mesg n/tty -s \\&\\& mesg n/' /root/.profile"
   end
 
   # Set up and use puppet-librarian inside the box to get all our Puppet Modules
   config.vm.provision "shell", path: "shell/librarian.sh"
   
   # Hand off to puppet
-  config.vm.provision :puppet, :options => [""] do |puppet|
+  config.vm.provision :puppet, :options => ["--disable_warnings deprecations"] do |puppet|
     puppet.environment_path = "puppet/environments"
     puppet.environment = "vm"
     puppet.hiera_config_path = "puppet/hiera.yaml"
@@ -162,5 +174,10 @@ Vagrant.configure(2) do |config|
       "first_boot" => first_boot,
       "packaging_mode" => packaging_mode,
     }
+  end
+  
+  if File.file?('shell/custom.sh')
+    # Run any Extra stuff you may need
+    config.vm.provision "shell", path: "shell/custom.sh", privileged: false
   end
 end

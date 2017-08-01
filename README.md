@@ -5,10 +5,10 @@
 
 ## What's Included?
 A full LAMP stack, and a few nice extras.
-- Ubuntu Server 14.04 LTS
+- Ubuntu Server 16.04.2 LTS
 - Apache Server 2.4
 - MariaDB 10.1
-- PHP 5.6
+- PHP 5.6 *or* 7.0
   - With Memcache, OPCache, and Xdebug all pre-configured
 - MailHog, the _absolute_ simplest way to locally test mail delivery
 
@@ -24,7 +24,7 @@ A full LAMP stack, and a few nice extras.
 ## Pre-flight Checklist
 - Get [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 - Also [Vagrant](http://www.vagrantup.com/downloads.html)
-- Then go download these super helpful Vagrant Plugins (If you forget to, Vagrant will install them for you. It'll error on your first `vagrant up`, but will work fine if you re-run `vagrant up`.)
+- Then go download these super helpful Vagrant Plugins (If you forget to, Vagrant will install them for you. It *might* error on your first `vagrant up`, but should still install things fine.)
   - `$ vagrant plugin install vagrant-vbguest`
   - `$ vagrant plugin install vagrant-hostsupdater`
   - `$ vagrant plugin install vagrant-useradd`
@@ -48,13 +48,12 @@ A full LAMP stack, and a few nice extras.
  - As a general rule, getting latest Vagrant, Virtualbox and plugins is advised
  - BUT if you have issues, as sometimes bleeding edge releases can have unreported / unresolved bugs, roll back to prior versions by uninstalling and re-installing that earlier version (and search issue queues). The Macosx package includes an uninstaller script.
  - Current known stable releases as of March 7, 2017: 
-    - vagrant 1.9.2
-    - vagrant-bindfs (1.0.1)
+    - vagrant 1.9.7
+    - vagrant-bindfs (1.0.8)
     - vagrant-hostsupdater (1.0.2)
-    - vagrant-persistent-storage (0.0.21)
-    - vagrant-share (1.1.6, system)
+    - vagrant-persistent-storage (0.0.33)
     - vagrant-useradd (0.0.1)
-    - vagrant-vbguest (0.13.0)
+    - vagrant-vbguest (0.14.2)
  
 ## Updating Vagrant
 - If you do a `$ git pull` and see that the `Vagrantfile` has been updated, you may want to make sure things are up to date by running `$ vagrant reload --provision`.
@@ -94,8 +93,6 @@ Each VirtualHost you define in `config.rb` automatically logs Apache errors to t
 
 ## Debugging Integration
 [Xdebug](http://xdebug.org/) is built in and preconfigured. Use something like [Xdebug Helper](https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc?hl=en) to trigger a session, and your IDE should automagically pick it up.
-
-The [XHProf PHP Extension](http://php.net/manual/en/book.xhprof.php) is also built in. There's a [pretty nice Drupal Module](https://www.drupal.org/project/xhprof) that can hook into it.
 
 ## MailHog
 [MailHog](https://github.com/mailhog/MailHog) is an alternative mailhandler written in Go. Similar to MailCatcher it collects mail sent by PHP (or, anything actually) and puts it in a friendly local web UI. Said web UI lives on port 8025: [precip.vm:8025](http://precip.vm:8025). The major benefit MailHog has over MailCatcher is that it's written in Go and is distributed as a statically-compiled binary, so we don't have a mile-long list of Ruby dependencies to reconcile before installing.

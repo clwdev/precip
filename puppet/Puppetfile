@@ -4,17 +4,13 @@
 forge "https://forgeapi.puppetlabs.com"
 
 mod 'puppetlabs-apache'
-mod 'puppetlabs-apt'
-mod 'puppetlabs-mysql', "3.2.0"
+mod 'puppetlabs-apt', "4.1.0"
+mod 'puppetlabs-mysql'
 mod 'puppetlabs-vcsrepo'
-mod 'puppetlabs-stdlib', "4.12.0"
-mod 'ftaeger-mailhog', "1.1.0"
-
-#mod 'thias-php', "1.2.0"
-#mod 'willdurand-composer'
-mod 'mayflower-php'
-
-mod 'jlondon-wkhtmltox'
+mod 'puppetlabs-stdlib'
+mod 'ftaeger-mailhog',
+  :git => "https://github.com/jeffgeorge/ftaeger-mailhog.git",
+  :ref => "remove_wget_cache_dir"
 
 mod 'saz-memcached'
 

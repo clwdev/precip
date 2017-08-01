@@ -13,6 +13,9 @@
 #        drupal: Drupal Version of the site, 6 or 7. Not Drupal? Pass in 
 #                "false".
 #
+#   php_version: "5.6" or "7.0", defaults to "5.6". Defines which php-fpm
+#                pool to talk to, on a host-by-host basis.
+#
 #       aliases: A list of alias domains to set up. Useful for testing 
 #                domain-based internationalization.
 #
@@ -79,6 +82,31 @@
 #   }
 # }
 #
+
+# Packaging Mode skips some of the build steps and preps a box for publishing. 
+# Uncomment the following line to run the site in "packaging mode".
+#
+# Warning: Only do this if you _really_ know what you're doing
+#
+# packaging_mode = true
+
+# Forward SSH Agent forwards your host's ssh_agent (so, all authorized keys and such)
+# into the box, which means you'll be able to do key-based git authentication without
+# having to copy/paste keys into the box.
+#
+# forward_ssh_agent = true
+
+# Sometimes you may need to run two instances of precip, but Virtualbox and Vagrant
+# get angry if two boxes have the same name. Need to override that? Set it here.
+#
+# vm_name = "not-precip"
+
+# We offer a partially pre-built version of the Precip Base Box, which ships with 
+# all keys and base packages pre-installed, so all that's left is installing PHP, 
+# Apache, MySQL, and Configuring everything. This can help on restrictive networks
+# where you might not be able to add keys properly.
+#
+# use_packaged_precip = true
 
 drupal_sites = {
 #   "example" => {

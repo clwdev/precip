@@ -1,0 +1,10 @@
+{
+    "require": {
+        "clickalicious/phpmemadmin": "~0.3"
+    },
+    "scripts": {
+    	"post-autoload-dump": [
+        	"Clickalicious\\PhpMemAdmin\\Installer::postInstall"
+    	]
+    }
+}

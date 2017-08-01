@@ -1,2 +1,3 @@
 ---
+version: 5
 # Blank yaml to prevent Hiera from throwing a warning during provisioning :(
