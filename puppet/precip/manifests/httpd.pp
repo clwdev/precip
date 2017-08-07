@@ -26,6 +26,15 @@ class precip::httpd {
     file_type  => 'application/x-httpd-php-7.0'
   }
 
+  apache::fastcgi::server { 'php71':
+    host       => '/run/php/php7.1-fpm.sock',
+    timeout    => 300,
+    flush      => false,
+    faux_path  => '/var/www/php71.fcgi',
+    fcgi_alias => '/php71.fcgi',
+    file_type  => 'application/x-httpd-php-7.1'
+  }
+
   # We'll also need this if there are any commands defined
   file { '/vagrant/bin':
     ensure => 'directory'
@@ -54,6 +63,18 @@ class precip::httpd {
     }],
     access_log     => false,
     custom_fragment => 'AddType application/x-httpd-php-7.0 .php'
+  }
+
+  apache::vhost { '71.precip.vm':
+    docroot        => '/vagrant/util',
+    manage_docroot => false,
+    port           => '80',
+    directories    => [{
+        path           => '/vagrant/util',
+        allow_override => ['All',],
+    }],
+    access_log     => false,
+    custom_fragment => 'AddType application/x-httpd-php-7.1 .php'
   }
 
   $parsed_siteinfo = parsejson($drupal_siteinfo)
