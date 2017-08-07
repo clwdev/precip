@@ -8,7 +8,7 @@ A full LAMP stack, and a few nice extras.
 - Ubuntu Server 16.04.2 LTS
 - Apache Server 2.4
 - MariaDB 10.1
-- PHP 5.6 *or* 7.0
+- PHP 5.6, 7.0 _and_ 7.1
   - With Memcache, OPCache, and Xdebug all pre-configured
 - MailHog, the _absolute_ simplest way to locally test mail delivery
 
