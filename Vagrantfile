@@ -42,6 +42,7 @@ drupal_sites.each do |name, site|
   end
 end
 internal_hosts.push("70.precip.vm")
+internal_hosts.push("71.precip.vm")
 internal_hosts = internal_hosts.flatten
 
 # The actual Vagrant Configuration
