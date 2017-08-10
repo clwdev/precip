@@ -145,7 +145,8 @@ define drupal_vhosts($host, $aliases = [], $path, $drupal = '7', $multisite_dir 
     password => $name,
     host     => 'localhost',
     grant    => ['all'],
-    charset => 'utf8mb4',
+    charset  => 'utf8mb4',
+    collate  => 'utf8mb4_unicode_ci',
   }
 
   mysql_user { "${name}@%":
