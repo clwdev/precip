@@ -23,10 +23,31 @@ class precip::database {
     override_options => {
       'mysqld'      => {
         'bind-address' => '0.0.0.0',
-        'log_error'    => '/vagrant/log/mysql_error.log'
+        'log_error' => '/vagrant/log/mysql_error.log',
+        'key_buffer_size' => '20M',
+        'max_allowed_packet' => '100M',
+        'query_cache_limit' => '5M',
+        'query_cache_size' => '40M',
+        'thread_cache_size' => '200',
+        'innodb_file_format' => 'Barracuda',
+        'innodb_file_format_max' => 'Barracuda',
+        'innodb_large_prefix' => '1',
+        'innodb_file_per_table' => '1',
+        'group_concat_max_len' => '10240',
       },
       'mysqld_safe' => {
-        'log_error' => '/vagrant/log/mysql_error.log'
+        'bind-address' => '0.0.0.0',
+        'log_error' => '/vagrant/log/mysql_error.log',
+        'key_buffer_size' => '20M',
+        'max_allowed_packet' => '100M',
+        'query_cache_limit' => '5M',
+        'query_cache_size' => '40M',
+        'thread_cache_size' => '200',
+        'innodb_file_format' => 'Barracuda',
+        'innodb_file_format_max' => 'Barracuda',
+        'innodb_large_prefix' => '1',
+        'innodb_file_per_table' => '1',
+        'group_concat_max_len' => '10240',
       }
     },
     require          => [
