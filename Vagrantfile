@@ -119,9 +119,9 @@ Vagrant.configure(2) do |config|
     # on Linux guests for performance
     # https://github.com/geerlingguy/drupal-vm/issues/212
     vb.customize ["modifyvm", :id, "--paravirtprovider", "kvm"]
-    # Now that we're off "legacy" paravirtprovider, we can use virtio for nics
-    vb.customize ["modifyvm", :id, "--nictype1", "virtio"]
-    vb.customize ["modifyvm", :id, "--nictype2", "virtio"]
+    # Am79C973 is shown to have the best performance http://kylebush.github.io/Improve-VirtualBox-Vagrant-Network-IO-Performance/
+    vb.customize ["modifyvm", :id, "--nictype1", "Am79C973"]
+    vb.customize ["modifyvm", :id, "--nictype2", "Am79C973"]
     # Defer DNS resolution to the host for performance
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     # Prevent Virtualbox status errors about vram
