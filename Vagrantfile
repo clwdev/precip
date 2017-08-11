@@ -8,6 +8,7 @@ packaging_mode = false
 forward_ssh_agent = false
 vm_name = "precip"
 use_packaged_precip = false
+mysql_storage_size = 32768
 vm_memory = 2048
 
 # Determine if this is our first boot or not. 
@@ -92,7 +93,7 @@ Vagrant.configure(2) do |config|
   # Same concept as before & same benefits, but with the added bonus of being a native filesystem instead of a share.
   config.persistent_storage.enabled = true
   config.persistent_storage.location = "mysql.vdi"
-  config.persistent_storage.size = 32768
+  config.persistent_storage.size = mysql_storage_size
   config.persistent_storage.mountname = 'mysql'
   config.persistent_storage.filesystem = 'ext4'
   config.persistent_storage.mountpoint = '/var/lib/mysql'
