@@ -1,13 +1,16 @@
 ;Precip php.ini Overrides.
-max_execution_time=600
-max_input_time=300
-post_max_size=50M
-upload_max_filesize=50M
-memory_limit=256M
-max_input_vars=10000
-realpath_cache_size=1024
+max_execution_time=300
+post_max_size=256M
+upload_max_filesize=256M
+max_input_time=120
+memory_limit=384M
+max_input_vars=5000
+realpath_cache_size=900K
+error_reporting=E_ALL
 display_errors=On
+display_startup_errors=1
 html_errors=On
 session_save_path=/tmp
 sendmail_path=/usr/bin/mailhog sendmail noreply@precip.vm
-date.timezone=America/New_York
+always_populate_raw_post_data=-1
+date.timezone=UTC
