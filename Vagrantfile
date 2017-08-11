@@ -8,6 +8,8 @@ packaging_mode = false
 forward_ssh_agent = false
 vm_name = "precip"
 use_packaged_precip = false
+mysql_storage_size = 32768
+vm_memory = 2048
 
 # Determine if this is our first boot or not. 
 # If there's a better way to figure this out we now have a single place to change.
@@ -91,7 +93,7 @@ Vagrant.configure(2) do |config|
   # Same concept as before & same benefits, but with the added bonus of being a native filesystem instead of a share.
   config.persistent_storage.enabled = true
   config.persistent_storage.location = "mysql.vdi"
-  config.persistent_storage.size = 32768
+  config.persistent_storage.size = mysql_storage_size
   config.persistent_storage.mountname = 'mysql'
   config.persistent_storage.filesystem = 'ext4'
   config.persistent_storage.mountpoint = '/var/lib/mysql'
@@ -128,8 +130,8 @@ Vagrant.configure(2) do |config|
     vb.customize ["modifyvm", :id, "--vram", "10"]
     # Prevent a time drift of more than a minute from the host
     vb.customize ["guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 60000]
-    # Set reserved memory at 2GB, as we've never seen it actively use more than ~1.5G
-    vb.customize ["modifyvm", :id, "--memory", 2048]
+    # Set reserved memory based on config
+    vb.customize ["modifyvm", :id, "--memory", vm_memory]
     # Give half of cpu cores as the host (if more than 1), otherwise leave as default
     # In our testing this produced the best results. Adapted from https://github.com/rdsubhas/vagrant-faster
     host = RbConfig::CONFIG['host_os']

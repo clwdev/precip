@@ -101,6 +101,18 @@
 #
 # vm_name = "not-precip"
 
+# You can configure the amount of memory that is allocated to the VM
+#
+# vm_memory = 4096
+
+# You can increase the storage size of mysql if you have large databases
+#
+# Warning: If you change this after it has been created then you can do the following.
+# This process will lose your databases so back them up if you need to.
+# Remove the vdi from the machine, delete it and reprovision the vm to recreate it.
+#
+# mysql_storage_size = 65536
+
 # We offer a partially pre-built version of the Precip Base Box, which ships with 
 # all keys and base packages pre-installed, so all that's left is installing PHP, 
 # Apache, MySQL, and Configuring everything. This can help on restrictive networks
