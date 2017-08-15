@@ -13,8 +13,8 @@
 #        drupal: Drupal Version of the site, 6 or 7. Not Drupal? Pass in 
 #                "false".
 #
-#   php_version: "5.6" or "7.0", defaults to "5.6". Defines which php-fpm
-#                pool to talk to, on a host-by-host basis.
+#   php_version: "5.6", "7.0", or "7.1" (defaults to "5.6"). Defines which
+#                php-fpm pool to use, on a host-by-host basis.
 #
 #       aliases: A list of alias domains to set up. Useful for testing 
 #                domain-based internationalization.
