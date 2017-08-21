@@ -178,7 +178,11 @@ Vagrant.configure(2) do |config|
       "packaging_mode" => packaging_mode,
     }
   end
-  
+
+  # Restart Apache and MySQL after provisioning
+  # and mounts are available.
+  config.vm.provision "shell", run: "always", path: "shell/restart-services.sh"
+
   if File.file?('shell/custom.sh')
     # Run any Extra stuff you may need
     config.vm.provision "shell", path: "shell/custom.sh", privileged: false

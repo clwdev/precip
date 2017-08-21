@@ -138,9 +138,4 @@ class precip {
     target => '/sbin/rcvboxadd',
   }
 
-  file { '/etc/init/restart_services_once_mounted.conf':
-    ensure  => 'file',
-    content => template('precip/restart_services_once_mounted.conf.erb'),
-    mode    => '0644',
-  }
 }
