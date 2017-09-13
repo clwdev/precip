@@ -57,7 +57,7 @@ Vagrant.configure(2) do |config|
   else
     # The super-generic simple Ubuntu 16.04 base box (with Puppet)
     config.vm.box = "clwdev/precip-16.04-base"
-    config.vm.box_version = "1.0.0"
+    config.vm.box_version = "2.0.1"
   end
 
   # Basic network config.
