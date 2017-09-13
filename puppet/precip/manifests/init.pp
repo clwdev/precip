@@ -52,7 +52,7 @@ class precip {
 
   # Define the Yarn apt repo
   apt::source { 'yarn':
-    location => 'http://dl.yarnpkg.com/debian/',
+    location => 'https://dl.yarnpkg.com/debian/',
     release  => 'stable',
     repos    => 'main',
     require  => [
