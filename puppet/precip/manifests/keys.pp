@@ -18,8 +18,14 @@ class precip::keys {
   }
   
   # Yarn's Package Signing Key
+
+  # Yarn helpfully added a new subkey to their repo with the release of 1.0.0, 
+  # but haven't published it to the Ubuntu Keyserver. So we get to source it
+  # directly for the time being. :(
+
   apt::key { 'yarn':
     id     => '72ECF46A56B4AD39C907BBB71646B01B86E50310',
-    server => 'keyserver.ubuntu.com',
+    #server => 'keyserver.ubuntu.com',
+    source => 'https://dl.yarnpkg.com/debian/pubkey.gpg',
   }
 }
