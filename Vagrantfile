@@ -132,13 +132,13 @@ Vagrant.configure(2) do |config|
     vb.customize ["guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 60000]
     # Set reserved memory based on config
     vb.customize ["modifyvm", :id, "--memory", vm_memory]
-    # Give half of cpu cores as the host (if more than 1), otherwise leave as default
-    # In our testing this produced the best results. Adapted from https://github.com/rdsubhas/vagrant-faster
+    # Give half the physical cpu cores as the host (if more than 1), otherwise leave as default,
+    # as per https://ruin.io/benchmarking-virtualbox-multiple-core-performance/
+    # (Detection of host cpus adapted from https://github.com/rdsubhas/vagrant-faster)
     host = RbConfig::CONFIG['host_os']
     cpus = -1
     if host =~ /darwin/
-      cpus = `sysctl -n hw.ncpu`.to_i
-      mem = `sysctl -n hw.memsize`.to_i / 1024 / 1024
+      cpus = `sysctl -n hw.physicalcpu`.to_i
     elsif host =~ /linux/
       cpus = `nproc`.to_i
     elsif host =~ /mswin|mingw|cygwin/
