@@ -57,7 +57,7 @@ Vagrant.configure(2) do |config|
   else
     # The super-generic simple Ubuntu 16.04 base box (with Puppet)
     config.vm.box = "clwdev/precip-16.04-base"
-    config.vm.box_version = "2.0.1"
+    config.vm.box_version = “2.0.2”
   end
 
   # Basic network config.
@@ -85,7 +85,7 @@ Vagrant.configure(2) do |config|
     config.vm.synced_folder drupal_basepath, "/srv/www", owner: "www-data", group: "www-data"
   else
     # Everybody else gets nfs + bindfs, for better small-file read perf
-    config.vm.synced_folder drupal_basepath, "/nfs-www", type: "nfs"
+    config.vm.synced_folder drupal_basepath, "/nfs-www", type: "nfs", nfs: true, nfs_version: 3, nfs_udp: false, mount_options: ['rw', 'vers=3', 'actimeo=1', 'fsc']
     config.bindfs.bind_folder "/nfs-www", "/srv/www", user: "vagrant", group: "www-data", chown_ignore: true, chgrp_ignore: true, perms: "u=rwx:g=rwx:o=rx"
   end
 
@@ -145,6 +145,7 @@ Vagrant.configure(2) do |config|
       cpus = `wmic cpu Get NumberOfCores`.split[1].to_i
     end
     cpus = cpus / 2 if cpus > 1
+    cpus = 2
     if cpus > 0
       vb.customize ["modifyvm", :id, "--cpus", cpus]
       # Suppress CPU Setting Noise, uncomment for debug purposes
