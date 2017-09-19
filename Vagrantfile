@@ -145,7 +145,6 @@ Vagrant.configure(2) do |config|
       cpus = `wmic cpu Get NumberOfCores`.split[1].to_i
     end
     cpus = cpus / 2 if cpus > 1
-    cpus = 2
     if cpus > 0
       vb.customize ["modifyvm", :id, "--cpus", cpus]
       # Suppress CPU Setting Noise, uncomment for debug purposes
