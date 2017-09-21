@@ -85,6 +85,7 @@ class precip::php {
     'php-msgpack',
     'php-pear',
     'php-xdebug',
+    'php-xhprof',
     ]:
     ensure  => present,
     require => [Apt::Ppa['ppa:ondrej/php'], Class['apt::update']],
