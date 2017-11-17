@@ -1,0 +1,14 @@
+{
+  "name": "clwdev-precip",
+  "version": "0.0.3",
+  "author": "Travelopia, Inc. (Clearwater Development Team)",
+  "summary": "Builds and configures a full-featured Acquia Cloud–oriented LAMP+ infrastructure for Drupal–based applications.",
+  "license": "MIT",
+  "source": "https://github.com/clwdev/precip/puppet/precip",
+  "project_page": "https://github.com/clwdev/precip",
+  "issues_url": "https://github.com/clwdev/precip/issues",
+  "description": "This puppet module defines a full-featured LAMP Stack for local development of Drupal sites, and (pretty closely) mirrors how Acquia Cloud Drupal Environments work. It's the special-sauce behind the Precip vagrant box.",
+  "dependencies": [
+    { "name": "puppetlabs/stdlib", "version_requirement": ">= 3.2.0 < 5.0.0" }
+  ]
+}

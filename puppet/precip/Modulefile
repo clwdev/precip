@@ -1,8 +1,0 @@
-name    'clwdev-precip'
-version '0.0.2'
-source 'https://github.com/clwdev/precip'
-author 'clwdev'
-license 'MIT'
-summary 'Builds out a full-featured Acquia-Cloud-Oriented LAMP Stack for Drupal Apps'
-description "This puppet module defines a full-featured LAMP Stack for local development of Drupal Sites, and (pretty closely) mirrors how Acquia Cloud Drupal Environments work. It's the special-sauce behind the Precip vagrant box."
-project_page 'https://github.com/clwdev/precip'

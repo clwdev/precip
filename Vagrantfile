@@ -57,7 +57,7 @@ Vagrant.configure(2) do |config|
   else
     # The super-generic simple Ubuntu 16.04 base box (with Puppet)
     config.vm.box = "clwdev/precip-16.04-base"
-    config.vm.box_version = "1.0.0"
+    config.vm.box_version = "2.0.2"
   end
 
   # Basic network config.
@@ -85,7 +85,7 @@ Vagrant.configure(2) do |config|
     config.vm.synced_folder drupal_basepath, "/srv/www", owner: "www-data", group: "www-data"
   else
     # Everybody else gets nfs + bindfs, for better small-file read perf
-    config.vm.synced_folder drupal_basepath, "/nfs-www", type: "nfs"
+    config.vm.synced_folder drupal_basepath, "/nfs-www", type: "nfs", nfs: true, nfs_version: 3, nfs_udp: false, mount_options: ['rw', 'vers=3', 'actimeo=1', 'fsc']
     config.bindfs.bind_folder "/nfs-www", "/srv/www", user: "vagrant", group: "www-data", chown_ignore: true, chgrp_ignore: true, perms: "u=rwx:g=rwx:o=rx"
   end
 
@@ -132,13 +132,13 @@ Vagrant.configure(2) do |config|
     vb.customize ["guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 60000]
     # Set reserved memory based on config
     vb.customize ["modifyvm", :id, "--memory", vm_memory]
-    # Give half of cpu cores as the host (if more than 1), otherwise leave as default
-    # In our testing this produced the best results. Adapted from https://github.com/rdsubhas/vagrant-faster
+    # Give half the physical cpu cores as the host (if more than 1), otherwise leave as default,
+    # as per https://ruin.io/benchmarking-virtualbox-multiple-core-performance/
+    # (Detection of host cpus adapted from https://github.com/rdsubhas/vagrant-faster)
     host = RbConfig::CONFIG['host_os']
     cpus = -1
     if host =~ /darwin/
-      cpus = `sysctl -n hw.ncpu`.to_i
-      mem = `sysctl -n hw.memsize`.to_i / 1024 / 1024
+      cpus = `sysctl -n hw.physicalcpu`.to_i
     elsif host =~ /linux/
       cpus = `nproc`.to_i
     elsif host =~ /mswin|mingw|cygwin/
