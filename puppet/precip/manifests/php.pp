@@ -77,6 +77,29 @@ class precip::php {
     require => [Apt::Ppa['ppa:ondrej/php'], Class['apt::update']],
   }
   
+  # Get all the PHP 7.2 deps
+  package{[
+    'php7.2-cli',
+    'php7.2-common',
+    'php7.2-curl',
+    'php7.2-dev',
+    'php7.2-fpm',
+    'php7.2-gd',
+    'php7.2-intl',
+    'php7.2-json',
+    'php7.2-mbstring',
+    'php7.2-mysql',
+    'php7.2-opcache',
+    'php7.2-readline',
+    'php7.2-soap',
+    'php7.2-sqlite3',
+    'php7.2-xml',
+    'php7.2-zip',
+    ]:
+    ensure  => present,
+    require => [Apt::Ppa['ppa:ondrej/php'], Class['apt::update']],
+  }
+  
   # . . and the ones we only need once
   package{[
     'php-igbinary',
@@ -113,6 +136,13 @@ class precip::php {
     hasstatus  => true,
   }
   
+  service { 'php7.2-fpm':
+    ensure     => running,
+    enable     => true,
+    hasrestart => true,
+    hasstatus  => true,
+  }
+  
   # Config files. Yes, these could be simplified because 
   # we only have the one .erb for each file. But we may
   # have to eventually split them out, so i'm keeping
@@ -141,6 +171,14 @@ class precip::php {
     notify  => Service['php7.1-fpm'],
   }
   
+  file { '/etc/php/7.2/mods-available/opcache.ini':
+    ensure  => 'file',
+    content => template('precip/php_opcache.erb'),
+    mode    => '0644',
+    require => Package['php7.2-fpm'],
+    notify  => Service['php7.2-fpm'],
+  }
+  
   file { '/etc/php/5.6/mods-available/xdebug.ini':
     ensure  => 'file',
     content => template('precip/php_xdebug.erb'),
@@ -163,6 +201,14 @@ class precip::php {
     mode    => '0644',
     require => Package['php-xdebug','php7.1-fpm'],
     notify  => Service['php7.1-fpm'],
+  }
+  
+  file { '/etc/php/7.2/mods-available/xdebug.ini':
+    ensure  => 'file',
+    content => template('precip/php_xdebug.erb'),
+    mode    => '0644',
+    require => Package['php-xdebug','php7.2-fpm'],
+    notify  => Service['php7.2-fpm'],
   }
   
   file {[
@@ -199,6 +245,17 @@ class precip::php {
   }
   
   file {[
+    '/etc/php/7.2/cli/conf.d/20-xdebug.ini',
+    '/etc/php/7.2/fpm/conf.d/20-xdebug.ini',
+    ]:
+    ensure => 'link',
+    force  => true,
+    target => '/etc/php/7.2/mods-available/xdebug.ini',
+    require => [File['/etc/php/7.2/mods-available/xdebug.ini'], Package['php7.2-fpm']],
+    notify  => Service['php7.2-fpm'],
+  }
+  
+  file {[
     '/etc/php/5.6/cli/conf.d/99-overrides.ini',
     '/etc/php/5.6/fpm/conf.d/99-overrides.ini',
     ]:
@@ -231,9 +288,20 @@ class precip::php {
     notify  => Service['php7.1-fpm'],
   }
   
+  file {[
+    '/etc/php/7.2/cli/conf.d/99-overrides.ini',
+    '/etc/php/7.2/fpm/conf.d/99-overrides.ini',
+    ]:
+    ensure  => 'file',
+    content => template('precip/php_overrides.erb'),
+    mode    => '0644',
+    require => Package['php7.2-fpm'],
+    notify  => Service['php7.2-fpm'],
+  }
+  
   package {'composer':
     ensure  => present,
-    require => Package['php5.6-cli','php7.0-cli','php7.1-cli'],
+    require => Package['php5.6-cli','php7.0-cli','php7.1-cli','php7.2-cli'],
   }
   
   # Add Composer's vendor directory to the vagrant user's $PATH
