@@ -62,6 +62,18 @@ class precip::httpd {
     custom_fragment => 'AddType application/x-httpd-php-7.1 .php'
   }
 
+  apache::vhost { '56.precip.vm':
+    docroot        => '/vagrant/util',
+    manage_docroot => false,
+    port           => '80',
+    directories    => [{
+        path           => '/vagrant/util',
+        allow_override => ['All',],
+    }],
+    access_log     => false,
+    custom_fragment => 'AddType application/x-httpd-php-7.0 .php'
+  }
+
   apache::vhost { '70.precip.vm':
     docroot        => '/vagrant/util',
     manage_docroot => false,

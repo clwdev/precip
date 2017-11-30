@@ -43,6 +43,7 @@ drupal_sites.each do |name, site|
     internal_hosts.push(site['aliases'])
   end
 end
+internal_hosts.push("56.precip.vm")
 internal_hosts.push("70.precip.vm")
 internal_hosts.push("71.precip.vm")
 internal_hosts.push("72.precip.vm")
