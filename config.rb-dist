@@ -120,6 +120,18 @@
 #
 # use_packaged_precip = true
 
+# By default on operating systems that support it (eg: not Windows), we mount the
+# drupal_sites directory as nfs then rig it to a bindfs mount, as this allows the OS
+# to treat it as a Big Boy drive, while also dramatically increasing performance.
+#
+# Turns out MacOS 10.13 High Sierra broke NFS pretty horribly. Whoops.
+# https://github.com/hashicorp/vagrant/issues/8788
+#
+# It's slated to be fixed in 10.13.2, but in the meantime a simple way to just kill
+# NFS support is helpful. So add 'nfs_killswitch = true' to config.rb and you're done.
+#
+# nfs_killswitch = true
+
 drupal_sites = {
 #   "example" => {
 #     "host" => "example.vm",

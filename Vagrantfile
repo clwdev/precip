@@ -10,6 +10,7 @@ vm_name = "precip"
 use_packaged_precip = false
 mysql_storage_size = 32768
 vm_memory = 2048
+nfs_killswitch = false
 
 # Determine if this is our first boot or not. 
 # If there's a better way to figure this out we now have a single place to change.
@@ -82,8 +83,9 @@ Vagrant.configure(2) do |config|
   config.ssh.forward_agent = forward_ssh_agent
 
   # Synced Folders
-  if Vagrant::Util::Platform.windows?
+  if Vagrant::Util::Platform.windows? || nfs_killswitch
     # Windows gets vboxsf, because it can't do nfs + bindfs
+    # ...or if nfs_killswitch is enabled, for stupid MacOS workarounds
     config.vm.synced_folder drupal_basepath, "/srv/www", owner: "www-data", group: "www-data"
   else
     # Everybody else gets nfs + bindfs, for better small-file read perf
