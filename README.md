@@ -5,10 +5,10 @@
 
 ## What's Included?
 A full LAMP stack, and a few nice extras.
-- Ubuntu Server 16.04.2 LTS
+- Ubuntu Server 16.04.3 LTS
 - Apache Server 2.4
 - MariaDB 10.1
-- PHP 5.6, 7.0 _and_ 7.1
+- PHP 5.6, 7.0, 7.1 and 7.2
   - With Memcache, OPCache, and Xdebug all pre-configured
 - MailHog, the _absolute_ simplest way to locally test mail delivery
 
@@ -23,8 +23,10 @@ A full LAMP stack, and a few nice extras.
 
 ## Pre-flight Checklist
 - Get [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
-- Also [Vagrant](http://www.vagrantup.com/downloads.html)
-- Then go download these super helpful Vagrant Plugins (If you forget to, Vagrant will install them for you. It *might* error on your first `vagrant up`, but should still install things fine.)
+  - Note: You _probably_ want to stick on 5.1.x for now
+  - Precip _technically_ supports Virtualbox 5.2.x with Vagrant 2.0.1+, but it's _very_ early days for the 5.2.x branch right now, proceed with caution
+- Get [Vagrant](http://www.vagrantup.com/downloads.html)
+- Download these super helpful Vagrant Plugins (If you forget to, Vagrant will install them for you. It *might* error on your first `vagrant up`, but should still install things fine.)
   - `$ vagrant plugin install vagrant-vbguest`
   - `$ vagrant plugin install vagrant-hostsupdater`
   - `$ vagrant plugin install vagrant-useradd`
@@ -42,18 +44,17 @@ A full LAMP stack, and a few nice extras.
   - **Warning:** This will probably take geologic age the first time, since Vagrant first has to download the ~200Mb base box. It's a one-time thing, though.
 - Once Vagrant downloads the base box it will hand off to Puppet for provisioning
 - Once Puppet is finished provisioning your environment will be ready to use!
-- If you're on OS X or Linux, you _may_ want to run `$ vagrant reload` after your first boot. It'll boost MySQL performance a bit.
 
 #### Special note about versions and dependencies
  - As a general rule, getting latest Vagrant, Virtualbox and plugins is advised
- - BUT if you have issues, as sometimes bleeding edge releases can have unreported / unresolved bugs, roll back to prior versions by uninstalling and re-installing that earlier version (and search issue queues). The Macosx package includes an uninstaller script.
- - Current known stable releases as of March 7, 2017: 
+ - BUT if you have issues, as sometimes bleeding edge releases can have unreported / unresolved bugs, roll back to prior versions by uninstalling and re-installing that earlier version (and search issue queues). The MacOS package includes an uninstaller script.
+ - Current known stable releases as of November 30th, 2017:
     - vagrant 1.9.7
-    - vagrant-bindfs (1.0.8)
+    - vagrant-bindfs (1.0.9)
     - vagrant-hostsupdater (1.0.2)
-    - vagrant-persistent-storage (0.0.33)
+    - vagrant-persistent-storage (0.0.37)
     - vagrant-useradd (0.0.1)
-    - vagrant-vbguest (0.14.2)
+    - vagrant-vbguest (0.15.0)
  
 ## Updating Vagrant
 - If you do a `$ git pull` and see that the `Vagrantfile` has been updated, you may want to make sure things are up to date by running `$ vagrant reload --provision`.
@@ -108,7 +109,8 @@ PHP is already set up to use it, but if for some reason you're making something 
 - Customize local-settings.inc (optional)
 
 # Known Issues
-- [ ] During Provisioning, Puppet complains about "Warning: Setting templatedir is deprecated." [It's a Vagrant Bug](https://github.com/mitchellh/vagrant/issues/3740).
+- [x] ~~During Provisioning, Puppet complains about "Warning: Setting templatedir is deprecated." [It's a Vagrant Bug](https://github.com/mitchellh/vagrant/issues/3740).~~
+- [ ] In migrating between VirtualBox 5.1.x and 5.2.x you may get a big angry red "Vagrant was unable to mount VirtualBox shared folders." fatal error on boot. Dumb Workaround: `vagrant reload --provision`.
 
 # @TODO
 - [x] ~~Puppet Library Caching~~
@@ -121,7 +123,10 @@ PHP is already set up to use it, but if for some reason you're making something 
 - [x] ~~Actual Testing on Windows~~
 - [x] ~~Figure out NFS support on Windows~~ (gave up)
 - [x] ~~[Pimp My Log](http://pimpmylog.com) support~~
-- [ ] Some sort of generalized environment pulldown script
+- [X] ~~Some sort of generalized environment pulldown script~~ (belongs elsewhere)
+- [ ] A reasonable memcached dashboard
+- [ ] Reduce repetition in `php.pp`
+- [ ] Implement some sort of reasonable way to skip installation of some stuff (like, if you _really_ only need _one_ version of PHP)
 - [ ] Other Cool Stuff?????
 
 # Legal

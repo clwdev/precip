@@ -35,6 +35,15 @@ class precip::httpd {
     file_type  => 'application/x-httpd-php-7.1'
   }
 
+  apache::fastcgi::server { 'php72':
+    host       => '/run/php/php7.2-fpm.sock',
+    timeout    => 300,
+    flush      => false,
+    faux_path  => '/var/www/php72.fcgi',
+    fcgi_alias => '/php72.fcgi',
+    file_type  => 'application/x-httpd-php-7.2'
+  }
+
   # We'll also need this if there are any commands defined
   file { '/vagrant/bin':
     ensure => 'directory'
@@ -50,7 +59,19 @@ class precip::httpd {
         allow_override => ['All',],
     }],
     access_log     => false,
-    custom_fragment => 'AddType application/x-httpd-php-5.6 .php'
+    custom_fragment => 'AddType application/x-httpd-php-7.1 .php'
+  }
+
+  apache::vhost { '56.precip.vm':
+    docroot        => '/vagrant/util',
+    manage_docroot => false,
+    port           => '80',
+    directories    => [{
+        path           => '/vagrant/util',
+        allow_override => ['All',],
+    }],
+    access_log     => false,
+    custom_fragment => 'AddType application/x-httpd-php-7.0 .php'
   }
 
   apache::vhost { '70.precip.vm':
@@ -77,6 +98,18 @@ class precip::httpd {
     custom_fragment => 'AddType application/x-httpd-php-7.1 .php'
   }
 
+  apache::vhost { '72.precip.vm':
+    docroot        => '/vagrant/util',
+    manage_docroot => false,
+    port           => '80',
+    directories    => [{
+        path           => '/vagrant/util',
+        allow_override => ['All',],
+    }],
+    access_log     => false,
+    custom_fragment => 'AddType application/x-httpd-php-7.2 .php'
+  }
+
   $parsed_siteinfo = parsejson($drupal_siteinfo)
   create_resources(drupal_vhosts, $parsed_siteinfo)
 
@@ -94,7 +127,7 @@ class precip::httpd {
   }
 }
 
-define drupal_vhosts($host, $aliases = [], $path, $drupal = '7', $multisite_dir = 'default', $setenv = [], $git_url = '', $git_dir = '', $commands = {}, $ssl_cert = '/vagrant/ssl/precip_vm_host.pem', $ssl_ca = '/vagrant/ssl/precip_ca_bundle.crt.pem', $ssl_key = '/vagrant/ssl/precip_vm_host-key.pem', $php_version = '5.6') {
+define drupal_vhosts($host, $aliases = [], $path, $drupal = '7', $multisite_dir = 'default', $setenv = [], $git_url = '', $git_dir = '', $commands = {}, $ssl_cert = '/vagrant/ssl/precip_vm_host.pem', $ssl_ca = '/vagrant/ssl/precip_ca_bundle.crt.pem', $ssl_key = '/vagrant/ssl/precip_vm_host-key.pem', $php_version = '7.1') {
   apache::vhost { $host:
     docroot        => "/srv/www/${path}",
     manage_docroot => false,
