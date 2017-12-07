@@ -39,6 +39,28 @@ A full LAMP stack, and a few nice extras.
   - Note: These don't all _have_ to be Drupal Sites. Nearly any PHP site that just needs a vhost + database should be fine.
 - Edit `/config.rb-dist`, fill in the blanks, and save it as `/config.rb`
 
+### A Quick Note About PHP Versions
+
+PHP 5.6 and 7.0 are slated to be EOL'ed in 2018, so you should _really_ be testing stuff vs 7.1 or 7.2 as soon as possible. Precip is here to help. We use [`php-fpm`](https://php-fpm.org/) instead of `mod-php`, which allows us to have PHP 5.6, 7.0, 7.1 and 7.2 running on the same box concurrently.
+
+By default new docroots defined in `config.rb` now use 7.1, but if you want to switch back to 5.6 or whatever, you just have to add a `php_version` parameter:
+
+```
+drupal_sites = {
+  "test-site" => {
+    "host" => "test.vm",
+    "path" => "test-site/docroot",
+    "php_version" => "5.6",
+  },
+```
+
+We also have four default hostnames so you can quickly check how the various versions of PHP are configured:
+
+ - [56.precip.vm](http://56.precip.vm)
+ - [70.precip.vm](http://70.precip.vm)
+ - [71.precip.vm](http://71.precip.vm)
+ - [72.precip.vm](http://72.precip.vm)
+
 ## Downloading, Booting & Provisioning the Vagrant Box
 - Kick off Vagrant by running `$ vagrant up`
   - **Warning:** This will probably take geologic age the first time, since Vagrant first has to download the ~200Mb base box. It's a one-time thing, though.
