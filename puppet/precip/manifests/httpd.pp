@@ -71,7 +71,7 @@ class precip::httpd {
         allow_override => ['All',],
     }],
     access_log     => false,
-    custom_fragment => 'AddType application/x-httpd-php-7.0 .php'
+    custom_fragment => 'AddType application/x-httpd-php-5.6 .php'
   }
 
   apache::vhost { '70.precip.vm':
