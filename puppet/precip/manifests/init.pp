@@ -100,7 +100,9 @@ class precip {
   class { 'memcached': }
 
   # Install Mailhog, back to being handled by ftaeger-mailhog
-  class { 'mailhog': }
+  class { 'mailhog':
+    smtp_bind_addr_ip => '0.0.0.0'
+  }
 
   # Kick off the rest of our manifests
   include 'precip::keys'
