@@ -1,3 +1,7 @@
+# Precip requires Vagrant >= 2.1.3, to allow us to install locally scoped
+# Vagrant Plugins in a non-insane way.
+Vagrant.require_version ">= 2.1.3"
+
 # Pull in external config
 require "json"
 drupal_sites = {}
