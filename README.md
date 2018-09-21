@@ -23,15 +23,8 @@ A full LAMP stack, and a few nice extras.
 
 ## Pre-flight Checklist
 - Get [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
-  - Note: You _probably_ want to stick on 5.1.x for now
-  - Precip _technically_ supports Virtualbox 5.2.x with Vagrant 2.0.1+, but it's _very_ early days for the 5.2.x branch right now, proceed with caution
 - Get [Vagrant](http://www.vagrantup.com/downloads.html)
-- Download these super helpful Vagrant Plugins (If you forget to, Vagrant will install them for you. It *might* error on your first `vagrant up`, but should still install things fine.)
-  - `$ vagrant plugin install vagrant-vbguest`
-  - `$ vagrant plugin install vagrant-hostsupdater`
-  - `$ vagrant plugin install vagrant-useradd`
-  - `$ vagrant plugin install vagrant-bindfs`
-  - `$ vagrant plugin install vagrant-persistent-storage`
+  - Note: Precip now requires Vagrant <= 2.1.3, due to how Vagrant Plugins are managed
 
 ## Git Clones & Configuration
 - Clone this repo
@@ -63,21 +56,11 @@ We also have four default hostnames so you can quickly check how the various ver
 
 ## Downloading, Booting & Provisioning the Vagrant Box
 - Kick off Vagrant by running `$ vagrant up`
+  - Note: If you don't have various vagrant plugins installed Precip will install them for you, but you'll have to re-run `vagrant up` when it's done.
   - **Warning:** This will probably take geologic age the first time, since Vagrant first has to download the ~200Mb base box. It's a one-time thing, though.
 - Once Vagrant downloads the base box it will hand off to Puppet for provisioning
 - Once Puppet is finished provisioning your environment will be ready to use!
 
-#### Special note about versions and dependencies
- - As a general rule, getting latest Vagrant, Virtualbox and plugins is advised
- - BUT if you have issues, as sometimes bleeding edge releases can have unreported / unresolved bugs, roll back to prior versions by uninstalling and re-installing that earlier version (and search issue queues). The MacOS package includes an uninstaller script.
- - Current known stable releases as of November 30th, 2017:
-    - vagrant 1.9.7
-    - vagrant-bindfs (1.0.9)
-    - vagrant-hostsupdater (1.0.2)
-    - vagrant-persistent-storage (0.0.37)
-    - vagrant-useradd (0.0.1)
-    - vagrant-vbguest (0.15.0)
- 
 ## Updating Vagrant
 - If you do a `$ git pull` and see that the `Vagrantfile` has been updated, you may want to make sure things are up to date by running `$ vagrant reload --provision`.
 - If things ever get weird for whatever reason, you can always completely nuke and rebuild the box with `$ vagrant destroy -f && vagrant up`.
@@ -89,7 +72,7 @@ So you've got your Clones and you've got Vagrant running. That means all your ho
 ## Install Drush Aliases
 Upon completing the provisioning process we build a convenient [Drush Aliases file](https://github.com/drush-ops/drush/blob/6.x/examples/example.aliases.drushrc.php) for you in the .gitignored `vm.aliases.drushrc.php` file. You can install these aliases by running `install_aliases.sh`. Once installed you can access any of your sites from anywhere on your local machine by using one of the `@vm.[sitename]` aliases. So, for instance: `$ drush @vm.testsite status` would give you a status report for the site "testsite".
 
-Drush isn't (presently) installed inside the box, which is actually preferable. Drush 6.x doesn't work with "remote" hosts on local IP's (it's a [known oversight](https://github.com/drush-ops/drush/pull/546) and is only implemented in Drush 7.x). Other fun tools like [drush_sql_sync_pipe](https://www.drupal.org/project/drush_sql_sync_pipe) [don't support Drush 7 yet](https://www.drupal.org/node/2406661), and other things like *normal* sql-sync don't work if both aliases are considered "remotes". It'd be awesome to set up aliases that would let you interact with your local Vagrant the exact same way as your remote cloud environments, but right now it sadly isn't ready for prime-time. 
+Drush isn't (presently) installed inside the box, which is actually preferable. Drush 6.x doesn't work with "remote" hosts on local IP's (it's a [known oversight](https://github.com/drush-ops/drush/pull/546) and is only implemented in Drush 7.x). Other fun tools like [drush_sql_sync_pipe](https://www.drupal.org/project/drush_sql_sync_pipe) [don't support Drush 7 yet](https://www.drupal.org/node/2406661), and other things like *normal* sql-sync don't work if both aliases are considered "remotes". It'd be awesome to set up aliases that would let you interact with your local Vagrant the exact same way as your remote cloud environments, but right now it sadly isn't ready for prime-time.
 
 ## Importing Databases
 - You've got a database server running on `precip.vm`, and can connect with user/pass `precip` / `precip`
