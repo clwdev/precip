@@ -63,6 +63,14 @@ Vagrant.configure(2) do |config|
     config.vm.box_version = "2.0.2"
   end
 
+  # Install some required Vagrant Plugins (the Right way)
+  config.vagrant.plugins = {
+    "vagrant-hostsupdater" => {"version" => "1.0.2"},
+    "vagrant-useradd" => {"version" => "0.0.1"},
+    "vagrant-bindfs" => {"version" => "1.0.9"},
+    "vagrant-persistent-storage" => {"version" => "0.0.37"},
+  }
+
   # Basic network config.
   config.vm.network :private_network, ip: "10.0.0.11"
   config.vm.hostname = "precip.vm"
